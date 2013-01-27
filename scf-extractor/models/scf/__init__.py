@@ -1,5 +1,5 @@
-from lib.peewee import *
 from modules.Configuration import *
+from lib.peewee import *
 
 __all__ = ['Example', 'Frame', 'ReferenceFrame', 'Sentence', 'Verb', 'Argument', 'SemanticFrame', 'Element', 'SCF']
 

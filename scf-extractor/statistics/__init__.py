@@ -1,10 +1,11 @@
 
+from modules.Configuration import *
+
 import math
+from lib.plfit import plfit
+from reader import *
 from lib.peewee import *
 from models.scf import Verb, Frame, database
-from lib.plfit import plfit
-from modules.Configuration import *
-from reader import *
 
 __all__ = ['Statistics']
 
@@ -39,11 +40,18 @@ class Statistics:
         verb.save()
 
   def calculateRelativeFrequencies(self):
-    #framesTable = Frame._meta.db_table
-    #Frame.frame.db_column
-    
-    database.execute_sql('UPDATE frames as f SET verb_frequency = (select frequency from verbs as v where v.id_verb = f.id_verb) WHERE 1=1')
-    database.execute_sql('UPDATE frames SET relative_frequency = frequency/verb_frequency WHERE 1=1')
+    database.execute_sql("""
+      UPDATE """+Frame._meta.db_table+""" AS f 
+      SET """+Frame.verbFrequency.db_column+""" = 
+          (SELECT """+Verb.frequency.db_column+""" 
+           FROM """+Verb._meta.db_table+""" AS v 
+           WHERE v."""+Verb.id.db_column+""" = f."""+Frame.verb.db_column+""") 
+      WHERE 1=1""")
+    database.execute_sql("""
+      UPDATE """+Frame._meta.db_table+""" 
+      SET """+Frame.relativeFrequency.db_column+""" = 
+        """+Frame.frequency.db_column+"""/"""+Frame.verbFrequency.db_column+""" 
+      WHERE 1=1""")
 
   def logL(self, p, k, n):
     return k * math.log(p) + (n -k) * math.log(1-p)
@@ -62,7 +70,9 @@ class Statistics:
     for frame in framefrequencies:
       Frame.update(frameFrequency = frame.frameFrequency).where(Frame.frame == frame.frame).execute()
 
-    query = database.execute_sql('select sum(frequency) as totalFrequency from verbs')
+    query = database.execute_sql("""
+      SELECT SUM("""+Verb.frequency.db_column+""") AS totalFrequency 
+      FROM """+Verb._meta.db_table)
     totalFrequency = query.fetchall()[0][0]
 
     frames = FrameDatabaseIterator.Iterator()
