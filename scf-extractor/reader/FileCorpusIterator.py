@@ -17,10 +17,7 @@ class FileCorpusIterator(CorpusIterator):
     self.EOF = False
     self.files = []
     path = config.reader.fileReader.path  
-    if FileUtils.isFile(path):
-      self.files = [path]
-    elif FileUtils.isDir(path):
-      self.files = FileUtils.getAllFiles(path)
+    self.files = FileUtils.getFiles(path)
     self.openNextFile()
 
   ## Opens the next file
@@ -28,6 +25,9 @@ class FileCorpusIterator(CorpusIterator):
   # @version 0.1
   # @return None
   def openNextFile(self):
+    if self.filePointer:
+      self.filePointer.close()
+
     if len(self.files) == 0:
       self.EOF = True
       return False
@@ -42,8 +42,7 @@ class FileCorpusIterator(CorpusIterator):
   # @return String
   def next(self):
     line = self.filePointer.readline()
-    if not line:
-      self.filePointer.close()
+    if not line:    
       if self.openNextFile():
         return None
       else:

@@ -49,6 +49,16 @@ class FileUtils(object):
       return True
     else:
       return False
+  
+  @staticmethod
+  def getFiles(self, path, extensions = []):
+    files = []
+    if FileUtils.isFile(path):
+      files = [path]
+    elif FileUtils.isDir(path):
+      files = FileUtils.getFilesFromDir(path, extensions)
+
+    return files
 
   ## get all files from a dir
   # @author Adriano Zanette
@@ -56,7 +66,7 @@ class FileUtils(object):
   # @param dirName String Directory name
   # @return List Returns an array with all files from the dir
   @staticmethod
-  def getAllFiles(dirName, extensions = []):
+  def getFilesFromDir(dirName, extensions = []):
     fileList = []
     for file in os.listdir(dirName):
       dirFile = os.path.join(dirName, file)
@@ -65,5 +75,5 @@ class FileUtils(object):
         if len(extensions) == 0 or extension in extensions:
           fileList.append(dirFile)
       elif FileUtils.isDir(dirFile):
-        fileList += FileUtils.getAllFiles(dirFile, extensions)
+        fileList += FileUtils.getFilesFromDir(dirFile, extensions)
     return fileList

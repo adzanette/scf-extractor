@@ -16,10 +16,7 @@ class Iterator(CorpusIterator):
   def __init__(self):
     self.files = []
     path = config.reader.fileReader.path  
-    if FileUtils.isFile(path):
-      self.files = [path]
-    elif FileUtils.isDir(path):
-      self.files = FileUtils.getAllFiles(path, extensions = ['.xml'])
+    self.files = FileUtils.getFiles(path, extensions = ['.xml'])
 
   ## Read a line from a file
   # @author Adriano Zanette

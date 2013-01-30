@@ -44,7 +44,7 @@ class Iterator(CorpusIterator):
     sentence.raw = raw
     sentence.parsed = parsed
     
-    self.id = self.id + 1
+    self.id += 1
 
     return sentence
 

@@ -1,3 +1,4 @@
-__all__ = [ 'ReferenceFramesBuilder', 
-            'SCFBuilder', 
-            'SemanticFramesDatabaseBuilder']
+__all__ = [  'ReferenceFramesBuilder'
+            ,'SCFBuilder'
+            ,'SemanticFramesDatabaseBuilder'
+          ]

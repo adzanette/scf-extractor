@@ -24,13 +24,6 @@ class Builder:
     Example.update(semanticFrame=None).execute()
     SemanticFrame.delete().execute()
 
-  ## Do nothing, only for avoiding to save sentence
-  # @author Adriano Zanette
-  # @version 0.1
-  # @return None
-  def saveSentence(self, sentence):
-    pass
-
   # Builds semantic frames
   # @author Adriano Zanette
   # @version 0.1

@@ -1,7 +1,9 @@
 
+from modules.Configuration import *
+from modules.XmlUtils import XmlUtils
 from models.palavras import *
 from models.scf import SCF, Element
-from modules.Configuration import *
+
 import re
 
 ## Extractor for PALAVRAS dependency format
@@ -16,21 +18,6 @@ class Extractor():
   def __init__(self):
     self.namespace = 'http://framenet.icsi.berkeley.edu'
   
-  ## Find all elements using class namespace
-  # @author Adriano Zanette
-  # @version 0.1
-  # @param doc XML XML node
-  # @param xp Xpath query without namespace
-  # @return All elements corresponding to xpath query
-  def findall(self, doc, xp):
-    num = xp.count('/')
-    if num == 0:
-      return doc.findall('{%s}%s' % (self.namespace, xp))  
-    else:
-      new_xp = xp.replace('/', '/{%s}')
-      ns_tup = (self.namespace,) * num
-      return doc.findall(new_xp % ns_tup)  
-
   ## It extracts frames
   # @author Adriano Zanette
   # @version 0.1
@@ -43,15 +30,15 @@ class Extractor():
     if sintax <> 'V':
       return frames
 
-    lexeme = self.findall(framenetItem, 'lexeme')[0].attrib['name']   
+    lexeme = XmlUtils.findall(self.namespace, framenetItem, 'lexeme')[0].attrib['name']   
     
-    verb = self.findall(framenetItem, 'lexeme')[0].attrib['name']
-    scfs = self.findall(framenetItem, './valences/FEGroupRealization/pattern')
+    verb = XmlUtils.findall(self.namespace, framenetItem, 'lexeme')[0].attrib['name']
+    scfs = XmlUtils.findall(self.namespace, framenetItem, './valences/FEGroupRealization/pattern')
     i = 1
     for scf in scfs:
       frame = SCF()
       frame.verb = verb
-      scfElements = self.findall(scf, './valenceUnit')
+      scfElements = XmlUtils.findall(self.namespace, scf, './valenceUnit')
       for scfElement in scfElements:
         element = self.buildElement(scfElement) 
         if element:
