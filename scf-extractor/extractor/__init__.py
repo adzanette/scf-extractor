@@ -1,6 +1,6 @@
-__all__ = [ 'SintaticRaspDependencyExtractor', 
-            'LexicalRaspDependencyExtractor', 
+__all__ = [ 'FramenetExtractor',
+            'NILCLexiconExtractor', 
             'PalavrasDependencyExtractor', 
             'SemanticFramesExtractor',
-            'VerbnetExtractor',
-            'FramenetExtractor']
+            'SintaticRaspDependencyExtractor', 
+            'VerbnetExtractor']

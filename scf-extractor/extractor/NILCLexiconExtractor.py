@@ -28,7 +28,7 @@ class Extractor():
     prepositions = verb.group("preps")[0:len(verb.group("preps"))-1].split(".")    
 
     for subcat in subcats:
-      if subcat == 'BI' or subcat == 'TI'
+      if subcat == 'BI' or subcat == 'TI':
         for prep in prepositions:
           frames += self.buildFrames(subcat, prep)
       else:
@@ -60,7 +60,6 @@ class Extractor():
       frame.elements.append(element) 
       element = Element(sintax = 'PP', element='PP[%s]' % (prep), position = 2, relevance = 2)  
       frame.elements.append(element)  
-      frame.scf = = 'NP_PP[%s]' % (prep)
       if config.builder.order == 'position':
         frames.append(frame)
 

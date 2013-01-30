@@ -27,6 +27,7 @@ class Verb(BaseModel):
   verb = CharField(max_length=100, unique=True)
   frequency = FloatField(default=1)
   alpha = FloatField(default=0)
+  filtered = BooleanField(default=False)
 
   class Meta:
     db_table = 'verbs'
@@ -55,7 +56,7 @@ class Frame(BaseModel):
 # @version 0.1
 class ReferenceFrame(BaseModel):
   id = PrimaryKeyField(db_column='id_frame')
-  verb = ForeignKeyField(Verb,  db_column='id_verb', related_name='frames')
+  verb = ForeignKeyField(Verb,  db_column='id_verb', related_name='referenceFrames')
   frame = CharField(max_length=255)
   isPassive = BooleanField(default=False, db_column='is_passive')
   

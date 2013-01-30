@@ -32,15 +32,10 @@ builder:
   clearTables: true
 
 statistics:
-  run: false
+  run: true
   modules: ['frequency', 'power-law', 'loglikelihood', 't-score']
 
-filter:
-  absoluteFrequencyVerb: 5
-  absoluteFrequencyFrame: 5
-  relativeFrequency: 10
-  alpha: 0.5
-
-
-
-
+filter: 
+  columns: ['verbFrequency', 'frequency', 'relativeFrequency', 'verb.alpha']
+  values: [0, 0, 0, 0.5]
+  operators: ['<', '<', '<', '<']

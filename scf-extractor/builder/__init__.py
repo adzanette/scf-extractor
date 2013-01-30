@@ -1,4 +1,3 @@
-__all__ = [ 'SentenceOrderBuilder', 
-            'RelevanceOrderBuilder', 
-            'SemanticFramesDatabaseBuilder',
-            'ReferenceFramesBuilder']
+__all__ = [ 'ReferenceFramesBuilder', 
+            'SCFBuilder', 
+            'SemanticFramesDatabaseBuilder']

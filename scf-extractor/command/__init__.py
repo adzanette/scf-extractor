@@ -6,6 +6,7 @@ from reader import *
 from extractor import *
 from builder import *
 from statistics import *
+from filter import *
 
 ## This class extracts SCF's from a raw source and stores the data processed in another
 # @author Adriano Zanette
@@ -39,5 +40,8 @@ class ExtractSCF:
 
     statistics = Statistics()
     statistics.run()
+
+    scfFilter = Filter()
+    scfFilter.filter()
 
 

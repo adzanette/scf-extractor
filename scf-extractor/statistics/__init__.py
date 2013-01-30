@@ -19,13 +19,13 @@ class Statistics:
     if self.execute:
       if 'frequency' in self.modules:
         self.calculateRelativeFrequencies()
-
+        
       if 'loglikelihood' in self.modules or 't-score' in self.modules:
         self.calculateLogLikelihood()
 
       if 'power-law' in self.modules:
-        self.calculateAlphas()        
-
+        self.calculateAlphas()
+        
   def calculateAlphas(self):
     verbs = Verb.select().execute()
     for verb in verbs:
@@ -47,11 +47,17 @@ class Statistics:
            FROM """+Verb._meta.db_table+""" AS v 
            WHERE v."""+Verb.id.db_column+""" = f."""+Frame.verb.db_column+""") 
       WHERE 1=1""")
+    
     database.execute_sql("""
       UPDATE """+Frame._meta.db_table+""" 
       SET """+Frame.relativeFrequency.db_column+""" = 
         """+Frame.frequency.db_column+"""/"""+Frame.verbFrequency.db_column+""" 
       WHERE 1=1""")
+    
+    framefrequencies = Frame.select(Frame, fn.Sum(Frame.frequency).alias('frameFrequency')).group_by(Frame.frame)
+    for frame in framefrequencies:
+      Frame.update(frameFrequency = frame.frameFrequency).where(Frame.frame == frame.frame).execute()
+
 
   def logL(self, p, k, n):
     return k * math.log(p) + (n -k) * math.log(1-p)
@@ -66,9 +72,6 @@ class Statistics:
     return (p1-p2)/math.sqrt(alphaDivisor)
 
   def calculateLogLikelihood(self):
-    framefrequencies = Frame.select( Frame, fn.Sum(Frame.frequency).alias('frameFrequency')).group_by(Frame.frame)
-    for frame in framefrequencies:
-      Frame.update(frameFrequency = frame.frameFrequency).where(Frame.frame == frame.frame).execute()
 
     query = database.execute_sql("""
       SELECT SUM("""+Verb.frequency.db_column+""") AS totalFrequency 
@@ -86,7 +89,7 @@ class Statistics:
       p2 = k2/n2
       p = (k1 + k2) / (n1 + n2)
       
-      if 't-score' in self.modules:        
+      if 't-score' in self.modules:
         frame.tscore = self.tscore(n1,n2,p1,p2)
 
       if 'loglikelihood' in self.modules: 

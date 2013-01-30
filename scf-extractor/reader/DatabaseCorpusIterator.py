@@ -12,7 +12,7 @@ class DatabaseCorpusIterator(CorpusIterator):
   # @version 0.1
   # @return DatabaseIterator
   def __init__(self):
-    self.last = 62919
+    self.last = 0
     self.rowset = None
     self.pageSize = int(config.reader.databaseReader.pageSize)
 
