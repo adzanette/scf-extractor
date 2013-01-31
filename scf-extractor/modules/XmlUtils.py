@@ -1,5 +1,8 @@
   
 
+## This class has static methods for xml handling
+# @author Adriano Zanette
+# @version 1.0
 class XmlUtils(object):
 
   ## Find all elements using class namespace

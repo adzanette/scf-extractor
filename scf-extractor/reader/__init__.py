@@ -1,5 +1,7 @@
-__all__ = [ 'SentenceDatabaseCorpusIterator', 
-            'PalavrasFileCorpusIterator', 
-            'ExampleDatabaseCorpusIterator', 
-            'FrameDatabaseIterator', 
-            'XmlFileIterator']
+__all__ = [ 
+             'SentenceDatabaseCorpusIterator'
+            ,'PalavrasFileCorpusIterator'
+            ,'ExampleDatabaseCorpusIterator'
+            ,'FrameDatabaseIterator'
+            ,'XmlFileIterator'
+          ]

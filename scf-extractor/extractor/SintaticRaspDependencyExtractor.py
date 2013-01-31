@@ -1,6 +1,6 @@
 
-from RaspDependencyExtractor import RaspDependencyExtractor
 from models.scf import Element
+from RaspDependencyExtractor import RaspDependencyExtractor
 
 ## It extracts frames with sintatic information
 # @author Adriano Zanette

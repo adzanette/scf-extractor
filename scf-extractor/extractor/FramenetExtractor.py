@@ -1,9 +1,8 @@
 
 from modules.Configuration import *
 from modules.XmlUtils import XmlUtils
-from models.palavras import *
 from models.scf import SCF, Element
-
+from models.palavras import *
 import re
 
 ## Extractor for PALAVRAS dependency format
@@ -34,11 +33,12 @@ class Extractor():
     
     verb = XmlUtils.findall(self.namespace, framenetItem, 'lexeme')[0].attrib['name']
     scfs = XmlUtils.findall(self.namespace, framenetItem, './valences/FEGroupRealization/pattern')
-    i = 1
+    
     for scf in scfs:
       frame = SCF()
       frame.verb = verb
       scfElements = XmlUtils.findall(self.namespace, scf, './valenceUnit')
+      i = 1
       for scfElement in scfElements:
         element = self.buildElement(scfElement) 
         if element:

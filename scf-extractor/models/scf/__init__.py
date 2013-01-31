@@ -1,7 +1,19 @@
+
+__all__ = [
+             'Example'
+            ,'Frame'
+            ,'ReferenceFrame'
+            ,'Sentence'
+            ,'Verb'
+            ,'Argument'
+            ,'SemanticFrame'
+            ,'Element'
+            ,'SCF'
+          ]
+
 from modules.Configuration import *
 from lib.peewee import *
 
-__all__ = ['Example', 'Frame', 'ReferenceFrame', 'Sentence', 'Verb', 'Argument', 'SemanticFrame', 'Element', 'SCF']
 
 dbConfig = config.builder.database
 
@@ -27,8 +39,7 @@ class Verb(BaseModel):
   verb = CharField(max_length=100, unique=True)
   frequency = FloatField(default=1)
   alpha = FloatField(default=0)
-  filtered = BooleanField(default=False)
-
+  
   class Meta:
     db_table = 'verbs'
 
@@ -117,7 +128,9 @@ class Argument(BaseModel):
   class Meta:
     db_table = 'arguments'
 
-
+## Model for frame elements
+# @author Adriano Zanette
+# @version 0.1
 class Element():
   
   def __init__(self, **kwargs):
@@ -135,7 +148,9 @@ class Element():
       if key in attributes:
         setattr(self, key, value)
 
-
+## Model for scf
+# @author Adriano Zanette
+# @version 0.1
 class SCF():
   
   def __init__(self):

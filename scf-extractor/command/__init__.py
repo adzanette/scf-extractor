@@ -23,7 +23,6 @@ class ExtractSCF:
   ## Read, extract and store SCF's
   # @author Adriano Zanette
   # @version 0.1
-  # @return bool Return True if has no error else returns False 
   def run(self):
     moduleReader = config.reader.module
     corpus = eval(moduleReader+"Iterator.Iterator()")

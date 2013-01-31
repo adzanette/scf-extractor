@@ -4,7 +4,7 @@ from modules.FileUtils import FileUtils
 from CorpusIterator import *
 import xml.etree.ElementTree as xml
 
-## Reads corpus from a file or all file of a folder
+## Reads corpus from xmls files
 # @author Adriano Zanette
 # @version 0.1
 class Iterator(CorpusIterator):

@@ -1,5 +1,8 @@
 
-__all__ = ['Token', 'Sentence']
+__all__ = [
+             'Token'
+            ,'Sentence'
+          ]
 
 import operator
 

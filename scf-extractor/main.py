@@ -7,5 +7,5 @@ command.run()
 
 # bht 
 # remover pontos fora da curva do powerlaw
-## valex como gold
-#bnc nlpserver
+# valex como gold
+# bnc nlpserver

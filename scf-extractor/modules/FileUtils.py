@@ -50,6 +50,12 @@ class FileUtils(object):
     else:
       return False
   
+  ## get files from a paths
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param path String
+  # @param extensions List Accepted extensions
+  # @return Boolean 
   @staticmethod
   def getFiles(self, path, extensions = []):
     files = []
@@ -64,6 +70,7 @@ class FileUtils(object):
   # @author Adriano Zanette
   # @version 1.0
   # @param dirName String Directory name
+  # @param extensions List Accepted extensions
   # @return List Returns an array with all files from the dir
   @staticmethod
   def getFilesFromDir(dirName, extensions = []):

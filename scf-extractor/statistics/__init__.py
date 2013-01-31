@@ -1,20 +1,32 @@
 
-from modules.Configuration import *
-
-import math
-from lib.plfit import plfit
-from reader import *
-from lib.peewee import *
-from models.scf import Verb, Frame, database
-
 __all__ = ['Statistics']
 
+from modules.Configuration import *
+from models.scf import Verb, Frame, database
+from reader import *
+from lib.peewee import *
+from lib.plfit import plfit
+import math
+
+## This class generates scf statistics
+# @author Adriano Zanette
+# @version 1.0
 class Statistics:
 
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean 
   def __init__(self):
     self.execute = config.statistics.run
     self.modules = config.statistics.modules
 
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean 
   def run(self):
     if self.execute:
       if 'frequency' in self.modules:
@@ -26,6 +38,11 @@ class Statistics:
       if 'power-law' in self.modules:
         self.calculateAlphas()
         
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean 
   def calculateAlphas(self):
     verbs = Verb.select().execute()
     for verb in verbs:
@@ -39,6 +56,11 @@ class Statistics:
         verb.alpha = alpha
         verb.save()
 
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean 
   def calculateRelativeFrequencies(self):
     database.execute_sql("""
       UPDATE """+Frame._meta.db_table+""" AS f 
@@ -58,19 +80,38 @@ class Statistics:
     for frame in framefrequencies:
       Frame.update(frameFrequency = frame.frameFrequency).where(Frame.frame == frame.frame).execute()
 
-
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean 
   def logL(self, p, k, n):
     return k * math.log(p) + (n -k) * math.log(1-p)
 
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean 
   def alpha(self, n, p):
     return n*p*(1-p)
 
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean   
   def tscore(self, n1, n2, p1, p2):
     alphaDivisor = math.pow(self.alpha(n1,p1),2) + math.pow(self.alpha(n2,p2),2)
     if alphaDivisor == 0:
       return 0
     return (p1-p2)/math.sqrt(alphaDivisor)
 
+  ## test if a file exists
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param filename String File name
+  # @return Boolean 
   def calculateLogLikelihood(self):
 
     query = database.execute_sql("""

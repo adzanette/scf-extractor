@@ -1,7 +1,7 @@
 
-from models.palavras import *
-from models.scf import SCF
 from modules.Configuration import *
+from models.scf import SCF
+from models.palavras import *
 import re
 
 ## Extractor for NILC lexicon

@@ -1,11 +1,11 @@
 
-from FileCorpusIterator import FileCorpusIterator
 from models.corpus import Sentence
 from CorpusIterator import *
+from FileCorpusIterator import FileCorpusIterator
 import re
 
 
-## Reads a PALAVRAS annoted corpus from files
+## Reads a NILV lexicon file
 # @author Adriano Zanette
 # @version 0.1
 class Iterator(CorpusIterator):

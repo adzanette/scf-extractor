@@ -1,7 +1,8 @@
-from lib.peewee import *
-from modules.Configuration import *
 
 __all__ = ['Sentence']
+
+from modules.Configuration import *
+from lib.peewee import *
 
 dbConfig = config.reader.database
 

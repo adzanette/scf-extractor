@@ -1,7 +1,7 @@
 
-from models.scf import *
 from modules.Configuration import *
 from builder.SCFBuilder import Builder as SCFBuilder
+from models.scf import *
 import operator
 
 ## Builder receives as argument an set of elements and builds semantic scfs and stores on database

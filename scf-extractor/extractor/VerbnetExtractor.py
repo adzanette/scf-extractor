@@ -1,10 +1,10 @@
 
-from models.palavras import *
-from models.scf import SCF, Element
 from modules.Configuration import *
+from models.scf import SCF, Element
+from models.palavras import *
 import re
 
-## Extractor for PALAVRAS dependency format
+## Extractor for Verbnet reference frames
 # @author Adriano Zanette
 # @version 0.1
 class Extractor():
@@ -34,6 +34,11 @@ class Extractor():
     
     return frames
 
+  ## Extract informatio from a verbnet class
+  # @author Adriano Zanette
+  # @version 0.1
+  # @param verbClass XML
+  # @return Dict Frames to be buiilt
   def extractVerbClassFrames(self, verbClass):
     frames = []
     verbs = []
@@ -52,17 +57,17 @@ class Extractor():
 
     return frames
 
-  ## Extract information from a token
+  ## Extract information from a verb and frame
   # @author Adriano Zanette
   # @version 0.1
-  # @param token Token
-  # @return Dict Element built
+  # @param verb String 
+  # @param frame String Verbnet frame
+  # @return models.scf.SCF 
   def buildFrame(self, verb, frame):
     
     scf = SCF()
     scf.verb = verb
     
-
     arguments = frame.upper().split(' ')
     i = 1
     for arg in arguments:

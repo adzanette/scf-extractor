@@ -1,6 +1,6 @@
 
-from models.scf import *
 from modules.Configuration import *
+from models.scf import *
 import operator
 
 ## Exception for error creating or deleting tables

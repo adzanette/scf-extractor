@@ -2,7 +2,9 @@
 from models.scf import Element, SCF
 import re
 
-
+## Extractor for semantic frames
+# @author Adriano Zanette
+# @version 0.1
 class Extractor():
 
   ## Class constuctor
@@ -11,7 +13,11 @@ class Extractor():
   # @return Extractor
   def __init__(self):
     pass
-
+  ## Extract information from an sintatic scf
+  # @author Adriano Zanette
+  # @version 0.1
+  # @param argument String
+  # @return models.scf.Element Element Built
   def buildElement(self, argument):
     
     element = None
@@ -43,6 +49,11 @@ class Extractor():
 
     return element
 
+  ## It extracts semantic frames
+  # @author Adriano Zanette
+  # @version 0.1
+  # @param example models.scf.Example 
+  # @return models.scf.SCF Frame to be built
   def extract(self, example):
     elements = []
 

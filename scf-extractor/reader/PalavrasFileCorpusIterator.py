@@ -1,7 +1,7 @@
 
+from CorpusIterator import *
 from FileCorpusIterator import FileCorpusIterator
 from models.corpus import Sentence
-from CorpusIterator import *
 import re
 
 

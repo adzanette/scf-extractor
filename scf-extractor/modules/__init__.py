@@ -1,1 +1,6 @@
-__all__ = ['SentenceDatabaseCorpusIterator', 'PalavrasFileCorpusIterator', 'ExampleDatabaseCorpusIterator']
+__all__ = [
+            'Configuration'
+            ,'FileUtils'
+            ,'Plotter'
+            ,'XmlUtils'
+          ]
