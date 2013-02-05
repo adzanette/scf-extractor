@@ -39,3 +39,6 @@ filter:
   columns: ['verbFrequency', 'frequency', 'relativeFrequency', 'verb.alpha']
   values: [0, 0, 0, 0.5]
   operators: ['<', '<', '<', '<']
+
+evaluator:
+  scfReferenceTable: framenet_frames
