@@ -11,7 +11,7 @@ evaluator = Evaluator()
 
 #evaluator.verbHistogram('get', cutoff=50, output = '/home/adriano/Desktop/teste.png')
 
-evaluator.evaluate('frel', 0.02, 0.001, 0, 1, 100)
+evaluator.evaluate('frel', 0.2, 0.01, 0, 10, 10)
 evaluator.plot()
 
 # bht 

@@ -58,6 +58,12 @@ class Frame(BaseModel):
   tscore = FloatField(default=0, db_column='t_score')
   isPassive = BooleanField(default=False, db_column='is_passive')
   filtered = BooleanField(default=False)
+
+  def referenceFrame(self):
+    try:
+      return ReferenceFrame.get(ReferenceFrame.verb == self.verb, ReferenceFrame.frame == self.frame)
+    except ReferenceFrame.DoesNotExist:
+      return None
   
   class Meta:
     db_table = 'frames'

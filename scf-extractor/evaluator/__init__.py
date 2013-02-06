@@ -1,15 +1,12 @@
 
 from modules.Configuration import *
-import MySQLdb
+from models.scf import Frame, ReferenceFrame, Verb, database
+import pylab
     
 
 class Evaluator():
 
   def __init__ (self):
-    self.conn = MySQLdb.connect('localhost', 'root', 'zanette', 'scf-teste')
-    self.cursor = self.conn.cursor()
-    self.reference_table = config.evaluator.scfReferenceTable
-
     self.filter_value   = [] 
     self.precision    = []  
     self.recall     = []  
@@ -17,9 +14,6 @@ class Evaluator():
 
   def verbHistogram(self, verbString, cutoff=10, output=None):
 
-    import pylab
-    from models.scf import Verb
-    
     verb = Verb.get(Verb.verb == verbString)
     frequencies = [frame.frequency for frame in verb.frames if frame.frequency > cutoff ]
     frequencies.sort(reverse=True)
@@ -45,34 +39,25 @@ class Evaluator():
 
     while(eval(filter_type) <= max_val):
 
-      sql = """ SELECT COUNT(*) AS gold 
-            FROM """ + self.reference_table + """ as r INNER JOIN
-            verbs v on v.id_verb = r.id_verb 
-            WHERE v.frequency >= """+str(fabsv)
-      self.cursor.execute(sql)
-      row = self.cursor.fetchone()
-      golden = row[0]
+      golden = ReferenceFrame.select().join(Verb).where(Verb.frequency >= fabsv).count()
 
-      sql = """ SELECT  COUNT(*) AS retr 
-            FROM  frames
-            WHERE relative_frequency >= """+ str(frel) + """
-              AND verb_frequency >= """+ str(fabsv) +"""
-              AND frequency >= """+ str(fabsf)
-      self.cursor.execute(sql)
-      row = self.cursor.fetchone()
-      retrieved = row[0]
+      retrieved = Frame.select().where(Frame.relativeFrequency >= frel, Frame.verbFrequency >= fabsv, Frame.frequency >= fabsf).count()
+      query =Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.relativeFrequency >= frel, Frame.verbFrequency >= fabsv, Frame.frequency >= fabsf)
+      #print query.sql(database.get_compiler())
+      #break
+      intersect = query.count()
 
-      sql = """ SELECT count(*) AS intersec
-            FROM """ + self.reference_table + """ AS r INNER JOIN
-              (SELECT id_frame, frame, id_verb
-               FROM frames
-               WHERE relative_frequency >= """+ str(frel) +"""
-                AND verb_frequency >= """+ str(fabsv) +""" 
-                AND frequency >= """+ str(fabsf) +""" ) AS f
-            ON f.id_verb = r.id_verb AND f.frame = r.frame"""
-      self.cursor.execute(sql)
-      row = self.cursor.fetchone()
-      intersect = row[0]
+      #sql = """ SELECT count(*) AS intersec
+      #      FROM """ + self.reference_table + """ AS r INNER JOIN
+      #        (SELECT id_frame, frame, id_verb
+      #         FROM frames
+      #         WHERE relative_frequency >= """+ str(frel) +"""
+      #          AND verb_frequency >= """+ str(fabsv) +""" 
+      #          AND frequency >= """+ str(fabsf) +""" ) AS f
+      #      ON f.id_verb = r.id_verb AND f.frame = r.frame"""
+      #self.cursor.execute(sql)
+      #row = self.cursor.fetchone()
+      #intersect = row[0]
 
       p = float(intersect)/float(retrieved)
       r = float(intersect)/float(golden)
@@ -93,17 +78,14 @@ class Evaluator():
 
   def plot(self, deflabel= 'Teste', output=None):
 
-    from matplotlib.mlab import *
-    from matplotlib.pyplot import *
+    pylab.plot(self.filter_value, self.precision,'-', label='precision')
+    pylab.plot(self.filter_value, self.recall,'-', label='recall')
+    pylab.plot(self.filter_value, self.fmeasure,'-', label='fmeasure')
 
-    plot(self.filter_value, self.precision,'-', label='precision')
-    plot(self.filter_value, self.recall,'-', label='recall')
-    plot(self.filter_value, self.fmeasure,'-', label='fmeasure')
-
-    legend(loc=(0.03,0.8))
-    xlabel(deflabel)
-    ylabel('%')
-    show()
+    pylab.legend(loc=(0.03,0.8))
+    pylab.xlabel(deflabel)
+    pylab.ylabel('%')
+    pylab.show()
     #savefig(out)
 
   def get_filter_values(self):
