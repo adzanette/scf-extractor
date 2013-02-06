@@ -1,21 +1,33 @@
 #!/usr/bin/env python -W ignore::DeprecationWarning
 # -*- coding: iso-8859-15 -*-
 
-from matplotlib.mlab import *
-from matplotlib.pyplot import *
+import pylab
 
 class Plotter():
 
   def labels(self, xlabel, yLabel):
-    xlabel(xlabel)
-    ylabel(yLabel)
+    pylab.xlabel(xlabel)
+    pylab.ylabel(yLabel)
+
+  def title(self, title):
+    pylab.title(title)
 
   def drawLine(self, x, y, label):
-    plot(x, y,'-', label)
+    pylab.plot(x, y,'-', label)
+
+  def drawBars(self, data, color='green', edgecolor = '#cccccc'):
+    pylab.bar(range(0,len(data)), data, facecolor='green', edgecolor="#cccccc")
+  
+  def output(self, filename = None):
+    pylab.legend(loc=(0.03,0.8))
+    if filename:
+      self.save(filename)
+    else:
+      self.show()
 
   def show(self):
-    show()
+    pylab.show()
 
   def save(filename):
-    savefig(filename)
+    pylab.savefig(filename)
 

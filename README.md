@@ -1,4 +1,4 @@
-# Pusher Python module
+# SCFExtractor Python Toolkit
 
 ## Installation
 

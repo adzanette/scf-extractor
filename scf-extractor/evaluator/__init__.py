@@ -1,16 +1,13 @@
 
 from modules.Configuration import *
 from models.scf import Frame, ReferenceFrame, Verb, database
-import pylab
+from modules.Plotter import Plotter
     
 
 class Evaluator():
 
   def __init__ (self):
-    self.filter_value   = [] 
-    self.precision    = []  
-    self.recall     = []  
-    self.fmeasure     = []  
+    pass
 
   def verbHistogram(self, verbString, cutoff=10, output=None):
 
@@ -18,76 +15,56 @@ class Evaluator():
     frequencies = [frame.frequency for frame in verb.frames if frame.frequency > cutoff ]
     frequencies.sort(reverse=True)
 
-    pylab.bar(range(0,len(frequencies)), frequencies, facecolor='green', edgecolor="#cccccc")
-    pylab.title('Verb '+verbString+' Histogram')
-    pylab.xlabel("Frames")
-    pylab.ylabel('Frequency')
-    if output:
-      pylab.savefig(output)
-    else:
-      pylab.show()
+    plotter = Plotter()
+    plotter.drawBars(frequencies, facecolor='green', edgecolor="#cccccc")
+    plotter.title('Verb '+verbString+' Histogram')
+    plotter.labels("Frames", 'Frequency')
+    plotter.output(output)
 
-  def evaluate(self,filter_type, max_val, increment, frel, fabsf, fabsv):
+  def evaluate(self,filterType, maxValue, increment, frel, fabsf, fabsv):
     
-    filter_type = filter_type.lower()
+    values = []
+    precision = []
+    recall = []
+    fmeasure = []
+
+    filterType = filterType.lower()
 
     try:
-      i = eval(filter_type)
+      i = eval(filterType)
     except:
       print "Invalid filter type!"
       return -1   
 
-    while(eval(filter_type) <= max_val):
+    while(eval(filterType) <= maxValue):
 
       golden = ReferenceFrame.select().join(Verb).where(Verb.frequency >= fabsv).count()
 
       retrieved = Frame.select().where(Frame.relativeFrequency >= frel, Frame.verbFrequency >= fabsv, Frame.frequency >= fabsf).count()
-      query =Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.relativeFrequency >= frel, Frame.verbFrequency >= fabsv, Frame.frequency >= fabsf)
-      #print query.sql(database.get_compiler())
-      #break
-      intersect = query.count()
-
-      #sql = """ SELECT count(*) AS intersec
-      #      FROM """ + self.reference_table + """ AS r INNER JOIN
-      #        (SELECT id_frame, frame, id_verb
-      #         FROM frames
-      #         WHERE relative_frequency >= """+ str(frel) +"""
-      #          AND verb_frequency >= """+ str(fabsv) +""" 
-      #          AND frequency >= """+ str(fabsf) +""" ) AS f
-      #      ON f.id_verb = r.id_verb AND f.frame = r.frame"""
-      #self.cursor.execute(sql)
-      #row = self.cursor.fetchone()
-      #intersect = row[0]
-
+      
+      intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.relativeFrequency >= frel, Frame.verbFrequency >= fabsv, Frame.frequency >= fabsf).count()
+      
       p = float(intersect)/float(retrieved)
       r = float(intersect)/float(golden)
       f = (2*p*r)/(p+r) 
 
-      self.filter_value.append(eval(filter_type))
-      self.precision.append(p)
-      self.recall.append(r)
-      self.fmeasure.append(f)
+      values.append(eval(filterType))
+      precision.append(p)
+      recall.append(r)
+      fmeasure.append(f)
 
-      if filter_type == "frel":
+      if filterType == "frel":
         frel += increment
-      elif filter_type == "fabsf":
+      elif filterType == "fabsf":
         fabsf += increment
-      elif filter_type == "fabsv":
+      elif filterType == "fabsv":
         fabsv += increment
   
-
-  def plot(self, deflabel= 'Teste', output=None):
-
-    pylab.plot(self.filter_value, self.precision,'-', label='precision')
-    pylab.plot(self.filter_value, self.recall,'-', label='recall')
-    pylab.plot(self.filter_value, self.fmeasure,'-', label='fmeasure')
-
-    pylab.legend(loc=(0.03,0.8))
-    pylab.xlabel(deflabel)
-    pylab.ylabel('%')
-    pylab.show()
-    #savefig(out)
-
-  def get_filter_values(self):
-    return [self.filter_value, self.precision, self.recall, self.fmeasure]
+    plotter = Plotter()
+    plotter.drawLine(values, precision, 'precision')
+    plotter.drawLine(values, recall, 'recall')
+    plotter.drawLine(values, fmeasure, 'fmeasure')
+    plotter.title('SCFExtractor Evaluation')
+    plotter.labels("Cutoff", '%')
+    plotter.output(output)
   
