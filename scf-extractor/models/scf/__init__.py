@@ -39,6 +39,7 @@ class Verb(BaseModel):
   verb = CharField(max_length=100, unique=True)
   frequency = FloatField(default=1)
   alpha = FloatField(default=0)
+  filtered = BooleanField(default=False)
   
   class Meta:
     db_table = 'verbs'

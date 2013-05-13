@@ -9,6 +9,14 @@ import operator
 # @version 0.1
 class Builder:
 
+
+  ## Class constuctor
+  # @author Adriano Zanette
+  # @version 0.1
+  # @return Builder
+  def __init__(self):
+    self.order = config.builder.order
+
   ## Create database structure
   # @author Adriano Zanette
   # @version 0.1

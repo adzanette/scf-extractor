@@ -2,12 +2,17 @@
 from modules.Configuration import *
 from models.scf import Frame, ReferenceFrame, Verb, database
 from modules.Plotter import Plotter
-    
+from filter import Filter
 
 class Evaluator():
 
-  def __init__ (self):
-    pass
+  def __init__ (self):        
+    self.filter = config.evaluator.filter
+    self.value = config.evaluator.minValue
+    self.max = config.evaluator.maxValue
+    self.increment = config.evaluator.increment
+    self.operator = config.evaluator.operator
+    self.output = config.evaluator.output
 
   def verbHistogram(self, verbString, cutoff=10, output=None):
 
@@ -21,12 +26,47 @@ class Evaluator():
     plotter.labels("Frames", 'Frequency')
     plotter.output(output)
 
+  def evaluateByVerbList(self,verbList):
+    
+    self.values = []
+    self.precision = []
+    self.recall = []
+    self.fmeasure = []
+
+    filters = Filter()
+    filters.filterVerbs(verbList)
+
+    golden = ReferenceFrame.select().join(Verb).where(Verb.filtered == False).count()
+
+    while(self.value <= self.max):
+
+      filters.setComparator(self.filter, self.operator, self.value)
+      filters.filter()
+
+      retrieved = Frame.select().where(Frame.filtered == False).count()
+      
+      intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
+      
+      p = float(intersect)/float(retrieved)
+      r = float(intersect)/float(golden)
+      f = (2*p*r)/(p+r) 
+
+      self.values.append(self.value)
+      self.precision.append(p)
+      self.recall.append(r)
+      self.fmeasure.append(f)
+
+      self.value += self.increment
+      
+    self.plot()  
+
+
   def evaluate(self,filterType, maxValue, increment, frel, fabsf, fabsv):
     
-    values = []
-    precision = []
-    recall = []
-    fmeasure = []
+    self.values = []
+    self.precision = []
+    self.recall = []
+    self.fmeasure = []
 
     filterType = filterType.lower()
 
@@ -48,10 +88,10 @@ class Evaluator():
       r = float(intersect)/float(golden)
       f = (2*p*r)/(p+r) 
 
-      values.append(eval(filterType))
-      precision.append(p)
-      recall.append(r)
-      fmeasure.append(f)
+      self.values.append(eval(filterType))
+      self.precision.append(p)
+      self.recall.append(r)
+      self.fmeasure.append(f)
 
       if filterType == "frel":
         frel += increment
@@ -60,11 +100,17 @@ class Evaluator():
       elif filterType == "fabsv":
         fabsv += increment
   
+    self.plot()
+  
+
+  def plot(self):
     plotter = Plotter()
-    plotter.drawLine(values, precision, 'precision')
-    plotter.drawLine(values, recall, 'recall')
-    plotter.drawLine(values, fmeasure, 'fmeasure')
+    plotter.drawLine(self.values, self.precision, 'precision')
+    plotter.drawLine(self.values, self.recall, 'recall')
+    plotter.drawLine(self.values, self.fmeasure, 'fmeasure')
     plotter.title('SCFExtractor Evaluation')
     plotter.labels("Cutoff", '%')
-    plotter.output(output)
-  
+    if self.output:
+      plotter.output(output)
+    else:
+      plotter.show()

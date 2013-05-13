@@ -57,7 +57,7 @@ class FileUtils(object):
   # @param extensions List Accepted extensions
   # @return Boolean 
   @staticmethod
-  def getFiles(self, path, extensions = []):
+  def getFiles(path, extensions = []):
     files = []
     if FileUtils.isFile(path):
       files = [path]

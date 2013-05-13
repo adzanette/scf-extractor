@@ -28,6 +28,12 @@ class Filter:
         'value' : self.values[index]
       }
 
+  def setComparator(self, column, operator, value):
+    self.comparators[column] = {
+      'operator' : operator,
+      'value' : value
+    }
+
   ## Filters scfs
   # @author Adriano Zanette
   # @version 1.0
@@ -42,6 +48,13 @@ class Filter:
           frame.filtered = 1
           frame.save()
           break
+
+  ## Filters verbs
+  # @author Adriano Zanette
+  # @version 1.0
+  # @return Boolean 
+  def filterVerbs(self, verbList):
+    verbs = Verb.update(filtered = True).where(Verb.verb <<  verbList).execute()
   
   ## get an attribute from an object
   # @author Adriano Zanette
@@ -93,6 +106,7 @@ class Filter:
   # @author Adriano Zanette
   # @version 1.0
   def resetFilters(self):
+    Verb.update(filtered=False).execute()
     Frame.update(filtered = False).execute()
     self.query = ''
     self.where = ''

@@ -37,10 +37,10 @@ class ExtractSCF:
       frames = extractor.extract(sentence)
       builder.buildFrames(sentence, frames)
 
-    statistics = Statistics()
-    statistics.run()
+    #statistics = Statistics()
+    #statistics.run()
 
-    scfFilter = Filter()
-    scfFilter.filter()
+    #scfFilter = Filter()
+    #scfFilter.filter()
 
 

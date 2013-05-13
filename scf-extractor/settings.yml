@@ -1,30 +1,30 @@
 command: ExtractSCF # [ExtractSCF]
 
 reader:
-  module: XmlFile # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
+  module: ExampleDatabaseCorpus # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
   database:
     engine: mysql 
     host: localhost
     user: root
     password: zanette
-    dbName: childes
+    dbName: scf-cardiologia
   databaseReader:
     pageSize: 100 
   fileReader:
-    path: /home/adriano/src/fndata-1.5/lu/
+    path: /home/adriano/Desktop/A06abr01.txt
 
 extractor:
-  module: Framenet # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
+  module: SemanticFrames # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
 
 builder:
-  module: ReferenceFrames # [SCF, SemanticFramesDatabase, ReferenceFrames, NILCLexicon]
+  module: SemanticFramesDatabase # [SCF, SemanticFramesDatabase, ReferenceFrames, NILCLexicon]
   order: position # [position, relevance]
   database:
     engine: mysql
     host: localhost
     user: root
     password: zanette
-    dbName: scf-teste
+    dbName: scf-cardiologia
     scfReferenceTable: framenet_frames
   ignoreClasses: ['AUX', 'SUBJ']
   extractArguments: true
@@ -32,13 +32,22 @@ builder:
   clearTables: true
 
 statistics:
-  run: true
+  run: false
   modules: ['frequency', 'power-law', 'loglikelihood', 't-score']
 
 filter: 
-  columns: ['verbFrequency', 'frequency', 'relativeFrequency', 'verb.alpha']
-  values: [0, 0, 0, 0.5]
-  operators: ['<', '<', '<', '<']
+  #columns: ['verbFrequency', 'frequency', 'relativeFrequency', 'verb.alpha']
+  #values: [0, 0, 0, 0.5]
+  #operators: ['<', '<', '<', '<']
+  columns: ['relativeFrequency']
+  values: [0.03]
+  operators: ['<']
 
 evaluator:
   scfReferenceTable: framenet_frames
+  filter: relativeFrequency
+  minValue: 0
+  maxValue: 1
+  increment: 0.1
+  operator: '<' 
+  output: ''
