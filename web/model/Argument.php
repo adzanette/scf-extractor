@@ -10,14 +10,13 @@
  */
 namespace MVC\Model;
 
-class Verb extends \MVC\Modules\ORM{
-  public static $table = 'verbs';
-  public static $foreign_key = 'id_verb';
-  public static $key = 'id_verb';
+class Argument extends \MVC\Modules\ORM{
+  public static $table = 'arguments';
+  public static $key = 'id_argument';
+  public static $foreign_key = 'id_argument';
 
-   public static $has = array(
-    'frames'  => '\MVC\Model\Frame',
-    'semanticFrames' => '\MVC\Model\SemanticFrame'
+  public static $belongs_to = array(
+    'example' => '\MVC\Model\Example',
   );
-
+  
 }

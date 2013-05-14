@@ -10,7 +10,7 @@
  * @license   http://micromvc.com/license
  ********************************** 80 Columns *********************************
  */
-namespace MVC\Modules;
+namespace MVC\Library;
 
 class APC{
 

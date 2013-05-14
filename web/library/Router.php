@@ -1,6 +1,6 @@
 <?php
 
-namespace MVC\Modules;
+namespace MVC\Library;
 
 class Router{
 

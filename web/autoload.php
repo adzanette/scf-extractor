@@ -5,7 +5,7 @@ require_once __DIR__."/modules/Autoloader.php";
 
 $autoload = array();
 
-$autoload[] = __DIR__.'/modules';
+$autoload[] = __DIR__.'/library';
 $autoload[] = __DIR__.'/controller';
 $autoload[] = __DIR__.'/conf';
 $autoload[] = __DIR__.'/model';

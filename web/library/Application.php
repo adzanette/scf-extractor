@@ -1,6 +1,6 @@
 <?php
 
-namespace MVC\Modules;
+namespace MVC\Library;
 
 class Application{
   
@@ -14,9 +14,8 @@ class Application{
   }
 
   private function loadServices(){
-    $configurationFolder = $this->conf->get('configuration-folder');
-    include $configurationFolder.'routes.php';
     
+    include __DIR__.'/conf/routes.php';
     $this->router = new Router($routes, $this->conf->get('router-ignore'));
     
     $template = new Template($this->conf->get('url-media'), $this->conf->get('url-media-js'), $this->conf->get('url-media-css'), $this->conf->get('url-media-img'), $this->conf->get('version'), $this->conf->get('title'), $this->conf->get('locale'));
@@ -31,12 +30,22 @@ class Application{
     };
 
     $this->context->session = function(){
-      return new Session($this->configuration->get('session-name'));
+      return new Session($this->conf->get('session-name'));
     };
 
     $this->context->template = function(){
       return $template;
     };
+
+    $db = new Database($this->conf->get('database'));
+    if(empty(ORM::$db)){
+      ORM::$db = $db;
+    }
+
+    $this->context->database = function(){
+      return $db;  
+    }
+
   }
 
   public function handleRequest(){
