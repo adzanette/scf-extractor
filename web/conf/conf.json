@@ -1,0 +1,47 @@
+{
+  "name": "SCF-viewer",
+  "session-name": "session",
+  "title": "Grupo Siga",
+  "default-locale": "en",
+  "version": "1.0",
+  "http-host":  "http://localhost/scf-viewer/",
+  "router-ignore": "/scf-viewer/index.php/",
+  "root-path": "/home/adriano/src/git/scf-extractor/web/", 
+  "libraries-folder": {
+    "mergebefore": "root-path",
+    "value": "modules/"
+  },
+  "configuration-folder": {
+    "mergebefore": "root-path",
+    "value": "conf/"
+  },
+  "controller-folder": {
+    "mergebefore": "root-path",
+    "value": "src/manager/"
+  },
+  
+  "templates-folder": {
+    "mergebefore": "root-path",
+    "value": "src/html/template/"
+  }, 
+  "web-folder": {
+    "mergebefore": "root-path",
+    "value": "src/html/"
+  },
+  "url-media": {
+    "mergebefore": "http-host",
+    "value": "src/html/shared/"
+  },
+  "url-media-css": {
+    "mergebefore": "url-media",
+    "value": "src/html/shared/css/"
+  },
+  "url-media-js": {
+    "mergebefore": "url-media",
+    "value": "src/html/shared/js/"
+  },
+  "url-media-img": {
+    "mergebefore": "url-media",
+    "value": "src/html/shared/img/"
+  }
+}

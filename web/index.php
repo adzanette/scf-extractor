@@ -1,34 +1,26 @@
 <?php
-include "inc/functions.php";
+namespace MVC;
+require_once __DIR__.'/autoload.php';
 
-$corpora = array();
-$corpora['cardiologia'] = 'Cardiologia';
-$corpora['diario-gaucho'] = 'Di&aacute;rio Ga&uacute;cho';
-$corpora['lacio'] = 'Lacio';
-$corpora['teste'] = 'CardTeste';
+$settings = new Modules\Settings(__DIR__."/conf/conf.json");
+
+$config = array(
+  'dns' => "mysql:host=127.0.0.1;port=3306;dbname=scf-cardiologia",
+  'username' => 'root',
+  'password' => 'zanette',
+  'params' => array()
+);
+
+$db = new Modules\Database($config);
+
+if(empty(Modules\ORM::$db)){
+  Modules\ORM::$db = $db;
+}
+
+$verbs = Model\Verb::fetch();
+foreach($verbs as $verb){
+  echo $verb->verb.'<br>';
+}
+$app = new Modules\Application($settings);
+$app->handleRequest();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Selecione um Corpus</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <link href="css/base.css" rel="stylesheet" type="text/css">
-  <script src="js/bootstrap.min.js"></script>
-</head>
-<body>
-  <div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span12 well text-center">
-      <h1>Selecione um Corpus</h1>
-      <form method="get" action="verbos.php">
-        <div class="input-append">
-          <?php select('corpus', $corpora, 'cardiologia');?>
-          <button class="btn btn-inverse" type="submit">Selecionar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-</body>
-</html>
-
