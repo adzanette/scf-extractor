@@ -26,6 +26,21 @@ class Router{
     return $route;
   }
 
+  public function generate($routeName, $params = array(), $absolute = false){
+    if (array_key_exists($routeName, $this->routes)){
+      $route = $this->routes[$routeName];
+      $url = $route['pattern'];
+
+      foreach ($params as $key => $value) {
+        $url = str_replace('{'.$key.'}',$value, $url);
+      }
+
+      return $url;
+    }else{
+      return null;
+    }   
+  }
+
 
   /**
    * Parse the given URL path and return the correct controller and parameters.

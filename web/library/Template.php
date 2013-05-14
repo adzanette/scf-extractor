@@ -82,9 +82,14 @@ class Template {
   protected $pageDomainMessages;
   
   /**
-   * @var  Symfony\Component\Translation\Translator message translator.
+   * @var  Translator message translator.
   */
   protected $translator;
+
+  /**
+   * @var  Router message translator.
+  */
+  protected $router;
   
   /**
    * @var  string Path to the Javascript, CSS and images.
@@ -718,7 +723,12 @@ class Template {
     
     return  $this->translator->translate($messageId, $params, $domain, $this->getLocale());
   }
-    
+   
+
+  public function setRouter($router){
+    $this->router = $router;
+  }
+
   /**
   * Generates a URL.
   *

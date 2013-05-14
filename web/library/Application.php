@@ -19,6 +19,8 @@ class Application{
     $this->router = new Router($routes, $this->conf->get('router-ignore'));
     
     $template = new Template($this->conf->get('url-media'), $this->conf->get('url-media-js'), $this->conf->get('url-media-css'), $this->conf->get('url-media-img'), $this->conf->get('version'), $this->conf->get('title'), $this->conf->get('locale'));
+    //setRouter
+    //setTranlator
 
     $this->context = new Service();
     $this->context->configuration = function(){
