@@ -18,17 +18,26 @@ class Application{
   private function loadServices(){
     
     $this->router = new Router($this->routes, $this->conf->get('router/ignore'));
+    
     $translator = new Translator($this->conf->get('translator/folder'), $this->conf->get('translator/domain'), $this->conf->get('default-locale'));
-    $template = new Template($this->conf->get('url-media'), $this->conf->get('url-media-js'), $this->conf->get('url-media-css'), $this->conf->get('url-media-img'), $this->conf->get('version'), $this->conf->get('title'), $this->conf->get('default-locale'));
+    
+    $templateConfig = $this->conf->get('template');
+    $template = new Template($templateConfig);
     $template->setTranslator($translator);
     $template->setRouter($this->router);
 
+    $database = new Database($this->conf->get('database'));
+    if(empty(ORM::$database)){
+      ORM::$db = $database;
+    }
+
     $services = array(
-      'settings' => $this->conf,
-      'router' => $this->router,
-      'session' => new Session(),
-      'template' => $template,
-      'request' => Request::createFromGlobals()
+       'settings' => $this->conf
+      ,'router' => $this->router
+      ,'session' => new Session()
+      ,'template' => $template
+      ,'request' => Request::createFromGlobals()
+      ,'database' => $database
     );
 
     $this->context = new Service($services);
@@ -49,16 +58,16 @@ class Application{
       throw new \Exception('Invalid Request Method.');
     }
 
-    $controller->initialize();
+    $controller->initialize($params);
 
     if($params){
-      list($view, $params) = call_user_func_array(array($controller, $methodName), $params);
+      list($view, $viewParams) = call_user_func_array(array($controller, $methodName), $params);
     }else{
-      list($view, $params) = $controller->$methodName();
+      list($view, $viewParams) = $controller->$methodName();
     }
 
     $template = $this->context->template;
-    extract((array) $params);
+    extract((array) $viewParams);
     ob_start();
     require __DIR__.'/../resources/view/'.$view;
     $page = ob_get_clean();

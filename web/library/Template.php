@@ -90,6 +90,8 @@ class Template {
    * @var  Router message translator.
   */
   protected $router;
+
+  protected $paginator;
   
   /**
    * @var  string Path to the Javascript, CSS and images.
@@ -146,17 +148,19 @@ class Template {
   */  
   protected $staticFilesVersion;
   
-  public function __construct($mediaUrl, $jsUrl, $cssUrl, $imgUrl, $version, $title, $locale){
+  public function __construct($conf){
     
-    $this->mediaUrl = $mediaUrl;
-    $this->jsUrl = $jsUrl;
-    $this->cssUrl = $cssUrl;
-    $this->imgUrl = $imgUrl;
+    $this->mediaUrl = $conf['url-media'];
+    $this->jsUrl = $conf['url-media-js'];
+    $this->cssUrl = $conf['url-media-css'];
+    $this->imgUrl = $conf['url-media-img'];
     
-    $this->staticFilesVersion = $version;
+    $this->staticFilesVersion = $conf['version'];;
     
-    $this->defaultTitle = $title;
-    $this->defaultLocale = $locale;
+    $this->defaultTitle = $conf['title'];
+    $this->defaultLocale = $conf['locale'];
+
+    $this->setPaginator($conf['page-size'], $conf['page-window']);
     
     $this->addMetaTagHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1');
     $this->addCss('bootstrap.min.css');
@@ -187,21 +191,11 @@ class Template {
     <script src="<?php echo $this->jsUrl; ?>modernizr.min.js<?php echo '?'.$this->staticFilesVersion; ?>"></script>
   </head>
   <body class="<?php echo $this->getLocale() . ' ' . $this->getContext(); ?>">
-    <div class="content">
-      <div class="wrapper">
-        <?php 
-        echo $this->getHeader();
-        ?>
-        <div class="main">
-          <?php 
-          echo $this->getContent();
-          ?>
-        </div>
-      </div>
-      <?php 
+    <?php 
+      echo $this->getHeader();
+      echo $this->getContent();
       echo $this->getFooter();
-      ?>
-    </div>
+    ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script>window.jQuery || document.write("<script src='<?php echo $this->jsUrl; ?>jquery.js'>\x3C/script>")</script>
     <?php
@@ -612,6 +606,17 @@ class Template {
   public function setTranslator($translator){
   
     $this->translator = $translator;
+  }
+
+  public function setPaginator($pageSize, $pageWindow){
+  
+    $this->paginator = new Paginator($pageSize, $pageWindow);
+  }
+
+  public function paginate($page, $total, $link, $params){
+    $url = $this->getLink($link, $params);
+    $this->paginator->initialize($page, $total, $url);
+    print $this->paginator;
   }
   
   /**

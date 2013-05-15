@@ -1,6 +1,10 @@
 <?php
 $template->setTitle('select.corpus');
+
+$template->paginate(1, $count, 'verb-list', array('corpus' => 'scf-teste'));
+
 ?>
+ashdjashduashudhuasuasduhasduhasudhusadhuasdhuas
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span12 well text-center">

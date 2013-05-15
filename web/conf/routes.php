@@ -4,19 +4,19 @@ $routes = array();
 $routes[''] = array(
   'pattern' => '',
   'controller' => 'SiteController',
-  'method' => 'test'
+  'method' => 'index'
 );
 
 $routes['404'] = array(
   'pattern' => '404',
-  'controller' => '\Controller\Page404',
-  'method' => 'run'
+  'controller' => 'SiteController',
+  'method' => 'show404'
 );
 
-$routes['school'] = array(
-  'pattern' => 'school',
-  'controller' => '\Controller\School',
-  'method' => 'run'
+$routes['verb-list'] = array(
+  'pattern' => 'verb-list/{corpus}/{page}',
+  'controller' => 'SiteController',
+  'method' => 'showVerbList'
 );
 
 $routes['example'] = array(
@@ -26,7 +26,6 @@ $routes['example'] = array(
 );
 
 $routes['articles'] = array(
-  //'pattern' => 'articles/(?P<year>\d{4})',
   'pattern' => 'articles/{year}',
   'controller' => '\Controller\Example\Param',
   'method' => 'run',

@@ -6,7 +6,6 @@ abstract class Controller{
   // URL path segment matched to route here
   public $context;
 
-
   /**
    * Set error handling and start session
    */
@@ -20,12 +19,7 @@ abstract class Controller{
    *
    * @param string $method name that will be run
    */
-  public function initialize($method, $params) {}
-
-  /**
-   * Called after the controller method is run to send the response
-   */
-  public function send() {}
+  public function initialize($params) {}
 
 }
 

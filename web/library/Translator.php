@@ -27,8 +27,6 @@ class Translator{
 
     if (!array_key_exists($domain, $this->translations[$locale]) && $this->fileHandler->exists($file)){
       $this->translations[$locale][$domain] = json_decode(file_get_contents($file), true);
-    }else{
-      $this->translations[$locale][$domain] = array();
     }
   }
 
@@ -36,7 +34,7 @@ class Translator{
     if (is_null($locale)) $locale = $this->defaultLocale;
     if (is_null($domain)) $domain = $this->globalDomain;
     $this->loadTranslations($domain, $locale);
-
+    
     if (!array_key_exists($messageId, $this->translations[$locale][$domain])){
       return $messageId; 
     }else{

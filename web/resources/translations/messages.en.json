@@ -1,0 +1,12 @@
+{
+  "site.title": "SCF Viewer"
+
+  ,"select.corpus": "Selecionar Corpus"
+  ,"select.a.corpus": "Selecione um corpus"
+  ,"default.select": "Selecione"
+  ,"select": "Selecionar"
+  ,"database.cardiologia": "Cardiologia"
+  ,"database.diario": "Diário Gaúcho"
+  ,"database.lacio": "Lácio"
+  ,"database.teste": "Teste"
+}

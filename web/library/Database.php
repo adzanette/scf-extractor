@@ -35,8 +35,8 @@ class Database{
    * @param array $config
    */
   public function __construct(array $config){
-    // Auto-detect database type from DNS
-    $this->type = current(explode(':', $config['dns'], 2));
+    // Auto-detect database type from DSN
+    $this->type = current(explode(':', $config['dsn'], 2));
 
     // Save config for connection
     $this->config = $config;
@@ -56,7 +56,7 @@ class Database{
     $this->config = NULL;
 
     // Connect to PDO
-    $this->pdo = new \PDO($dns, $username, $password, $params);
+    $this->pdo = new \PDO($dsn.'dbname='.$dbname, $username, $password, $params);
 
     // PDO should throw exceptions
     $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

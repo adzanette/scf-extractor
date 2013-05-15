@@ -1,38 +1,41 @@
 <?php
 namespace MVC\Controller;
 
+use MVC\Library\Database;
+use MVC\Library\ORM;
+use MVC\Model\Verb;
+
 class SiteController extends \MVC\Library\Controller{
   
-  // URL path segment matched to route here
-  public $context;
-
-
-  /**
-   * Set error handling and start session
-   */
-  public function __construct($context){
-    $this->context = $context;
+  public function initialize($params) {
+    if (array_key_exists('corpus', $params)){
+      $databaseConfig = $this->context->settings->get('database');
+      $databaseConfig['dbname'] = $params['corpus'];
+      $database = new Database($databaseConfig);
+      ORM::$db = $database;
+    }
   }
 
+  public function index(){
+    $settings = $this->context->settings;
 
-  /**
-   * Called before the controller method is run
-   *
-   * @param string $method name that will be run
-   */
-  public function initialize($method, $params) {
+    $databases = $settings->get('databases');
 
+    $return = array();
+    $return['databases'] = $databases;
+    return array('index.html.php', $return);
   }
 
-  public function test(){
-    return array('index.html.php', array('teste' => 'blah'));
-  }
+  public function showVerbList($corpus, $page){
+    
+    $verbs = Verb::fetch(array('frequency > 1'));
+    $count = Verb::count(array('frequency > 1'));
 
-  /**
-   * Called after the controller method is run to send the response
-   */
-  public function send() {}
+
+    $return = array();
+    $return['verbs'] = $verbs; 
+    $return['count'] = $count; 
+    return array('verb-list.html.php', $return);
+  }
 
 }
-
-// End

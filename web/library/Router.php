@@ -35,7 +35,7 @@ class Router{
         $url = str_replace('{'.$key.'}',$value, $url);
       }
 
-      return $url;
+      return $this->ignore.$url;
     }else{
       return null;
     }   
@@ -66,7 +66,6 @@ class Router{
       $regex = str_replace('/','\/',$pattern);
       if (preg_match("/$regex/i", $path, $matches) === 1) {
         $complete = array_shift($matches);
-
         foreach ($matches as $key => $value){
           if (is_numeric($key)){
             unset($matches[$key]);
