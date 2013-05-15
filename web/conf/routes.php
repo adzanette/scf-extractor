@@ -1,7 +1,7 @@
 <?php
 $routes = array();
 
-$routes[''] = array(
+$routes['index'] = array(
   'pattern' => '',
   'controller' => 'SiteController',
   'method' => 'index'
@@ -19,22 +19,29 @@ $routes['verb-list'] = array(
   'method' => 'showVerbList'
 );
 
-$routes['example'] = array(
-  'pattern' => 'example/path',
-  'controller' => '\Controller\Index',
-  'method' => 'run'
+$routes['frame-list'] = array(
+  'pattern' => 'frame-list/{corpus}/{verbId}/{verbPage}/{page}',
+  'controller' => 'SiteController',
+  'method' => 'showFrameList'
 );
 
-$routes['articles'] = array(
-  'pattern' => 'articles/{year}',
-  'controller' => '\Controller\Example\Param',
-  'method' => 'run',
-  'restrictions' => array('year' => '\d{4}')
+$routes['example-list'] = array(
+  'pattern' => 'example-list/{corpus}/{verbId}/{verbPage}/{frameId}/{$framePage}/{page}',
+  'controller' => 'SiteController',
+  'method' => 'showExampleList'
 );
 
-$routes['blog'] = array(
-  'pattern' => 'blog/{year}/{slug}',
-  'controller' => '\Controller\Example\Param',
-  'method' => 'run'
+$routes['semantic-frames-list'] = array(
+  'pattern' => 'semantic-frames-list/{corpus}/{page}',
+  'controller' => 'SiteController',
+  'method' => 'showSemanticFramesList'
 );
+
+$routes['sematic-frames'] = array(
+  'pattern' => 'frame-list/{corpus}/{verbId}/{verbPage}/{page}',
+  'controller' => 'SiteController',
+  'method' => 'showFrameList'
+);
+
+
 ?>

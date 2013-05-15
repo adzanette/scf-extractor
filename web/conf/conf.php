@@ -41,7 +41,6 @@ $conf['database'] = array(
     'params' => array()
 );
 
-
 $conf['databases'] = array(
     'scf-cardiologia' => 'database.cardiologia',
     'scf-diario-gaucho' => 'database.diario',

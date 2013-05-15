@@ -1,30 +1,52 @@
 <?php
-$template->setTitle('select.corpus');
-
-$template->paginate(1, $count, 'verb-list', array('corpus' => 'scf-teste'));
-
+$template->setTitle('verb.list');
+$pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => $corpus));
 ?>
-ashdjashduashudhuasuasduhasduhasudhusadhuasdhuas
 <div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span12 well text-center">
-      <h1><?php echo $template->translate('select.a.corpus')?></h1>
-      <form method="get" action="verbos.php">
-        <div class="input-append">
-          <select id="corpus" name="corpus">
-            <option value=""><?php echo $template->translate('default.select')?></option>
-            <?php 
-              foreach ($databases as $database => $name){
-              ?>
-                <option value="<?php echo $database; ?>"><?php echo $template->translate($name); ?></option>
-              <?php
-              }
-            ?>
-          </select>
-          <button class="btn btn-inverse" type="submit"><?php echo $template->translate('select')?></button>
-        </div>
-      </form>
+    <div class="row-fluid">
+      <div class="span12 well text-center">
+        <h1>Listagem de verbos</h1>
+        <a href="<?php echo $template->getLink('semantic-frames-list', array('corpus' => $corpus))?>" target="_blank" class="btn btn-inverse">Ver Lista de Frames Sem&acirc;nticos</a>
+        <a class="btn btn-warning" title="Trocar de Corpus" href="<?php echo $template->getLink('index')?>">Trocar de corpus</a>
+        <?php echo $pagination;?>
+      </div>
+    </div>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr class="header">
+          <th>Verbo</th>
+          <th>Frequ&ecirc;ncia</th>
+          <th>Frames</th>
+          <th>Frames Sem&acirc;nticos</th>
+        </tr>
+      </thead>
+    <?php
+    foreach($verbs as $verb){
+      ?>
+      <tr>
+        <td><?php echo $verb->verb; ?></td>
+        <td><?php echo $verb->frequency; ?></td>
+        <td>
+          <a class="btn btn-success" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'verbId' => $verb->id_verb, 'verbPage' => $page, 'page' => 1))?>">
+            <span class="icon-play icon-white">
+          </a>
+        </td>
+        <td>
+          <a class="btn btn-success" href="<?php echo $template->getLink('semantic-frames', array('corpus' => $corpus, 'verbId' => $verb->id_verb, 'verbPage' => $page, 'page' => 1))?>">
+            <span class="icon-play icon-white">
+          </a>
+        </td>
+      </tr>
+    <?php
+      $i++;
+    }
+    ?>
+    </table>
+    <div class="row-fluid">
+      <div class="span12 well text-center">
+        <?php echo $pagination;?>
+        <a class="btn btn-warning" title="Trocar de Corpus" href="<?php echo $template->getLink('index')?>">Trocar de corpus</a>
+      </div>
     </div>
   </div>
-</div>
-
+?>
