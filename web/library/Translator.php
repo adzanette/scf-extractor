@@ -9,6 +9,8 @@ class Translator{
   private $fileHandler;
   private $translations;
 
+  //TODO replace tags
+
   public function __construct($folder, $globalDomain, $locale){
     $this->folder = $folder;
     $this->globalDomain = $globalDomain;

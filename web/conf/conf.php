@@ -1,11 +1,11 @@
 <?php
 $conf = array();
 
-$conf['name'] = "SCF-viewer";
-$conf['title'] = "site.title";
-$conf['version'] = "1.0";
+$conf['name'] = 'SCF-viewer';
+$conf['title'] = 'site.title';
+$conf['version'] = '1.0';
 
-$conf['http-host'] = "http://localhost/scf-viewer/";
+$conf['http-host'] = 'http://localhost/scf-viewer/';
 $conf['url-media'] = $conf['http-host'].'resources/web/';
 
 $conf['template'] = array(
@@ -16,25 +16,26 @@ $conf['template'] = array(
   'url-media-css' => $conf['url-media'].'css/',
   'url-media-js' => $conf['url-media'].'js/',
   'url-media-img' => $conf['url-media'].'img/',
-  "page-size" => 50,
+  'page-size' => 50,
   'page-window' => 12
 );
 
 $conf['session'] = array(
-  "name" => "session"
+  'name' => 'session'
 );
 
 $conf['router'] = array(
-    'ignore' => "/scf-viewer/index.php/"
+  'domain' => 'http://127.0.0.1',
+  'ignore' => '/scf-viewer/index.php/'
 );
 
 $conf['translator'] = array(
-    'domain' => "messages",
+    'domain' => 'messages',
     'folder' => 'resources/translations/'
 );
 
 $conf['database'] = array(
-    'dsn' => "mysql:host=127.0.0.1;port=3306;",
+    'dsn' => 'mysql:host=127.0.0.1;port=3306;',
     'dbname' => 'scf-teste',
     'username' => 'root',
     'password' => 'zanette',

@@ -17,7 +17,7 @@ class Application{
 
   private function loadServices(){
     
-    $this->router = new Router($this->routes, $this->conf->get('router/ignore'));
+    $this->router = new Router($this->routes, $this->conf->get('router/ignore'), $this->conf->get('router/domain'));
     
     $translator = new Translator($this->conf->get('translator/folder'), $this->conf->get('translator/domain'), $this->conf->get('default-locale'));
     
@@ -33,53 +33,42 @@ class Application{
 
     $services = array(
        'settings' => $this->conf
-      ,'router' => $this->router
-      ,'session' => new Session()
-      ,'template' => $template
       ,'request' => Request::createFromGlobals()
+      ,'session' => new Session()
+      ,'router' => $this->router
       ,'database' => $database
+      ,'template' => $template
     );
 
     $this->context = new Service($services);
   }
 
   public function handleRequest(){  
-    $server = $this->context->request->server;
-    $path = $server->get('REQUEST_URI');
+    $path = $this->context->request->server->get('request-uri');
    
     list($params, $route, $execute) = $this->router->route($path);
+    extract($execute);
 
-    $controllerName = '\\MVC\\Controller\\'.$execute['controller'];
-    $methodName = $execute['method'];
+    $controller = '\\MVC\\Controller\\'.$controller;
+    $control = new $controller($this->context);
 
-    $controller = new $controllerName($this->context);
-
-    if(!method_exists($controller, $methodName)){
+    if(!method_exists($control, $method)) 
       throw new \Exception('Invalid Request Method.');
-    }
 
-    $controller->initialize($params);
-
+    $control->initialize($params);
     if($params){
-      list($view, $viewParams) = call_user_func_array(array($controller, $methodName), $params);
+      $response = call_user_func_array(array($control, $method), $params);
     }else{
-      list($view, $viewParams) = $controller->$methodName();
+      $response = $control->$method();
     }
 
-    $template = $this->context->template;
-    extract((array) $viewParams);
-    ob_start();
-    require __DIR__.'/../resources/view/'.$view;
-    $page = ob_get_clean();
-    
-    $template->setContent($page);
-    $html = $template->getPage();
+    if (!$response instanceof Response) 
+      throw new \Exception('Controller must return a Response Object');
 
-    $response = new Response($html);
-    $response->send();
-    
-    return true;
+    return $response->send();
   }
+
+  //implement handle
 
 }
 
