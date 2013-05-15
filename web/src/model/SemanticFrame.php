@@ -10,13 +10,17 @@
  */
 namespace MVC\Model;
 
-class Sentence extends \MVC\Modules\ORM{
-  public static $table = 'sentences';
-  public static $key = 'id_sentence';
-  public static $foreign_key = 'id_sentence';
+class SemanticFrame extends \MVC\Library\ORM{
+  public static $table = 'semantic_frames';
+  public static $key = 'id_frame';
+  public static $foreign_key = 'id_semantic_frame';
+
+  public static $belongs_to = array(
+    'verb' => '\MVC\Model\Verb',
+  );
 
   public static $has = array(
-    'examples' => '\MVC\Model\Example',
+    'examples' => '\MVC\Model\Example'
   );
-  
+
 }

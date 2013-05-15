@@ -4,15 +4,15 @@ namespace MVC\Library;
 
 class Request{
   
-  protected $post;
-  protected $query;
-  protected $server;
-  protected $method;
-  protected $headers;
-  protected $session;
+  public $post;
+  public $query;
+  public $server;
+  public $method;
+  public $headers;
+  public $session;
   
   public function __construct(array $query = array(), array $post = array(), array $server = array()){
-    $this->initialize($query, $request, $server);
+    $this->initialize($query, $post, $server);
   }
 
   public function initialize(array $query = array(), array $post = array(), array $server = array()){
@@ -45,9 +45,9 @@ class Request{
   }
 
   public function getClientIP(){
-    if(!empty($this->server->get('HTTP_CLIENT_IP'))){
+    if(!$this->server->has('HTTP_CLIENT_IP')){
       $ip = $this->server->get('HTTP_CLIENT_IP');
-    }elseif (!empty($this->server->get('HTTP_X_FORWARDED_FOR']))){
+    }elseif (!$this->server->has('HTTP_X_FORWARDED_FOR')){
       $ip = $this->server->get('HTTP_X_FORWARDED_FOR');
     }else{
       $ip = $this->server->get('REMOTE_ADDR');
@@ -81,9 +81,9 @@ class Request{
       }
     }
 
-    if (isset($this->server['PHP_AUTH_USER'])) {
-      $headers['PHP_AUTH_USER'] = $this->server['PHP_AUTH_USER'];
-      $headers['PHP_AUTH_PW'] = isset($this->server['PHP_AUTH_PW']) ? $this->server['PHP_AUTH_PW'] : '';
+    if (!$this->server->has('PHP_AUTH_USER')) {
+      $headers['PHP_AUTH_USER'] = $this->server->get('PHP_AUTH_USER');
+      $headers['PHP_AUTH_PW'] = !$this->server->has('PHP_AUTH_PW') ? $this->server->get('PHP_AUTH_PW') : '';
     }else{
       $authorizationHeader = null;
       if (isset($this->server['HTTP_AUTHORIZATION'])) {

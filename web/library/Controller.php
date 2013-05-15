@@ -1,7 +1,7 @@
 <?php
-namespace MVC\Controller;
+namespace MVC\Library;
 
-class SiteController{
+abstract class Controller{
   
   // URL path segment matched to route here
   public $context;
@@ -20,13 +20,7 @@ class SiteController{
    *
    * @param string $method name that will be run
    */
-  public function initialize($method, $params) {
-
-  }
-
-  public function test(){
-    echo 'hahahah';
-  }
+  public function initialize($method, $params) {}
 
   /**
    * Called after the controller method is run to send the response

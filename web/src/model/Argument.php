@@ -10,7 +10,7 @@
  */
 namespace MVC\Model;
 
-class Argument extends \MVC\Modules\ORM{
+class Argument extends \MVC\Library\ORM{
   public static $table = 'arguments';
   public static $key = 'id_argument';
   public static $foreign_key = 'id_argument';

@@ -1,17 +1,17 @@
 <?php
 namespace MVC;
 
-require_once __DIR__."/modules/Autoloader.php";
+require_once __DIR__."/library/Autoloader.php";
 
 $autoload = array();
 
 $autoload[] = __DIR__.'/library';
-$autoload[] = __DIR__.'/controller';
 $autoload[] = __DIR__.'/conf';
-$autoload[] = __DIR__.'/model';
-//$autoload[] = __DIR__.'/modules';
+$autoload[] = __DIR__.'/src/controller';
+$autoload[] = __DIR__.'/src/model';
+$autoload[] = __DIR__.'/src/service';
 
-new Modules\Autoloader($autoload);
+new Library\Autoloader($autoload);
 
 
 ?>

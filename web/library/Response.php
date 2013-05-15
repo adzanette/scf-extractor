@@ -98,7 +98,8 @@ class Response{
     if (!$this->headers->has('Date')) {
       $this->setDate(new \DateTime(null, new \DateTimeZone('UTC')));
     }
-    if (!isset($this->headers->has('cache-control'))){
+
+    if (!$this->headers->has('cache-control')){
       $this->headers->set('Cache-Control', '');
     }
   }

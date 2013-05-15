@@ -147,8 +147,7 @@ class Template {
   protected $staticFilesVersion;
   
   public function __construct($mediaUrl, $jsUrl, $cssUrl, $imgUrl, $version, $title, $locale){
-    global $appset;
-
+    
     $this->mediaUrl = $mediaUrl;
     $this->jsUrl = $jsUrl;
     $this->cssUrl = $cssUrl;
@@ -160,8 +159,8 @@ class Template {
     $this->defaultLocale = $locale;
     
     $this->addMetaTagHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1');
-    //$this->addCss('jquery-ui-1.8.16.custom.css');
-    //$this->addJs('feedback.js');
+    $this->addCss('bootstrap.min.css');
+    $this->addJs('bootstrap.min.js');
   }
   
   /**
@@ -185,7 +184,7 @@ class Template {
     echo $this->getFavicon();
     echo $this->getCss();
     ?>
-    <script src="<?php echo $this->jsUrl; ?>modernizr-1.7.min.js<?php echo '?'.$this->staticFilesVersion; ?>"></script>
+    <script src="<?php echo $this->jsUrl; ?>modernizr.min.js<?php echo '?'.$this->staticFilesVersion; ?>"></script>
   </head>
   <body class="<?php echo $this->getLocale() . ' ' . $this->getContext(); ?>">
     <div class="content">
@@ -203,8 +202,8 @@ class Template {
       echo $this->getFooter();
       ?>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write("<script src='<?php echo $this->jsUrl; ?>jquery-1.6.1.min.js'>\x3C/script>")</script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write("<script src='<?php echo $this->jsUrl; ?>jquery.js'>\x3C/script>")</script>
     <?php
     echo $this->getJsInclude();
     echo "\n";
@@ -702,7 +701,7 @@ class Template {
   */
   public function globalTranslate($messageId, $params = array()){
     
-    return $this->trans($messageId, $this->getGlobalDomainMessages(), $params);
+    return $this->trans($messageId, $this->globalDomainMessages, $params);
   }
   
   /**

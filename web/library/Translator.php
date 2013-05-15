@@ -14,7 +14,8 @@ class Translator{
     $this->globalDomain = $globalDomain;
     $this->defaultLocale = $locale;
     $this->fileHandler = new FileHandler();
-    $this->loadTranslations($this->globalDomain);
+    $this->translations = array();
+    $this->loadTranslations($this->globalDomain, $this->defaultLocale);
   }
 
   private function loadTranslations($domain, $locale){
@@ -37,7 +38,7 @@ class Translator{
     $this->loadTranslations($domain, $locale);
 
     if (!array_key_exists($messageId, $this->translations[$locale][$domain])){
-      return null; 
+      return $messageId; 
     }else{
       $message = $this->translations[$locale][$domain][$messageId];
       return $this->replace($message, $params);

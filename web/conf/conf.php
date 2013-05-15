@@ -1,22 +1,28 @@
 <?php
-//global $routes;
 $conf = array();
 
 $conf['name'] = "SCF-viewer";
-$conf['session-name'] = "session";
 $conf['title'] = "SCF-Viewer";
 $conf['default-locale'] = "en";
 $conf['version'] = "1.0";
 
 $conf['http-host'] = "http://localhost/scf-viewer/";
-$conf['url-media'] = $conf['http-host'].'src/html/shared/';
+$conf['url-media'] = $conf['http-host'].'resources/web/';
 $conf['url-media-css'] = $conf['url-media'].'css/';
 $conf['url-media-js'] = $conf['url-media'].'js/';
 $conf['url-media-img'] = $conf['url-media'].'img/';
 
+$conf['session'] = array(
+  "name" => "session"
+);
 
 $conf['router'] = array(
-    'ignore' => "/~zanette/scf/web/index.php/"
+    'ignore' => "/scf-viewer/index.php/"
+);
+
+$conf['tranlator'] = array(
+    'domain' => "messages",
+    'folder' => 'resources/translations/'
 );
 
 $conf['database'] = array(
