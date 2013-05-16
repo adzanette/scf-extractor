@@ -22,7 +22,7 @@ class Router{
         $restriction = @$restrictions[$param];
         $defaultValue = @$defaults[$param];
         if (!$restriction) $restriction = '[a-zA-Z0-9_-]+';
-        $defautlt = '';
+        $default = '';
         if (!is_null($defaultValue)) $default = '?';
         $route = str_replace('{'.$param.'}',$default.'(?P<'.$param.'>'.$restriction.')'.$default, $route);
       }
@@ -39,6 +39,7 @@ class Router{
         $url = str_replace('{'.$key.'}',$value, $url);
       }
 
+      /*
       $defaults = @$route['defaults'];
       if (is_array($defaults)){
         foreach ($defaults as $key => $value){
@@ -47,7 +48,7 @@ class Router{
           }
         }
       }
-
+      */
       $url = $this->ignore.$url;
       if ($absolute) $url = $this->domain.$url;
 
@@ -67,7 +68,11 @@ class Router{
    */
   public function route($path){
     if (substr($path, 0, strlen($this->ignore)) == $this->ignore) {
-      $path = substr($path, strlen($this->ignore));
+      if (strlen($path) === strlen($this->ignore)){
+        $path = '';
+      }else{
+        $path = substr($path, strlen($this->ignore));
+      }
     } 
 
     if($path === ''){

@@ -21,7 +21,7 @@ class Example extends \MVC\Library\ORM{
     'semanticFrame' => '\MVC\Model\SemanticFrame'
   );
 
-  public static $has = array(
+  public static $has_many = array(
     'arguments' => '\MVC\Model\Argument'
   );
 

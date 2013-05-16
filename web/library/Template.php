@@ -616,7 +616,7 @@ class Template {
   public function paginate($page, $total, $link, $params){
     $url = $this->getLink($link, $params);
     $this->paginator->initialize($page, $total, $url);
-    print $this->paginator;
+    return $this->paginator;
   }
   
   /**

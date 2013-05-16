@@ -40,7 +40,7 @@ $routes['frame-list'] = array(
 );
 
 $routes['example-list'] = array(
-  'pattern' => 'example-list/{corpus}/{verbId}/{verbPage}/{frameId}/{$framePage}/{page}',
+  'pattern' => 'example-list/{corpus}/{verbId}/{verbPage}/{frameId}/{framePage}/{page}',
   'controller' => 'SiteController',
   'method' => 'showExampleList',
   'defaults' => array(

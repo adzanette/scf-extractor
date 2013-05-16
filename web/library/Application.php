@@ -44,8 +44,8 @@ class Application{
   }
 
   public function handleRequest(){  
-    $path = $this->context->request->server->get('request-uri');
-   
+    $path = $this->context->request->server->get('REQUEST_URI');
+
     list($params, $route, $execute) = $this->router->route($path);
     extract($execute);
 

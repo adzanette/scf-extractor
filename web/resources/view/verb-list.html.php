@@ -37,8 +37,7 @@ $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => 
           </a>
         </td>
       </tr>
-    <?php
-      $i++;
+      <?php
     }
     ?>
     </table>
@@ -49,4 +48,4 @@ $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => 
       </div>
     </div>
   </div>
-?>
+
