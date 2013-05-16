@@ -5,35 +5,33 @@ namespace MVC\Library;
 class Application{
   
   private $router;
-  private $routes;
-  private $conf;
+  private $settings;
   private $context;
 
   public function __construct($conf, $routes){
-    $this->conf = $conf;
-    $this->routes = $routes;
+    $this->settings = new ParameterBag($conf);
+    $this->router = new Router($this->routes, $this->settings->get('router/ignore'), $this->settings->get('router/domain'));
+    $this->request = Request::createFromGlobals();
+    
     $this->loadServices();
   }
 
   private function loadServices(){
+    $translator = new Translator($this->settings->get('translator/folder'), $this->settings->get('translator/domain'), $this->settings->get('default-locale'));
     
-    $this->router = new Router($this->routes, $this->conf->get('router/ignore'), $this->conf->get('router/domain'));
-    
-    $translator = new Translator($this->conf->get('translator/folder'), $this->conf->get('translator/domain'), $this->conf->get('default-locale'));
-    
-    $templateConfig = $this->conf->get('template');
+    $templateConfig = $this->settings->get('template');
     $template = new Template($templateConfig);
     $template->setTranslator($translator);
     $template->setRouter($this->router);
 
-    $database = new Database($this->conf->get('database'));
+    $database = new Database($this->settings->get('database'));
     if(empty(ORM::$database)){
       ORM::$db = $database;
     }
 
     $services = array(
-       'settings' => $this->conf
-      ,'request' => Request::createFromGlobals()
+       'settings' => $this->settings
+      ,'request' => $this->request
       ,'session' => new Session()
       ,'router' => $this->router
       ,'database' => $database
@@ -44,7 +42,7 @@ class Application{
   }
 
   public function handleRequest(){  
-    $path = $this->context->request->server->get('REQUEST_URI');
+    $path = $this->request->server->get('REQUEST_URI');
 
     list($params, $route) = $this->router->route($path);
     

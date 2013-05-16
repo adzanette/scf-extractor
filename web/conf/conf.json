@@ -1,0 +1,42 @@
+{
+   "name":"SCF-viewer",
+   "title":"site.title",
+   "version":"1.0",
+   "http-host":"http://localhost/scf-viewer/",
+   "url-media":"{http-host}resources/web/",
+   "template":{
+      "title":"{title}",
+      "locale":"en",
+      "version":"{version}",
+      "url-media":"{http-host}",
+      "url-media-css":"{http-host}css/",
+      "url-media-js":"{http-host}js/",
+      "url-media-img":"{http-host}img/",
+      "page-size":50,
+      "page-window":12
+   },
+   "session":{
+      "name":"session"
+   },
+   "router":{
+      "domain":"http://localhost/",
+      "ignore":"/scf-viewer/index.php/"
+   },
+   "translator":{
+      "domain":"messages",
+      "folder":"resources/translations/"
+   },
+   "database":{
+      "dsn":"mysql:host=127.0.0.1;port=3306;",
+      "dbname":"scf-teste",
+      "username":"root",
+      "password":"zanette",
+      "params": {}
+   },
+   "databases":{
+      "scf-cardiologia":"database.cardiologia",
+      "scf-diario-gaucho":"database.diario",
+      "scf-lacio":"database.lacio",
+      "scf-teste":"database.teste"
+   }
+}

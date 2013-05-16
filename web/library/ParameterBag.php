@@ -7,99 +7,112 @@ class ParameterBag implements \IteratorAggregate, \Countable{
   protected $parameters;
 
   public function __construct(array $parameters = array()){
-      $this->parameters = $parameters;
+    $this->parameters = $parameters;
   }
 
   public function all(){
-      return $this->parameters;
+    return $this->parameters;
   }
 
   public function keys(){
-      return array_keys($this->parameters);
+    return array_keys($this->parameters);
   }
 
   public function replace(array $parameters = array()){
-      $this->parameters = $parameters;
+    $this->parameters = $parameters;
   }
 
   public function add(array $parameters = array()){
-      $this->parameters = array_replace($this->parameters, $parameters);
+    $this->parameters = array_replace_recursive($this->parameters, $parameters);
+  }
+  
+  public function get($key, $default = null){
+    if (strpos($key, '/') === false){
+      return array_key_exists($key, $this->parameters) ? $this->parameters[$key] : $default;
+    }else{
+      $keys = explode('/', $key);
+      $value = $this->parameters;
+      foreach ($keys as $key){
+        if(array_key_exists($key, $value)){
+          $value = $value[$key];
+        }else{
+          $value = $default;
+          break;
+        }
+      }
+      return $value;
+    }
   }
 
-  public function get($path, $default = null, $deep = false){
-    if (!$deep || false === $pos = strpos($path, '[')) {
-      return array_key_exists($path, $this->parameters) ? $this->parameters[$path] : $default;
+  public function setRecursive($keys, $value){
+    $key = array_shift($keys);
+    if (count($keys) > 0){
+      return array($key => $this->setRecursive($keys, $value));
+    }else{
+      return array($key => $value);
     }
-
-    $root = substr($path, 0, $pos);
-    if (!array_key_exists($root, $this->parameters)) {
-      return $default;
-    }
-
-    $value = $this->parameters[$root];
-    $currentKey = null;
-    for ($i = $pos, $c = strlen($path); $i < $c; $i++) {
-      $char = $path[$i];
-
-      if ('[' === $char) {
-        if (null !== $currentKey) {
-            throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "[" at position %d.', $i));
-        }
-
-        $currentKey = '';
-      } elseif (']' === $char) {
-        if (null === $currentKey) {
-          throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "]" at position %d.', $i));
-        }
-
-        if (!is_array($value) || !array_key_exists($currentKey, $value)) {
-          return $default;
-        }
-
-        $value = $value[$currentKey];
-        $currentKey = null;
-      } else {
-        if (null === $currentKey) {
-          throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "%s" at position %d.', $char, $i));
-        }
-
-        $currentKey .= $char;
-      }
-    }
-
-    if (null !== $currentKey) {
-      throw new \InvalidArgumentException(sprintf('Malformed path. Path must end with "]".'));
-    }
-
-    return $value;
   }
 
   public function set($key, $value){
-    $this->parameters[$key] = $value;
+    if (strpos($key, '/') === false){
+      $this->parameters[$key] = $value;
+    }else{
+      $keys = explode('/', $key);
+      $replace = $this->setRecursive($keys, $value);
+      $this->add($replace);
+    }
   }
 
   public function has($key){
-    return array_key_exists($key, $this->parameters);
+    if (strpos($key, '/') === false){
+      return array_key_exists($key, $this->parameters);
+    }else{
+      $keys = explode('/', $key);
+      $value = $this->parameters;
+      foreach ($keys as $key){
+        if(array_key_exists($key, $value)){
+          $value = $value[$key];
+        }else{
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
+  private function removeElement(&$params, $keys) { 
+    $key = array_shift($keys);
+    if (count($keys) > 0) {
+      $value = &$params[$key]; 
+      $this->removeElement($value, $keys); 
+    } else {
+      unset($params[$key]);
+    } 
   }
 
   public function remove($key){
-    unset($this->parameters[$key]);
+    if (strpos($key, '/') === false){
+      unset($this->parameters[$key]);
+    }else{
+      $keys = explode('/', $key);
+      $this->removeElement($this->parameters, $keys);
+    }
   }
 
-  public function getAlpha($key, $default = '', $deep = false){
-    return preg_replace('/[^[:alpha:]]/', '', $this->get($key, $default, $deep));
+  public function getAlpha($key, $default = ''){
+    return preg_replace('/[^[:alpha:]]/', '', $this->get($key, $default));
   }
 
-  public function getAlnum($key, $default = '', $deep = false){
-    return preg_replace('/[^[:alnum:]]/', '', $this->get($key, $default, $deep));
+  public function getAlnum($key, $default = ''){
+    return preg_replace('/[^[:alnum:]]/', '', $this->get($key, $default));
   }
 
-  public function getDigits($key, $default = '', $deep = false){
-    return str_replace(array('-', '+'), '', $this->filter($key, $default, $deep, FILTER_SANITIZE_NUMBER_INT));
+  public function getDigits($key, $default = ''){
+    return str_replace(array('-', '+'), '', $this->filter($key, $default, FILTER_SANITIZE_NUMBER_INT));
   }
 
-  public function getInt($key, $default = 0, $deep = false){
-      return (int) $this->get($key, $default, $deep);
+  public function getInt($key, $default = 0){
+      return (int) $this->get($key, $default);
   }
   
   public function getDate($key, \DateTime $default = null){
@@ -114,8 +127,8 @@ class ParameterBag implements \IteratorAggregate, \Countable{
     return $date;
   }
 
-  public function filter($key, $default = null, $deep = false, $filter=FILTER_DEFAULT, $options=array()){
-    $value = $this->get($key, $default, $deep);
+  public function filter($key, $default = null, $filter=FILTER_DEFAULT, $options=array()){
+    $value = $this->get($key, $default);
 
     if (!is_array($options) && $options) {
       $options = array('flags' => $options);
