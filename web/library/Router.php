@@ -30,7 +30,7 @@ class Router{
     return $route;
   }
 
-  public function generate($routeName, $params = array(), $absolute = false){
+  public function generate($routeName, $params = array(), $absolute = false, $withDefaults = false){
     if (array_key_exists($routeName, $this->routes)){
       $route = $this->routes[$routeName];
       $url = $route['pattern'];
@@ -39,16 +39,17 @@ class Router{
         $url = str_replace('{'.$key.'}',$value, $url);
       }
 
-      /*
-      $defaults = @$route['defaults'];
-      if (is_array($defaults)){
-        foreach ($defaults as $key => $value){
-          if (!array_key_exists($key, $params)){
-            $url = str_replace('{'.$key.'}',$value, $url);
+      if ($withDefaults){
+        $defaults = @$route['defaults'];
+        if (is_array($defaults)){
+          foreach ($defaults as $key => $value){
+            if (!array_key_exists($key, $params)){
+              $url = str_replace('{'.$key.'}',$value, $url);
+            }
           }
         }
       }
-      */
+      
       $url = $this->ignore.$url;
       if ($absolute) $url = $this->domain.$url;
 
@@ -58,14 +59,11 @@ class Router{
     }   
   }
 
+  public function getRoute($route){
+    return array_key_exists($route, $this->routes) ? $this->routes[$route] : null;
+  }
 
-  /**
-   * Parse the given URL path and return the correct controller and parameters.
-   *
-   * @param string $path segment of URL
-   * @param array $routes to test against
-   * @return array
-   */
+
   public function route($path){
     if (substr($path, 0, strlen($this->ignore)) == $this->ignore) {
       if (strlen($path) === strlen($this->ignore)){
@@ -76,7 +74,7 @@ class Router{
     } 
 
     if($path === ''){
-      return array(array(), '', $this->routes['index']);
+      return array(array(), 'index');
     }
 
     foreach($this->routes as $route => $controller){
@@ -102,10 +100,10 @@ class Router{
             }
           }
         }
-        return array($matches, $route, $controller);
+        return array($matches, $route);
       }
     }
 
-    return array(array(), $path, $this->routes['404']);
+    return array(array(), '404');
   }
 }

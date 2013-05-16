@@ -46,11 +46,22 @@ class Application{
   public function handleRequest(){  
     $path = $this->context->request->server->get('REQUEST_URI');
 
-    list($params, $route, $execute) = $this->router->route($path);
-    extract($execute);
+    list($params, $route) = $this->router->route($path);
+    
+    $response = $this->handle($route, $params); 
+
+    if (!$response instanceof Response) 
+      throw new \Exception('Controller must return a Response Object');
+
+    return $response->send();
+  }
+
+  public function handle($route, $params){
+    $routeParams = $this->getRoute($route);
+    extract($routeParams);
 
     $controller = '\\MVC\\Controller\\'.$controller;
-    $control = new $controller($this->context);
+    $control = new $controller($this->context, $this);
 
     if(!method_exists($control, $method)) 
       throw new \Exception('Invalid Request Method.');
@@ -62,14 +73,8 @@ class Application{
       $response = $control->$method();
     }
 
-    if (!$response instanceof Response) 
-      throw new \Exception('Controller must return a Response Object');
-
-    return $response->send();
+    return $response;
   }
-
-  //implement handle
-
 }
 
 ?>

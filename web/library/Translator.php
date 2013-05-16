@@ -9,8 +9,6 @@ class Translator{
   private $fileHandler;
   private $translations;
 
-  //TODO replace tags
-
   public function __construct($folder, $globalDomain, $locale){
     $this->folder = $folder;
     $this->globalDomain = $globalDomain;
@@ -46,12 +44,15 @@ class Translator{
   }
 
   public function replace($message, $params){
-    if (is_null($params)) return $message;
-    foreach ($params as $key => $value){
-      $message = str_replace('%'.$key.'%', $value, $message);
+    if (is_array($params) && count($params) > 0){
+      foreach ($params as $key => $value){
+        $message = str_replace('{'.$key.'}', $value, $message);
+      }
     }
+
     return $message;
   }
+
 }
 
 ?>

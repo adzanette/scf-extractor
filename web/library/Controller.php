@@ -3,24 +3,15 @@ namespace MVC\Library;
 
 abstract class Controller{
   
-  // URL path segment matched to route here
   public $context;
+  public $app;
 
-  /**
-   * Set error handling and start session
-   */
-  public function __construct($context){
+  public function __construct($context, $app){
     $this->context = $context;
+    $this->app = $app;
   }
 
-
-  /**
-   * Called before the controller method is run
-   *
-   * @param string $method name that will be run
-   */
   public function initialize($params) {}
-
 
   public function render($view, $params){
     $template = $this->context->template;
@@ -36,10 +27,20 @@ abstract class Controller{
     return $response;
   }
 
-  //implement redirect
-  //implement foward
-  //implement get and has for retrieve context
+  public function forward($route, $params){
+    return $this->app->handle($route, $params);
+  }
+
+  public function get($serviceName){
+    return $this->context->get($serviceName);
+  }
+
+  public function set($serviceName, $service){
+    return $this->context->set($serviceName, $service);
+  }
+
+  public function redirect($url, $status = 302, $headers = array()){
+    return new RedirectResponse($url, $status, $headers);
+  }
 
 }
-
-// End
