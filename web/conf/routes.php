@@ -7,6 +7,12 @@ $routes['index'] = array(
   'method' => 'index'
 );
 
+$routes['select-corpus'] = array(
+  'pattern' => 'corpus/select',
+  'controller' => 'SiteController',
+  'method' => 'selectCorpus'
+);
+
 $routes['404'] = array(
   'pattern' => '404',
   'controller' => 'SiteController',
@@ -14,7 +20,7 @@ $routes['404'] = array(
 );
 
 $routes['verb-list'] = array(
-  'pattern' => 'verb-list/{corpus}/{page}',
+  'pattern' => 'verbs/list/{corpus}/{page}',
   'controller' => 'SiteController',
   'method' => 'showVerbList',
   'defaults' => array(
@@ -26,7 +32,7 @@ $routes['verb-list'] = array(
 );
 
 $routes['frame-list'] = array(
-  'pattern' => 'frame-list/{corpus}/{verbId}/{verbPage}/{page}',
+  'pattern' => 'frames/list/{corpus}/{verbId}/{verbPage}/{page}',
   'controller' => 'SiteController',
   'method' => 'showFrameList',
   'defaults' => array(
@@ -40,7 +46,7 @@ $routes['frame-list'] = array(
 );
 
 $routes['example-list'] = array(
-  'pattern' => 'example-list/{corpus}/{verbId}/{verbPage}/{frameId}/{framePage}/{page}',
+  'pattern' => 'examples/list/{corpus}/{verbId}/{verbPage}/{frameId}/{framePage}/{page}',
   'controller' => 'SiteController',
   'method' => 'showExampleList',
   'defaults' => array(
@@ -55,8 +61,26 @@ $routes['example-list'] = array(
   )
 );
 
+$routes['delete-example'] = array(
+  'pattern' => 'ajax/example/delete/{corpus}',
+  'controller' => 'SiteController',
+  'method' => 'deleteExample'
+);
+
+$routes['delete-argument'] = array(
+  'pattern' => 'ajax/argument/delete/{corpus}',
+  'controller' => 'SiteController',
+  'method' => 'deleteArgument'
+);
+
+$routes['save-argument'] = array(
+  'pattern' => 'ajax/argument/save/{corpus}',
+  'controller' => 'SiteController',
+  'method' => 'saveArgument'
+);
+
 $routes['semantic-frames-list'] = array(
-  'pattern' => 'semantic-frames-list/{corpus}/{page}',
+  'pattern' => 'semantic-frames/list/{corpus}/{page}',
   'controller' => 'SiteController',
   'method' => 'showSemanticFramesList',
   'defaults' => array(
@@ -67,8 +91,20 @@ $routes['semantic-frames-list'] = array(
   )
 );
 
+$routes['semantic-frames-verbs'] = array(
+  'pattern' => 'semantic-frames/verbs/list/{corpus}/{framePage}/{frame}',
+  'controller' => 'SiteController',
+  'method' => 'showVerbSemanticFramesList',
+  'defaults' => array(
+    'framePage' => 1
+  ),
+  'restrictions' => array(
+    'framePage' => '\d+'
+  )
+);
+
 $routes['sematic-frames'] = array(
-  'pattern' => 'frame-list/{corpus}/{verbId}/{verbPage}/{page}',
+  'pattern' => 'sframe-list/{corpus}/{verbId}/{verbPage}/{page}',
   'controller' => 'SiteController',
   'method' => 'showFrameList',
   'defaults' => array(

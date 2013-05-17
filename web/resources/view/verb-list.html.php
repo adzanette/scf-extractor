@@ -6,8 +6,8 @@ $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => 
     <div class="row-fluid">
       <div class="span12 well text-center">
         <h1>Listagem de verbos</h1>
-        <a href="<?php echo $template->getLink('semantic-frames-list', array('corpus' => $corpus))?>" target="_blank" class="btn btn-inverse">Ver Lista de Frames Sem&acirc;nticos</a>
-        <a class="btn btn-warning" title="Trocar de Corpus" href="<?php echo $template->getLink('index')?>">Trocar de corpus</a>
+        <a href="<?php echo $template->getLink('semantic-frames-list', array('corpus' => $corpus), true, true); ?>" target="_blank" class="btn btn-inverse">Ver Lista de Frames Sem&acirc;nticos</a>
+        <a class="btn btn-warning" title="Trocar de Corpus" href="<?php echo $template->getLink('index'); ?>">Trocar de corpus</a>
         <?php echo $pagination;?>
       </div>
     </div>

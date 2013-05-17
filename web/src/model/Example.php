@@ -14,6 +14,7 @@ class Example extends \MVC\Library\ORM{
   public static $table = 'examples';
   public static $key = 'id_example';
   public static $foreign_key = 'id_example';
+  public static $order_by = array('id_example' => 'ASC');
  
   public static $belongs_to = array(
     'sentence' => '\MVC\Model\Sentence',
@@ -21,8 +22,8 @@ class Example extends \MVC\Library\ORM{
     'semanticFrame' => '\MVC\Model\SemanticFrame'
   );
 
-  public static $has_many = array(
-    'arguments' => '\MVC\Model\Argument'
+  public static $has = array(
+    'arguments' =>  '\MVC\Model\Argument'
   );
 
 }

@@ -188,7 +188,7 @@ class Template {
     echo $this->getFavicon();
     echo $this->getCss();
     ?>
-    <script src="<?php echo $this->jsUrl; ?>modernizr.min.js<?php echo '?'.$this->staticFilesVersion; ?>"></script>
+    <script src="<?php echo $this->jsUrl; ?>modernizr.js<?php echo '?'.$this->staticFilesVersion; ?>"></script>
   </head>
   <body class="<?php echo $this->getLocale() . ' ' . $this->getContext(); ?>">
     <?php 
@@ -744,9 +744,9 @@ class Template {
   *
   * @return string The generated URL
   */
-  public function getLink($name, array $parameters = array(), $absolute = true){
+  public function getLink($name, array $parameters = array(), $absolute = true, $withDefaults = false){
   
-    return $this->router->generate($name, $parameters, $absolute);
+    return $this->router->generate($name, $parameters, $absolute, $withDefaults);
   }
   
   

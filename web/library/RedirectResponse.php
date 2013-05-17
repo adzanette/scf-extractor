@@ -11,6 +11,9 @@
 
 namespace MVC\Library;
 
+require_once 'Response.php';
+
+
 /**
  * RedirectResponse represents an HTTP response doing a redirect.
  *

@@ -16,7 +16,7 @@ $conf['template'] = array(
   'url-media-css' => $conf['url-media'].'css/',
   'url-media-js' => $conf['url-media'].'js/',
   'url-media-img' => $conf['url-media'].'img/',
-  'page-size' => 50,
+  'page-size' => 10,
   'page-window' => 12
 );
 
@@ -47,5 +47,15 @@ $conf['databases'] = array(
     'scf-diario-gaucho' => 'database.diario',
     'scf-lacio' => 'database.lacio',
     'scf-teste' => 'database.teste'
+);
+
+$conf['roles'] = array(
+   'agente' => 'role.agente'
+  ,'paciente' => 'role.paciente'
+  ,'tema' => 'role.tema'
+  ,'instrumento' => 'role.instrumento'
+  ,'experienciador' => 'role.experienciador'
+  ,'experienciado' => 'role.experenciado'
+  ,'beneficiario' => 'role.beneficiario'
 );
 ?>

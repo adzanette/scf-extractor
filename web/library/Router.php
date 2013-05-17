@@ -21,7 +21,7 @@ class Router{
         $param = str_replace(array('{','}'), "", $param);
         $restriction = @$restrictions[$param];
         $defaultValue = @$defaults[$param];
-        if (!$restriction) $restriction = '[a-zA-Z0-9_-]+';
+        if (!$restriction) $restriction = '[^/]+';
         $default = '';
         if (!is_null($defaultValue)) $default = '?';
         $route = str_replace('{'.$param.'}',$default.'(?P<'.$param.'>'.$restriction.')'.$default, $route);

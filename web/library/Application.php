@@ -10,7 +10,7 @@ class Application{
 
   public function __construct($conf, $routes){
     $this->settings = new ParameterBag($conf);
-    $this->router = new Router($this->routes, $this->settings->get('router/ignore'), $this->settings->get('router/domain'));
+    $this->router = new Router($routes, $this->settings->get('router/ignore'), $this->settings->get('router/domain'));
     $this->request = Request::createFromGlobals();
     
     $this->loadServices();
@@ -42,7 +42,7 @@ class Application{
   }
 
   public function handleRequest(){  
-    $path = $this->request->server->get('REQUEST_URI');
+    $path = $this->request->server->get('PHP_SELF');
 
     list($params, $route) = $this->router->route($path);
     
@@ -55,7 +55,7 @@ class Application{
   }
 
   public function handle($route, $params){
-    $routeParams = $this->getRoute($route);
+    $routeParams = $this->router->getRoute($route);
     extract($routeParams);
 
     $controller = '\\MVC\\Controller\\'.$controller;

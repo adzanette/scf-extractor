@@ -37,7 +37,7 @@ class Paginator{
       $html .= '<li class="disabled"><a href="#">&lt;</a></li>';
       $html .= '<li class="active"><a href="'.$this->getLink(1).'">1</a></li>';
     }else{
-      $previous = $this->page - $this->pageWindow < 1 ? 1 : $page - $this->pageWindow;
+      $previous = $this->page - $this->pageWindow < 1 ? 1 : $this->page - $this->pageWindow;
       $html .= '<li><a href="'.$this->getLink($previous).'">&lt;&lt;</a></li>';
       $html .= '<li><a href="'.$this->getLink($this->page-1).'">&lt;</a></li>';
       $html .= '<li><a href="'.$this->getLink(1).'">1</a></li>';

@@ -241,7 +241,7 @@ class Database{
 
     // Build prepared statement SQL
     $sql = "UPDATE $i$table$i SET $i" . $columns . "$i = ? WHERE ";
-
+    
     // Process WHERE conditions
     list($where, $params) = $this->where($where);
 
@@ -263,7 +263,7 @@ class Database{
    * @param array $order array of order by conditions
    * @return array
    */
-  public function select($column, $table, $where = NULL, $limit = NULL, $offset = 0, $order = NULL){
+  public function select($column, $table, $where = NULL, $limit = NULL, $offset = 0, $order = NULL, $group = NULL){
     $i = $this->i;
 
     $sql = "SELECT $column FROM $i$table$i";
@@ -275,6 +275,7 @@ class Database{
     if($where) $sql .= " WHERE $where";
 
     // Append optional ORDER BY sorting
+    $sql .= self::group_by($group);
     $sql .= self::order_by($order);
 
     if($limit){
@@ -329,6 +330,20 @@ class Database{
 
     // Add each order clause
     foreach($fields as $k => $v) $sql .= "$i$k$i $v, ";
+
+    // Remove ending ", "
+    return substr($sql, 0, -2);
+  }
+
+  public function group_by($fields = NULL){
+    if( ! $fields) return;
+
+    $i = $this->i;
+
+    $sql = ' GROUP BY ';
+
+    // Add each order clause
+    foreach($fields as $k => $v) $sql .= "$i$v$i, ";
 
     // Remove ending ", "
     return substr($sql, 0, -2);

@@ -41,6 +41,7 @@ $frames = mysql_query($query);
       <tr class="header">
         <th>Frame</th>
         <th>Frequ&ecirc;ncia</th>
+        
         <th>Ver Verbos</th>
       </tr>
     </thead>

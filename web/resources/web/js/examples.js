@@ -5,42 +5,40 @@ $(document).ready(function($){
     var semantic = $('select[name="role_'+id+'"]').val();
     
     $.ajax({
-      type: 'GET',
-      url: 'ajax/save_argument.php',
+      type: 'POST',
+      url: saveArgumentUrl,
+      dataType: 'json',
       data: {
         id_argument: id,
         syntax: syntax,
-        semantic: semantic,
-        corpus: corpus
+        semantic: semantic
       },
       success: function(data) {
-        if (data == '1'){
+        if (data.success){
           alert("Dados salvos com sucesso");
         }else{
           alert("Erro ao salvar os dados, tente novamente.");
         }
-      },
-      dataType: 'html'
+      }
     });
  });
  
  $(".delete-argument").click(function(){
     var id = $(this).attr('id_argument'); 
     $.ajax({
-      type: 'GET',
-      url: 'ajax/delete_argument.php',
+      type: 'POST',
+      url: deleteArgumentUrl,
+      dataType: 'json',
       data: {
-        id_argument: id,
-        corpus: corpus
+        id_argument: id
       },
       success: function(data) {
-        if (data == '1'){
+        if (data.success){
           $("#argument-"+id).slideUp(500);
         }else{
           alert("Erro ao excluir o argumento, tente novamente.");
         }
-      },
-      dataType: 'html'
+      }
     });
  });
  
@@ -48,20 +46,19 @@ $(document).ready(function($){
     var id = $(this).parent().parent().attr('id');
     
     $.ajax({
-      type: 'GET',
-      url: 'ajax/delete_example.php',
+      type: 'POST',
+      url: deleteExampleUrl,
+      dataType: 'json',
       data: {
-        id_example: id,
-        corpus: corpus
+        id_example: id
       },
       success: function(data) {
-        if (data == '1'){
+        if (data.success){
           $("#"+id).slideUp(700);
         }else{
           alert("Erro ao excluir o exemplo, tente novamente.");
         }
-      },
-      dataType: 'html'
+      }
     });
  });
 });
