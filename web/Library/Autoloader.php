@@ -1,31 +1,61 @@
 <?php
-
 namespace MVC\Library;
 
-class Autoloader{
-  
-  public function __construct($directories){
-    foreach ($directories as $directory){
-      self::scanDirectories($directory);
+class Autoloader{
+  private $namespaces = array();
+  private $fallback;
+  private $separator = '/';
+
+  public function registerNamespaceFallback($dir) {
+    $this->fallback = $dir;
+  }
+
+  public function registerNamespaces(array $namespaces) {
+    foreach ($namespaces as $namespace => $locations) {
+      $this->namespaces[$namespace] = (array) $locations;
     }
   }
 
-  public static function scanDirectories($rootDir){
-    $invisibleFileNames = array(".", "..", ".htaccess", ".htpasswd");
-    $dirContent = scandir($rootDir);
-    foreach($dirContent as $key => $content){
-      $path = $rootDir.'/'.$content;
-      if(!in_array($content, $invisibleFileNames)){
-        if(is_dir($path) && is_readable($path)){
-          self::scanDirectories($path);
-        }else if (is_file($path)){
-          $fileParts = pathinfo($content);
-          if ($fileParts['extension'] === 'php'){
-            require_once $path;
+  public function register(){
+    spl_autoload_register(array($this, 'loadClass'), true);
+  }
+
+  public function loadClass($class){
+    if ($file = $this->findFile($class)) {
+      require $file;
+      return true;
+    }
+  }
+
+  public function findFile($class){
+    if ('\\' == $class[0]) {
+      $class = substr($class, 1);
+    }
+
+    if (false !== $pos = strrpos($class, '\\')) {
+      $namespace = substr($class, 0, $pos);
+      foreach ($this->namespaces as $ns => $dirs) {
+        if (0 !== strpos($namespace, $ns)) {
+          continue;
+        }
+        
+        $className = substr($class, strlen($ns));
+        $normalizedClass = str_replace('\\', $this->separator, $className).'.php';
+
+        foreach ($dirs as $dir) {
+          $file = $dir. $this->separator.$normalizedClass;
+          if (is_file($file)) {
+            return $file;
           }
         }
       }
+
+      if (!is_null($this->fallback){
+        $file = $this->fallback.$this->separator.str_replace('\\', $this->sepator, $class).'.php';
+        if (is_file($file)) {
+          return $file;
+        }
+      }
     }
-    return true;    
   }
 }
