@@ -16,7 +16,7 @@ $conf['template'] = array(
   'url-media-css' => $conf['url-media'].'css/',
   'url-media-js' => $conf['url-media'].'js/',
   'url-media-img' => $conf['url-media'].'img/',
-  'page-size' => 10,
+  'page-size' => 50,
   'page-window' => 12
 );
 
