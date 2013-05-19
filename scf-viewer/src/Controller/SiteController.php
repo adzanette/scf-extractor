@@ -28,7 +28,7 @@ class SiteController extends \MVC\Library\Controller{
 
     $return = array();
     $return['databases'] = $databases;
-    return $this->render('index.html.php', $return); 
+    return $this->render('select-corpus.html.php', $return); 
   }
 
   public function selectCorpus(){
