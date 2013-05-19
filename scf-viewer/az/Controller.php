@@ -1,5 +1,5 @@
 <?php
-namespace MVC\Library;
+namespace AZ\Framework;
 
 abstract class Controller{
   

@@ -1,6 +1,6 @@
 <?php
 
-namespace MVC\Library;
+namespace AZ\Framework;
 
 class Translator{
   private $folder;

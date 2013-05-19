@@ -1,27 +1,18 @@
 <?php
-/**
- * Car Model
- *
- * @package   MicroMVC
- * @author    David Pennington
- * @copyright (c) 2011 MicroMVC Framework
- * @license   http://micromvc.com/license
- ********************************** 80 Columns *********************************
- */
-namespace MVC\Model;
+namespace SCFViewer\Model;
 
-class Frame extends \MVC\Library\ORM{
+class Frame extends \AZ\Framework\ORM{
   public static $table = 'frames';
   public static $key = 'id_frame';
   public static $foreign_key = 'id_frame';
   public static $order_by = array('frequency' => 'DESC');
  
   public static $belongs_to = array(
-    'verb' => '\MVC\Model\Verb',
+    'verb' => '\SCFViewer\Model\Verb',
   );
 
   public static $has = array(
-    'examples' => '\MVC\Model\Example'
+    'examples' => '\SCFViewer\Model\Example'
   );
 
 }

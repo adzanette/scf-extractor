@@ -1,16 +1,16 @@
 <?php
-namespace MVC\Controller;
+namespace SCFViewer\Controller;
 
-use MVC\Library\Database;
-use MVC\Library\ORM;
-use MVC\Library\JsonResponse;
-use MVC\Model\Verb;
-use MVC\Model\Frame;
-use MVC\Model\SemanticFrame;
-use MVC\Model\Example;
-use MVC\Model\Argument;
+use AZ\Framework\Database;
+use AZ\Framework\ORM;
+use AZ\Framework\JsonResponse;
+use SCFViewer\Model\Verb;
+use SCFViewer\Model\Frame;
+use SCFViewer\Model\SemanticFrame;
+use SCFViewer\Model\Example;
+use SCFViewer\Model\Argument;
 
-class SiteController extends \MVC\Library\Controller{
+class SiteController extends \AZ\Framework\Controller{
   
   public function initialize($params) {
     if (array_key_exists('corpus', $params)){

@@ -1,5 +1,5 @@
 <?php
-namespace MVC\Library;
+namespace AZ\Framework;
 
 final class Settings{
 

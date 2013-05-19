@@ -1,6 +1,6 @@
 <?php
 
-namespace MVC\Library;
+namespace AZ\Framework;
 
 class Application{
   
@@ -58,7 +58,7 @@ class Application{
     $routeParams = $this->router->getRoute($route);
     extract($routeParams);
 
-    $controller = '\\MVC\\Controller\\'.$controller;
+    $controller = '\\AZ\\Controller\\'.$controller;
     $control = new $controller($this->context, $this);
 
     if(!method_exists($control, $method)) 

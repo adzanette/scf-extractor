@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MVC\Library;
+namespace AZ\Framework;
 
 /**
  * HeaderBag is a container for HTTP headers.

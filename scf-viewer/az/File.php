@@ -1,4 +1,5 @@
 <?php
+namespace AZ\Framework;
 
 class File extends \DirectoryIterator{
   

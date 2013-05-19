@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MVC\Library;
+namespace AZ\Framework;
 
 /**
  * Response represents an HTTP response in JSON format.

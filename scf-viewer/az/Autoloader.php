@@ -1,5 +1,5 @@
 <?php
-namespace MVC\Library;
+namespace AZ\Framework;
 
 class Autoloader{
   private $namespaces = array();

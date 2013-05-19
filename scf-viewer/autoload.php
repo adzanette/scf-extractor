@@ -1,14 +1,12 @@
 <?php
-namespace MVC;
-require_once __DIR__."/Library/Autoloader.php";
-use MVC\Library\Autoloader;
+namespace AZ;
+require_once __DIR__."/az/Autoloader.php";
+use AZ\Framework\Autoloader;
 
 $loader = new Autoloader();
 $loader->registerNamespaces(array(
-  'MVC\\Library'           => __DIR__.'/Library',
-  'MVC\\Controller'           => __DIR__.'/src/Controller',
-  'MVC\\Model'           => __DIR__.'/src/Model',
-  'MVC\\Service'           => __DIR__.'/src/Service'
+  'AZ\\Framework'           => __DIR__.'/az',
+  'SCFViewer\\Controller'           => __DIR__.'/src/SCFViewer',
 ));
 
 

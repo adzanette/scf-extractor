@@ -1,6 +1,6 @@
 <?php
 
-namespace MVC\Library;
+namespace AZ\Framework;
 
 /**
 *  Service to control the rendering of the page.
