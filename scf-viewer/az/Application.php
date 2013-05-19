@@ -10,7 +10,14 @@ class Application{
 
   public function __construct($directory, $conf, $routes){
     $this->settings = new ParameterBag($conf);
-    $this->settings->set('root-directory', $directory);
+    $this->settings->set('root-directory', $directory.DIRECTORY_SEPARATOR);
+    if ($this->settings->has('view-directory')){
+      $viewDirectory = $this->settings->get('root-directory').$this->settings->get('root-directory');
+    }else{
+      $viewDirectory = $this->settings->get('root-directory').'resources'.DIRECTORY_SEPARATOR.'view'.DIRECTORY_SEPARATOR;
+    }
+    $this->settings->set('view-directory', $viewDirectory);
+    
     $this->router = new Router($routes, $this->settings->get('router/ignore'), $this->settings->get('router/domain'));
     $this->request = Request::createFromGlobals();
     
@@ -19,7 +26,7 @@ class Application{
 
   private function loadServices(){
     $database = new Database($this->settings->get('database'));
-    $translator = new Translator($this->settings->get('translator/folder'), $this->settings->get('translator/domain'), $this->settings->get('default-locale'));
+    $translator = new Translator($this->settings->get('translator/folder'), $this->settings->get('translator/domain'), $this->settings->get('template/locale'));
     
     $templateConfig = $this->settings->get('template');
     $template = new Template($templateConfig);

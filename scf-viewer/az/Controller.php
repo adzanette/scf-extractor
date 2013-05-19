@@ -11,13 +11,15 @@ abstract class Controller{
     $this->app = $app;
   }
 
-  public function initialize($params) {}
+  public function initialize($params){}
 
   public function render($view, $params){
-    $template = $this->context->template;
+    $template = $this->get('template');
+    $settings = $this->get('settings');
+
     extract((array) $params);
     ob_start();
-    require __DIR__.'/../resources/view/'.$view;
+    require $settings->get('view-directory').$view;
     $page = ob_get_clean();
     
     $template->setContent($page);

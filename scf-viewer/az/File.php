@@ -1,7 +1,7 @@
 <?php
 namespace AZ\Framework;
 
-class File extends \DirectoryIterator{
+class File extends \SplFileInfo{
   
   private $path;
 
@@ -11,7 +11,7 @@ class File extends \DirectoryIterator{
   }
 
   public function get(){
-    return file_get_contents($path);
+    return file_get_contents($this->path);
   }
 
   public function exists(){
@@ -21,8 +21,6 @@ class File extends \DirectoryIterator{
   public function getExtension(){
     return pathinfo($this->path, PATHINFO_EXTENSION); 
   }
-
-
 }
 
 ?>

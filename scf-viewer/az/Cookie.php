@@ -1,23 +1,7 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AZ\Framework;
 
-/**
- * Represents a cookie
- *
- * @author Johannes M. Schmitt <schmittjoh@gmail.com>
- *
- * @api
- */
 class Cookie{
   protected $name;
   protected $value;
@@ -28,21 +12,21 @@ class Cookie{
   protected $httpOnly;
 
   public function __construct($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true){
-    if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
-      throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
+    if (preg_match("/[=,; \t\r\n\013\014]/", $name)){
+      throw new \Exception(sprintf('The cookie name "%s" contains invalid characters.', $name));
     }
 
-    if (empty($name)) {
-      throw new \InvalidArgumentException('The cookie name cannot be empty.');
+    if (empty($name)){
+      throw new \Exception('The cookie name cannot be empty.');
     }
 
-    if ($expire instanceof \DateTime) {
+    if ($expire instanceof \DateTime){
       $expire = $expire->format('U');
-    } elseif (!is_numeric($expire)) {
+    }elseif (!is_numeric($expire)){
       $expire = strtotime($expire);
 
-      if (false === $expire || -1 === $expire) {
-        throw new \InvalidArgumentException('The cookie expiration time is not valid.');
+      if (false === $expire || -1 === $expire){
+        throw new \Exception('The cookie expiration time is not valid.');
       }
     }
 
@@ -58,29 +42,29 @@ class Cookie{
   public function __toString(){
     $str = urlencode($this->getName()).'=';
 
-    if ('' === (string) $this->getValue()) {
+    if (((string) $this->getValue()) === ''){
       $str .= 'deleted; expires='.gmdate("D, d-M-Y H:i:s T", time() - 31536001);
-    } else {
+    }else{
       $str .= urlencode($this->getValue());
 
-      if ($this->getExpiresTime() !== 0) {
+      if ($this->getExpiresTime() !== 0){
         $str .= '; expires='.gmdate("D, d-M-Y H:i:s T", $this->getExpiresTime());
       }
     }
 
-    if ('/' !== $this->path) {
+    if ($this->path !== '/'){
       $str .= '; path='.$this->path;
     }
 
-    if (null !== $this->getDomain()) {
+    if ($this->getDomain() !== null){
       $str .= '; domain='.$this->getDomain();
     }
 
-    if (true === $this->isSecure()) {
+    if ($this->isSecure() === true){
       $str .= '; secure';
     }
 
-    if (true === $this->isHttpOnly()) {
+    if ($this->isHttpOnly() === true){
       $str .= '; httponly';
     }
 

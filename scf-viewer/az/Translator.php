@@ -6,27 +6,25 @@ class Translator{
   private $folder;
   private $globalDomain;
   private $defaultLocale;
-  private $fileHandler;
   private $translations;
 
   public function __construct($folder, $globalDomain, $locale){
     $this->folder = $folder;
     $this->globalDomain = $globalDomain;
     $this->defaultLocale = $locale;
-    $this->fileHandler = new FileHandler();
     $this->translations = array();
     $this->loadTranslations($this->globalDomain, $this->defaultLocale);
   }
 
   private function loadTranslations($domain, $locale){
-    $file = $this->folder.'/'.$domain.'.'.$locale.'.json';
+    $file = new File($this->folder.$domain.'.'.$locale.'.json');
     
     if (!array_key_exists($locale, $this->translations)){
       $this->translations[$locale] = array();
     }
 
-    if (!array_key_exists($domain, $this->translations[$locale]) && $this->fileHandler->exists($file)){
-      $this->translations[$locale][$domain] = json_decode(file_get_contents($file), true);
+    if (!array_key_exists($domain, $this->translations[$locale]) && $file->exists()){
+      $this->translations[$locale][$domain] = JSON::decode($file->get());
     }
   }
 

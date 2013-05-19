@@ -4,7 +4,7 @@ namespace AZ\Framework;
 class Autoloader{
   private $namespaces = array();
   private $fallback;
-  private $separator = '/';
+  private $separator = DIRECTORY_SEPARATOR;
 
   public function registerNamespaceFallback($dir) {
     $this->fallback = $dir;

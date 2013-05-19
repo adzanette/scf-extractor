@@ -1,37 +1,15 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AZ\Framework;
 
-/**
- * RedirectResponse represents an HTTP response doing a redirect.
- *
- * @author Fabien Potencier <fabien@symfony.com>
- *
- * @api
- */
 class RedirectResponse extends Response{
-  protected $targetUrl;
+  protected $redirectUrl;
 
   public function __construct($url, $status = 302, $headers = array()){
-    if (empty($url)) {
-      throw new \InvalidArgumentException('Cannot redirect to an empty URL.');
-    }
-
     parent::__construct('', $status, $headers);
-
-    $this->setTargetUrl($url);
-
+    $this->setRedirectUrl($url);
     if (!$this->isRedirect()) {
-      throw new \InvalidArgumentException(sprintf('The HTTP status code is not a redirect ("%s" given).', $status));
+      throw new \Exception('Invalid Redirect Code.');
     }
   }
 
@@ -39,33 +17,13 @@ class RedirectResponse extends Response{
     return new static($url, $status, $headers);
   }
 
-  public function getTargetUrl(){
-    return $this->targetUrl;
+  public function getRedirectUrl(){
+    return $this->redirectUrl;
   }
 
-  public function setTargetUrl($url){
-    if (empty($url)) {
-      throw new \InvalidArgumentException('Cannot redirect to an empty URL.');
-    }
-
-    $this->targetUrl = $url;
-
-    $this->setContent(
-        sprintf('<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="refresh" content="1;url=%1$s" />
-
-    <title>Redirecting to %1$s</title>
-</head>
-<body>
-    Redirecting to <a href="%1$s">%1$s</a>.
-</body>
-</html>', htmlspecialchars($url, ENT_QUOTES, 'UTF-8')));
-
+  public function setRedirectUrl($url){
+    $this->redirectUrl = $url;
     $this->headers->set('Location', $url);
-
     return $this;
   }
 }

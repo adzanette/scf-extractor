@@ -24,7 +24,6 @@ class Paginator{
   private function getLink($page){
     return str_replace('{page}', $page, $this->link);
   }
-
   
   public function __toString(){
     $totalPages = ceil($this->total/$this->pageSize);
@@ -71,6 +70,5 @@ class Paginator{
     $html .= '</ul></div>';
     return $html;
   }
-
 }
 

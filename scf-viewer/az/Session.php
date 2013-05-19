@@ -3,7 +3,7 @@
 namespace AZ\Framework;
 
 class Session{
-  private $name='Default';
+  private $name='default';
  
   public function __constructor($name){
     session_start();

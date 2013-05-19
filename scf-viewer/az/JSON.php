@@ -12,6 +12,16 @@ class JSON{
     return json_decode($string, true);
   }
 
+  public static function isValidIdentifier($identifier){
+    $pattern = '/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u';
+    $parts = explode('.', $identifier);
+    foreach ($parts as $part) {
+      if (!preg_match($pattern, $part)) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 ?>
