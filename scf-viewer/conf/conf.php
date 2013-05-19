@@ -10,7 +10,7 @@ $conf['url-media'] = $conf['http-host'].'resources/web/';
 
 $conf['template'] = array(
   'title' => $conf['title'],
-  'locale' => 'en',
+  'locale' => 'pt',
   'version' => $conf['version'],
   'url-media' => $conf['url-media'],
   'url-media-css' => $conf['url-media'].'css/',
@@ -55,7 +55,7 @@ $conf['roles'] = array(
   ,'tema' => 'role.tema'
   ,'instrumento' => 'role.instrumento'
   ,'experienciador' => 'role.experienciador'
-  ,'experienciado' => 'role.experenciado'
+  ,'experienciado' => 'role.experienciado'
   ,'beneficiario' => 'role.beneficiario'
 );
 ?>

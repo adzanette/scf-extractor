@@ -5,18 +5,18 @@ $pagination = $template->paginate($page, $count, 'frame-list', array('corpus' =>
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span12 well text-center">
-      <h1>Frames do verbo '<?php echo $verb->verb; ?>'</h1>
-      <a class="btn btn-warning" title="Voltar para os verbos" href="<?php echo $template->getLink('verb-list', array('corpus' => $corpus, 'page' => $verbPage)); ?>">Voltar para os verbos</a>
+      <h1><?php echo $template->translate('frame.list.verb', array('verb' => $verb->verb))?></h1>
+      <a class="btn btn-warning" href="<?php echo $template->getLink('verb-list', array('corpus' => $corpus, 'page' => $verbPage)); ?>"><?php echo $template->translate('verb.list.back')?></a>
       <?php echo $pagination; ?>
     </div>
   </div>
   <table class="table table-bordered table-hover">
     <thead>
       <tr class="header">
-        <th>Frame</th>
-        <th>Forma</th>
-        <th>Frequ&ecirc;ncia</th>
-        <th>Exemplos</th>
+        <th><?php echo $template->translate('frame.table.frame')?></th>
+        <th><?php echo $template->translate('frame.table.type')?></th>
+        <th><?php echo $template->translate('frame.table.frequency')?></th>
+        <th><?php echo $template->translate('frame.table.examples')?></th>
       </tr>
     </thead>
     <?php
@@ -34,7 +34,7 @@ $pagination = $template->paginate($page, $count, 'frame-list', array('corpus' =>
         </td>
         <td><?php echo $frame->frequency; ?></td>
         <td>
-          <a class="btn btn-success" title="Ver Exemplos" href="<?php echo $template->getLink('example-list', array('corpus' => $corpus, 'verbId' => $verb->id_verb, 'verbPage' => $verbPage, 'frameId' => $frame->id_frame, 'framePage' => $page, 'page' => 1))?>">
+          <a class="btn btn-success" href="<?php echo $template->getLink('example-list', array('corpus' => $corpus, 'verbId' => $verb->id_verb, 'verbPage' => $verbPage, 'frameId' => $frame->id_frame, 'framePage' => $page, 'page' => 1))?>">
             <span class="icon-play icon-white">
           </a>
         </td>
@@ -45,8 +45,8 @@ $pagination = $template->paginate($page, $count, 'frame-list', array('corpus' =>
   </table>
   <div class="row-fluid">
     <div class="span12 well text-center">
-    <?php echo $pagination; ?>
-    <a class="btn btn-warning" title="Voltar para os verbos" href="<?php echo $template->getLink('verb-list', array('corpus' => $corpus, 'page' => $verbPage))?>">Voltar para os verbos</a>
+      <?php echo $pagination; ?>
+      <a class="btn btn-warning" href="<?php echo $template->getLink('verb-list', array('corpus' => $corpus, 'page' => $verbPage)); ?>"><?php echo $template->translate('verb.list.back')?></a>
     </div>
   </div>
 </div>

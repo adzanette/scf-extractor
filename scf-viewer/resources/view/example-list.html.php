@@ -1,5 +1,5 @@
 <?php
-$template->setTitle('frame.list');
+$template->setTitle('example.list');
 $template->addJs('examples.js');
 $template->addTextJs('var deleteExampleUrl = "'.$template->getLink('delete-example', array('corpus' => $corpus)).'";');
 $template->addTextJs('var saveArgumentUrl = "'.$template->getLink('save-argument', array('corpus' => $corpus)).'";');
@@ -12,8 +12,8 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span12 well text-center">
-        <h1>Exemplos do frame '<?php echo $frame->frame; ?>' do verbo '<?php echo $verb->verb; ?>'</h1>
-        <a class="btn btn-warning" title="Voltar para os frames" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>">Voltar para os frames</a>
+        <h1><?php echo $template->translate('example.title', array('verb' => $verb->verb, 'frame' => $frame->frame))?></h1>
+        <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
         <?php echo $pagination; ?>
       </div>
     </div>
@@ -27,10 +27,10 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
     ?>  
     <div class="accordion-group" id="<?php echo $exampleId; ?>">
       <div class="accordion-heading">
-        <button type="button" class="btn btn-danger btn-mini delete-example" title="Excluir Exemplo">
+        <button type="button" class="btn btn-danger btn-mini delete-example" title="<?php echo $template->translate('delete-example')?>">
           <i class="icon-remove icon-white"></i>
         </button>
-        <span class="label label-info">Exemplo <?php echo $count++; ?></span>
+        <span class="label label-info"><?php echo $template->translate('example.number', array('i' => $count++))?></span>
         <h4>&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($sentence->raw_sentence); ?></h4>
         <div class="arguments" id="arguments-<?php echo $exampleId; ?>">
         <?php
@@ -40,28 +40,28 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
           ?>
           <div id="argument-<?php echo $argument->id_argument; ?>">
             <div class="row-fluid">
-              <div class="span1 offset1"><?php echo "ARG_".$i; ?></div>
+              <div class="span1 offset1"><?php echo $template->translate('argument.number', array('i' => $i))?></div>
               <div class="span2"><?php echo $argument->argument; ?></div>
               <div class="span2">
                 <input type="text" name="syntax_<?php echo $argument->id_argument; ?>" value="<?php echo $argument->sintax; ?>" />
               </div>
               <div class="span3">
                 <select name="role_<?php echo $argumentId; ?>" id ="role_argument_<?php echo $argumentId; ?>">
-                  <option value="">Selecione</option>
+                  <option value=""><?php echo $template->translate('select.role')?></option>
                   <?php
                   $semantic = $argument->semantic;
                   foreach($roles as $role => $description){
                     $selected = $role == $semantic ? 'selected' : '';
                     ?>
-                      <option value="<?php echo $role; ?>" <?php echo $selected; ?>><?php echo $description; ?></option>
+                      <option value="<?php echo $role; ?>" <?php echo $selected; ?>><?php echo $template->translate($description); ?></option>
                     <?php
                   }
                   ?>
                 </select>
               </div>
               <div class="span3">
-                <input type="button" title="Salvar Argumento" class="btn btn-info save-argument" id_argument="<?php echo $argument->id_argument; ?>" value="Salvar">
-                <input type="button" title="Excluir Argumento" class="btn btn-danger delete-argument" id_argument="<?php echo $argument->id_argument; ?>" value="Excluir">
+                <button class="btn btn-info save-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.save'); ?></button>
+                <button class="btn btn-danger delete-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.delete'); ?></button>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
       </div>
       <div id="example<?php echo $exampleId; ?>" class="accordion-body collapse in">
         <div class="accordion-inner">     
-            <span class="label label-info">Anota&ccedil;&atilde;o</span>
+            <span class="label label-info"><?php echo $template->translate('annotation'); ?></span>
             <pre><?php echo $sentence->parsed_sentence; ?></pre>
           </div>
         </div>
@@ -85,7 +85,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
   <div class="row-fluid">
       <div class="span12 well text-center">
         <?php echo $pagination;?>
-        <a class="btn btn-warning" title="Voltar para os frames" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>">Voltar para os frames</a>
+        <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
       </div>
     </div>
   </div>  

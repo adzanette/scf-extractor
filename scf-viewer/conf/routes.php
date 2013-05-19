@@ -69,19 +69,19 @@ $routes['delete-example'] = array(
 
 $routes['delete-argument'] = array(
   'pattern' => 'ajax/argument/delete/{corpus}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'deleteArgument'
 );
 
 $routes['save-argument'] = array(
   'pattern' => 'ajax/argument/save/{corpus}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'saveArgument'
 );
 
 $routes['semantic-frames-list'] = array(
   'pattern' => 'semantic-frames/list/{corpus}/{page}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'showSemanticFramesList',
   'defaults' => array(
     'page' => 1
@@ -93,7 +93,7 @@ $routes['semantic-frames-list'] = array(
 
 $routes['semantic-frames-verbs'] = array(
   'pattern' => 'semantic-frames/list/verbs/{corpus}/{framePage}/{frame}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'showVerbSemanticFramesList',
   'defaults' => array(
     'framePage' => 1
@@ -105,7 +105,7 @@ $routes['semantic-frames-verbs'] = array(
 
 $routes['semantic-frame-examples'] = array(
   'pattern' => 'semantic-frames/examples/{corpus}/{framePage}/{frame}/{verbId}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'showSemanticFrameExamples',
   'defaults' => array(
     'framePage' => 1
@@ -117,7 +117,7 @@ $routes['semantic-frame-examples'] = array(
 
 $routes['semantic-frames'] = array(
   'pattern' => 'semantic-frames/list/by-verbs/{corpus}/{verbId}/{verbPage}/{page}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'showSemanticFramesListByVerb',
   'defaults' => array(
     'page' => 1

@@ -1,0 +1,55 @@
+{
+  "site.title": "SCF Viewer"
+
+  ,"select.corpus": "Selecionar Corpus"
+  ,"select.a.corpus": "Selecione um corpus"
+  ,"default.select": "Selecione"
+  ,"select": "Selecionar"
+  ,"database.cardiologia": "Cardiologia"
+  ,"database.diario": "Diário Gaúcho"
+  ,"database.lacio": "Lácio"
+  ,"database.teste": "Teste"
+
+  ,"verb.list": "Lista de verbos"
+  ,"see.semantic.frames": "Ver lista de Frames Semânticos"
+  ,"change.corpus": "Trocar de corpus"
+  ,"verb.table.verb": "Verbo"
+  ,"verb.table.frequency": "Frequência"
+  ,"verb.table.frames": "Frames"
+  ,"verb.table.semantic.frames": "Frames Semânticos"
+
+  ,"frame.list": "Lista de Frames"
+  ,"frame.list.verb": "Lista de frames do verbo '{verb}'"
+  ,"verb.list.back":"Voltar para lista de verbos"
+  ,"frame.table.frame": "Frame"
+  ,"frame.table.type": "Forma"
+  ,"frame.table.frequency": "Frequência"
+  ,"frame.table.examples": "Exemplos"
+
+  ,"example.list": "Lista de Exemplos"
+  ,"example.title": "Lista de exemplos do frame '{frame}' com o verbo '{verb}'"
+  ,"frame.list.back": "Voltar para lista de frames"
+  ,"delete.example": "Excluir exemplo"
+  ,"example.number": "Exemplo {i}"
+  ,"argument.number": "ARG_{i}"
+  ,"select.role": "Selecione"
+  ,"role.agente": "Agente"
+  ,"role.paciente": "Paciente"
+  ,"role.tema": "Tema"
+  ,"role.instrumento": "Instrumento"
+  ,"role.experienciador": "Experienciador"
+  ,"role.experienciado": "Experienciado"
+  ,"role.beneficiario": "Beneficiário"
+  ,"argument.save": "Salvar"
+  ,"argument.delete": "Excluir"
+  ,"annotation": "Anotação"
+
+  ,"semantic.frame.list": "Lista de frames semânticos"
+  ,"semantic.frame.title": "Lista de frames semânticos do verbo '{verb}'"
+
+  ,"frame.table.verbs": "Verbos"
+
+  ,"semantic.frames.verb": "Lista de verbos com o frame semântico '{frame}'"
+
+  ,"semantic.frames.examples": "Lista de exemplos do frame semântico '{frame}' com o verbo '{verb}'"
+}

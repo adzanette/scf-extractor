@@ -5,19 +5,19 @@ $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => 
 <div class="container-fluid">
     <div class="row-fluid">
       <div class="span12 well text-center">
-        <h1>Listagem de verbos</h1>
-        <a href="<?php echo $template->getLink('semantic-frames-list', array('corpus' => $corpus), true, true); ?>" target="_blank" class="btn btn-inverse">Ver Lista de Frames Sem&acirc;nticos</a>
-        <a class="btn btn-warning" title="Trocar de Corpus" href="<?php echo $template->getLink('index'); ?>">Trocar de corpus</a>
+        <h1><?php echo $template->translate('verb.list')?></h1>
+        <a href="<?php echo $template->getLink('semantic-frames-list', array('corpus' => $corpus), true, true); ?>" target="_blank" class="btn btn-inverse"><?php echo $template->translate('see.semantic.frames')?></a>
+        <a class="btn btn-warning" href="<?php echo $template->getLink('index'); ?>"><?php echo $template->translate('change.corpus')?></a>
         <?php echo $pagination;?>
       </div>
     </div>
     <table class="table table-bordered table-hover">
       <thead>
         <tr class="header">
-          <th>Verbo</th>
-          <th>Frequ&ecirc;ncia</th>
-          <th>Frames</th>
-          <th>Frames Sem&acirc;nticos</th>
+          <th><?php echo $template->translate('verb.table.verb')?></th>
+          <th><?php echo $template->translate('verb.table.frequency')?></th>
+          <th><?php echo $template->translate('verb.table.frames')?></th>
+          <th><?php echo $template->translate('verb.table.semantic.frames')?></th>
         </tr>
       </thead>
     <?php
@@ -44,7 +44,7 @@ $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => 
     <div class="row-fluid">
       <div class="span12 well text-center">
         <?php echo $pagination;?>
-        <a class="btn btn-warning" title="Trocar de Corpus" href="<?php echo $template->getLink('index')?>">Trocar de corpus</a>
+        <a class="btn btn-warning" href="<?php echo $template->getLink('index'); ?>"><?php echo $template->translate('change.corpus')?></a>
       </div>
     </div>
   </div>

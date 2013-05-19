@@ -1,20 +1,20 @@
 <?php
-$template->setTitle('verb.list');
+$template->setTitle('semantic.frame.list');
 $pagination = $template->paginate($page, $count, 'semantic-frames-list', array('corpus' => $corpus));
 ?>
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span12 well text-center">
-      <h1>Frames Sem&acirc;nticos</h1>
+      <h1><?php echo $template->translate('semantic.frame.list')?></h1>
       <?php echo $pagination;?>
     </div>
   </div>
   <table class="table table-bordered table-hover">
   <thead>
     <tr class="header">
-      <th>Frame</th>
-      <th>Frequ&ecirc;ncia</th>
-      <th>Ver Verbos</th>
+      <th><?php echo $template->translate('frame.table.frame')?></th>
+      <th><?php echo $template->translate('frame.table.frequency')?></th>
+      <th><?php echo $template->translate('frame.table.verbs')?></th>
     </tr>
   </thead>
   <?php
