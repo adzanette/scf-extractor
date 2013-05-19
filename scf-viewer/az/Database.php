@@ -43,6 +43,8 @@ class Database{
 
     // MySQL uses a non-standard column identifier
     if($this->type == 'mysql') $this->i = '`';
+
+    ORM::$db = $this;
   }
 
 

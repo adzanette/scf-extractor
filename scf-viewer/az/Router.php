@@ -74,7 +74,7 @@ class Router{
     } 
 
     if($path === ''){
-      return array(array(), 'index');
+      return array('index', array());
     }
 
     foreach($this->routes as $route => $controller){
@@ -100,10 +100,10 @@ class Router{
             }
           }
         }
-        return array($matches, $route);
+        return array($route, $matches);
       }
     }
 
-    return array(array(), '404');
+    return array('404', array());
   }
 }

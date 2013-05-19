@@ -16,8 +16,7 @@ class SiteController extends \AZ\Framework\Controller{
     if (array_key_exists('corpus', $params)){
       $databaseConfig = $this->context->settings->get('database');
       $databaseConfig['dbname'] = $params['corpus'];
-      $database = new Database($databaseConfig);
-      ORM::$db = $database;
+      $this->set('database', new Database($databaseConfig));
     }
   }
 

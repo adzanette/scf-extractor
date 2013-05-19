@@ -1,7 +1,7 @@
 <?php
 $conf = array();
 
-$conf['name'] = 'SCF-viewer';
+$conf['name'] = 'SCFViewer';
 $conf['title'] = 'site.title';
 $conf['version'] = '1.0';
 

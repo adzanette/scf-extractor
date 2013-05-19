@@ -3,25 +3,25 @@ $routes = array();
 
 $routes['index'] = array(
   'pattern' => '',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'index'
 );
 
 $routes['select-corpus'] = array(
   'pattern' => 'corpus/select',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'selectCorpus'
 );
 
 $routes['404'] = array(
   'pattern' => '404',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'show404'
 );
 
 $routes['verb-list'] = array(
   'pattern' => 'verbs/list/{corpus}/{page}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'showVerbList',
   'defaults' => array(
     'page' => 1
@@ -33,7 +33,7 @@ $routes['verb-list'] = array(
 
 $routes['frame-list'] = array(
   'pattern' => 'frames/list/{corpus}/{verbId}/{verbPage}/{page}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'showFrameList',
   'defaults' => array(
     'page' => 1
@@ -47,7 +47,7 @@ $routes['frame-list'] = array(
 
 $routes['example-list'] = array(
   'pattern' => 'examples/list/{corpus}/{verbId}/{verbPage}/{frameId}/{framePage}/{page}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'showExampleList',
   'defaults' => array(
     'page' => 1
@@ -63,7 +63,7 @@ $routes['example-list'] = array(
 
 $routes['delete-example'] = array(
   'pattern' => 'ajax/example/delete/{corpus}',
-  'controller' => 'SiteController',
+  'controller' => 'SCFViewer\Controller\SiteController',
   'method' => 'deleteExample'
 );
 

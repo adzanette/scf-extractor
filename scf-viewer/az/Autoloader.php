@@ -28,31 +28,31 @@ class Autoloader{
   }
 
   public function findFile($class){
-    if ('\\' == $class[0]) {
+    if ($class[0] == '\\'){
       $class = substr($class, 1);
     }
 
-    if (false !== $pos = strrpos($class, '\\')) {
+    if (($pos = strrpos($class, '\\')) !== false){
       $namespace = substr($class, 0, $pos);
-      foreach ($this->namespaces as $ns => $dirs) {
-        if (0 !== strpos($namespace, $ns)) {
+      foreach ($this->namespaces as $ns => $dirs){
+        if (strpos($namespace, $ns) !== 0) {
           continue;
         }
         
         $className = substr($class, strlen($ns));
         $normalizedClass = str_replace('\\', $this->separator, $className).'.php';
 
-        foreach ($dirs as $dir) {
-          $file = $dir. $this->separator.$normalizedClass;
-          if (is_file($file)) {
+        foreach ($dirs as $dir){
+          $file = $dir.$this->separator.$normalizedClass;
+          if (is_file($file)){
             return $file;
           }
         }
       }
 
       if (!is_null($this->fallback)){
-        $file = $this->fallback.$this->separator.str_replace('\\', $this->sepator, $class).'.php';
-        if (is_file($file)) {
+        $file = $this->fallback.$this->separator.str_replace('\\', $this->separator, $class).'.php';
+        if (is_file($file)){
           return $file;
         }
       }

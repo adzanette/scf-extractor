@@ -8,8 +8,9 @@ class Application{
   private $settings;
   private $context;
 
-  public function __construct($conf, $routes){
+  public function __construct($directory, $conf, $routes){
     $this->settings = new ParameterBag($conf);
+    $this->settings->set('root-directory', $directory);
     $this->router = new Router($routes, $this->settings->get('router/ignore'), $this->settings->get('router/domain'));
     $this->request = Request::createFromGlobals();
     
@@ -17,17 +18,13 @@ class Application{
   }
 
   private function loadServices(){
+    $database = new Database($this->settings->get('database'));
     $translator = new Translator($this->settings->get('translator/folder'), $this->settings->get('translator/domain'), $this->settings->get('default-locale'));
     
     $templateConfig = $this->settings->get('template');
     $template = new Template($templateConfig);
     $template->setTranslator($translator);
     $template->setRouter($this->router);
-
-    $database = new Database($this->settings->get('database'));
-    if(empty(ORM::$database)){
-      ORM::$db = $database;
-    }
 
     $services = array(
        'settings' => $this->settings
@@ -44,7 +41,7 @@ class Application{
   public function handleRequest(){  
     $path = $this->request->server->get('PHP_SELF');
 
-    list($params, $route) = $this->router->route($path);
+    list($route, $params) = $this->router->route($path);
     
     $response = $this->handle($route, $params); 
 
@@ -58,7 +55,6 @@ class Application{
     $routeParams = $this->router->getRoute($route);
     extract($routeParams);
 
-    $controller = '\\AZ\\Controller\\'.$controller;
     $control = new $controller($this->context, $this);
 
     if(!method_exists($control, $method)) 
