@@ -1,1 +1,0 @@
-agente,paciente,tema,instrumento,experienciador,experienciado,beneficiário
