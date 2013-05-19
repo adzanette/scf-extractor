@@ -92,7 +92,7 @@ $routes['semantic-frames-list'] = array(
 );
 
 $routes['semantic-frames-verbs'] = array(
-  'pattern' => 'semantic-frames/verbs/list/{corpus}/{framePage}/{frame}',
+  'pattern' => 'semantic-frames/list/verbs/{corpus}/{framePage}/{frame}',
   'controller' => 'SiteController',
   'method' => 'showVerbSemanticFramesList',
   'defaults' => array(
@@ -103,10 +103,22 @@ $routes['semantic-frames-verbs'] = array(
   )
 );
 
-$routes['sematic-frames'] = array(
-  'pattern' => 'sframe-list/{corpus}/{verbId}/{verbPage}/{page}',
+$routes['semantic-frame-examples'] = array(
+  'pattern' => 'semantic-frames/examples/{corpus}/{framePage}/{frame}/{verbId}',
   'controller' => 'SiteController',
-  'method' => 'showFrameList',
+  'method' => 'showSemanticFrameExamples',
+  'defaults' => array(
+    'framePage' => 1
+  ),
+  'restrictions' => array(
+    'framePage' => '\d+'
+  )
+);
+
+$routes['semantic-frames'] = array(
+  'pattern' => 'semantic-frames/list/by-verbs/{corpus}/{verbId}/{verbPage}/{page}',
+  'controller' => 'SiteController',
+  'method' => 'showSemanticFramesListByVerb',
   'defaults' => array(
     'page' => 1
   ),

@@ -168,8 +168,30 @@ class SiteController extends \MVC\Library\Controller{
     return new JsonResponse($return);
   }
 
-  public function showSemanticFramesList($corpus, $page){
-      
+  public function showSemanticFramesListByVerb($corpus, $verbId, $verbPage, $page){
+    $settings = $this->context->settings;
+
+    $verb = Verb::row(array('id_verb = '.$verbId));
+    
+    $limit = $settings->get('template/page-size');
+    $offset = ($page-1) * $limit;
+    $filter = array('id_verb = '.$verbId);
+
+    $frames = SemanticFrame::fetch($filter, $limit, $offset, array('frequency' => 'DESC'));
+    $count = SemanticFrame::count($filter);
+  
+    $return = array();
+    $return['verb'] = $verb; 
+    $return['frames'] = $frames; 
+    $return['count'] = $count; 
+    $return['corpus'] = $corpus; 
+    $return['verbPage'] = $verbPage; 
+    $return['page'] = $page; 
+    return $this->render('semantic-frames.html.php', $return);
+  }
+
+
+  public function showSemanticFramesList($corpus, $page){   
     $settings = $this->get('settings');
     $database = SemanticFrame::$db;
 
@@ -190,9 +212,53 @@ class SiteController extends \MVC\Library\Controller{
   }
 
   public function showVerbSemanticFramesList($corpus, $framePage, $frame){
-    var_dump($frame);
-    die();
+    $database = Verb::$db;  
+    
+    $query = "SELECT v.*, 
+            (select frequency 
+              from semantic_frames as sf 
+              where frame = '".$frame."' 
+              and sf.id_verb = v.id_verb) 
+              as frequency
+          FROM verbs as v
+          WHERE id_verb in (
+            SELECT id_verb
+            FROM semantic_frames
+            WHERE frame = '".$frame."'
+          ) order by frequency desc;";
+    $statement = $database->query($query);
+    $verbs = $statement->fetchAll(\PDO::FETCH_OBJ);
+    
+    $return = array();
+    $return['verbs'] = $verbs; 
+    $return['corpus'] = $corpus; 
+    $return['frame'] = $frame;
+    $return['framePage'] = $framePage; 
+    return $this->render('verb-semantic-frames-list.html.php', $return); 
+  }
 
-   return $this->render('verb-semantic-frames-list.html.php', $return); 
+  public function showSemanticFrameExamples($corpus, $framePage, $frame, $verbId){
+    $database = Example::$db;  
+
+    $verb = Verb::row(array('id_verb = '.$verbId));
+    
+    $query = "select sentences.* from sentences where id_sentence in (
+              SELECT id_sentence 
+              FROM examples
+              WHERE id_semantic_frame = (
+                SELECT id_frame
+                FROM semantic_frames
+                WHERE frame = '".$frame."' and id_verb = '".$verbId."'
+              ));";
+    $statement = $database->query($query);
+    $sentences = $statement->fetchAll(\PDO::FETCH_OBJ);
+    
+    $return = array();
+    $return['sentences'] = $sentences; 
+    $return['corpus'] = $corpus; 
+    $return['frame'] = $frame;
+    $return['verb'] = $verb;
+    $return['framePage'] = $framePage; 
+    return $this->render('semantic-frame-examples.html.php', $return); 
   }
 }

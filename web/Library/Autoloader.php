@@ -1,7 +1,7 @@
 <?php
 namespace MVC\Library;
 
-class Autoloader{
+class Autoloader{
   private $namespaces = array();
   private $fallback;
   private $separator = '/';
@@ -16,18 +16,18 @@ class Autoloader{
     }
   }
 
-  public function register(){
+  public function register(){
     spl_autoload_register(array($this, 'loadClass'), true);
   }
 
-  public function loadClass($class){
+  public function loadClass($class){
     if ($file = $this->findFile($class)) {
       require $file;
       return true;
     }
   }
 
-  public function findFile($class){
+  public function findFile($class){
     if ('\\' == $class[0]) {
       $class = substr($class, 1);
     }
@@ -50,7 +50,7 @@ class Autoloader{
         }
       }
 
-      if (!is_null($this->fallback){
+      if (!is_null($this->fallback)){
         $file = $this->fallback.$this->separator.str_replace('\\', $this->sepator, $class).'.php';
         if (is_file($file)) {
           return $file;

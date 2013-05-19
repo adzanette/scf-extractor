@@ -24,7 +24,7 @@ $pagination = $template->paginate($page, $count, 'semantic-frames-list', array('
       <td><?php echo htmlspecialchars($frame->frame); ?></td>
       <td><?php echo $frame->count; ?></td>
       <td>
-        <a class="btn btn-success" title="Ver Verbos" href="<?php echo $template->getLink('semantic-frames-verbs', array('corpus' => $corpus, 'frame' => rawurlencode($frame->frame), 'framePage' => $page)); ?>">
+        <a class="btn btn-success" title="Ver Verbos" href="<?php echo $template->getLink('semantic-frames-verbs', array('corpus' => $corpus, 'frame' => urlencode($frame->frame), 'framePage' => $page)); ?>">
           <span class="icon-play icon-white">
         </a>
       </td>

@@ -11,7 +11,6 @@
 
 namespace MVC\Library;
 
-require_once 'Response.php';
 /**
  * Response represents an HTTP response in JSON format.
  *
