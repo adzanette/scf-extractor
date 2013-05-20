@@ -25,8 +25,9 @@ class Application{
   }
 
   private function loadServices(){
+    $cache = new Cache\CacheHandler($this->settings->get('cache'));
     $database = new Database($this->settings->get('database'));
-    $translator = new Translator($this->settings->get('translator/folder'), $this->settings->get('translator/domain'), $this->settings->get('template/locale'));
+    $translator = new Translator($this->settings->get('translator/folder'), $this->settings->get('translator/domain'), $this->settings->get('template/locale'), $cache);
     
     $templateConfig = $this->settings->get('template');
     $template = new Template($templateConfig);
@@ -40,6 +41,7 @@ class Application{
       ,'router' => $this->router
       ,'database' => $database
       ,'template' => $template
+      ,'cache' => $cache
     );
 
     $this->context = new Service($services);

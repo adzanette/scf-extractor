@@ -16,26 +16,26 @@ class MemcacheCache{
     return $this->memcache;
   }
 
-  protected function fetch($id){
+  public function fetch($id){
     return $this->memcache->get($id);
   }
 
-  protected function contains($id){
+  public function contains($id){
     return (bool) $this->memcache->get($id);
   }
 
-  protected function save($id, $data, $lifeTime = 0){
+  public function save($id, $data, $lifeTime = 0){
     if ($lifeTime > 30 * 24 * 3600) {
         $lifeTime = time() + $lifeTime;
     }
     return $this->memcache->set($id, $data, 0, (int) $lifeTime);
   }
 
-  protected function delete($id){
+  public function delete($id){
     return $this->memcache->delete($id);
   }
 
-  protected function flush(){
+  public function flush(){
     return $this->memcache->flush();
   }
 }

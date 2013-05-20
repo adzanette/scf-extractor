@@ -1,6 +1,8 @@
 <?php
 
 namespace AZ\Framework\Cache;
+use \Memcache as MemcacheDriver;
+use \Memcached as MemcachedDriver;
 
 class CacheHandler {
 
@@ -13,9 +15,8 @@ class CacheHandler {
     $this->defaultTimeout = $params['default-timeout'];
     $this->cacheType = $params['type'];
     $this->enabled = $params['enabled'];
-    switch ($type) {
+    switch ($this->cacheType) {
       case 'memcache':
-        use \Memcache as MemcacheDriver;
         $host = $params['host'];
         $port = $params['port'];
         if($this->enabled) {
@@ -29,7 +30,6 @@ class CacheHandler {
         }  
         break;
       case 'memcached':
-        use \Memcached as MemcachedDriver;
         $servers = $params['servers'];
         if($this->enabled) {
           $memcached = new MemcachedDriver();
@@ -45,7 +45,7 @@ class CacheHandler {
         $this->cacheDriver = new APC();
         break;
       case 'array':
-        $this->cacheDriver = new Array();
+        $this->cacheDriver = new ArrayCache();
         break;
       default:
         throw new \InvalidArgumentException(sprintf('"%s" is an unrecognized cache driver.', $type));

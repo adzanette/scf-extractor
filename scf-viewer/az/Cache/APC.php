@@ -3,23 +3,23 @@ namespace AZ\Framework\Cache;
 
 class APC{
 
-  protected function fetch($id){
+  public function fetch($id){
     return apc_fetch($id);
   }
 
-  protected function contains($id){
+  public function contains($id){
     return apc_exists($id);
   }
 
-  protected function save($id, $data, $lifeTime = 0){
+  public function save($id, $data, $lifeTime = 0){
     return (bool) apc_store($id, $data, (int) $lifeTime);
   }
 
-  protected function delete($id){
+  public function delete($id){
     return apc_delete($id);
   }
 
-  protected function flush(){
+  public function flush(){
     return apc_clear_cache() && apc_clear_cache('user');
   }
 }

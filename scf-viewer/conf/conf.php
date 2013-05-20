@@ -34,6 +34,12 @@ $conf['translator'] = array(
     'folder' => 'resources/translations/'
 );
 
+$conf['cache'] = array(
+  'type' => 'array',
+  'default-timeout' => 100,
+  'enabled' => true
+);
+
 $conf['database'] = array(
     'dsn' => 'mysql:host=127.0.0.1;port=3306;',
     'dbname' => 'scf-teste',
