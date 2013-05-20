@@ -1,5 +1,8 @@
 <?php
-namespace AZ\Framework;
+namespace AZ\Framework\Kernel;
+
+use AZ\Framework\HTTP\Response;
+use AZ\Framework\HTTP\RedirectResponse;
 
 abstract class Controller{
   

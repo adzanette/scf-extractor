@@ -3,14 +3,14 @@ namespace SCFViewer\Controller;
 
 use AZ\Framework\Database;
 use AZ\Framework\ORM;
-use AZ\Framework\JsonResponse;
+use AZ\Framework\HTTP\JsonResponse;
 use SCFViewer\Model\Verb;
 use SCFViewer\Model\Frame;
 use SCFViewer\Model\SemanticFrame;
 use SCFViewer\Model\Example;
 use SCFViewer\Model\Argument;
 
-class SiteController extends \AZ\Framework\Controller{
+class SiteController extends \AZ\Framework\Kernel\Controller{
   
   public function initialize($params) {
     if (array_key_exists('corpus', $params)){

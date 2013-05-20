@@ -5,7 +5,7 @@ $template->setTitle('example.list');
   <div class="row-fluid">
     <div class="span12 well text-center">
       <h1><?php echo $template->translate('semantic.frames.examples', array('frame' => htmlentities($frame), 'verb' => $verb->verb)); ?></h1>
-      <a class="btn btn-warning" href="semanticFramesVerbs.php?corpus=<?php echo $corpus; ?>&frame_page=<?php echo $frame_page; ?>&frame=<?php echo $frame; ?>"><?php echo $template->translate('verb.list.back'); ?></a>
+      <a class="btn btn-warning" href="<?php echo $template->getLink('semantic-frames-verbs', array('corpus' => $corpus, 'framePage' => $framePage, 'frame' => urlencode($frame)));?>"><?php echo $template->translate('verb.list.back'); ?></a>
     </div>
   </div>
   <div class="accordion" id="examples">

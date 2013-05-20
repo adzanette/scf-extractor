@@ -1,6 +1,8 @@
 <?php
+namespace AZ\Framework\Template;
 
-namespace AZ\Framework;
+use AZ\Framework\File;
+use AZ\Framework\JSON;
 
 class Translator{
   private $folder;

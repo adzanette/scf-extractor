@@ -1,6 +1,14 @@
 <?php
+namespace AZ\Framework\Kernel;
 
-namespace AZ\Framework;
+use AZ\Framework\HTTP\Request;
+use AZ\Framework\HTTP\Response;
+use AZ\Framework\Kernel\ParameterBag;
+use AZ\Framework\Cache\CacheHandler;
+use AZ\Framework\Database;
+use AZ\Framework\Template\Template;
+use AZ\Framework\Template\Translator;
+use AZ\Framework\HTTP\Session;
 
 class Application{
   
@@ -25,7 +33,7 @@ class Application{
   }
 
   private function loadServices(){
-    $cache = new Cache\CacheHandler($this->settings->get('cache'));
+    $cache = new CacheHandler($this->settings->get('cache'));
     $database = new Database($this->settings->get('database'));
     $translator = new Translator($this->settings->get('translator/folder'), $this->settings->get('translator/domain'), $this->settings->get('template/locale'), $cache);
     

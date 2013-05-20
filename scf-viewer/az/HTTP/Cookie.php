@@ -1,6 +1,6 @@
 <?php
 
-namespace AZ\Framework;
+namespace AZ\Framework\HTTP;
 
 class Cookie{
   protected $name;

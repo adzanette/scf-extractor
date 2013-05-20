@@ -1,6 +1,6 @@
 <?php
 
-namespace AZ\Framework;
+namespace AZ\Framework\Template;
 
 /**
 *  Service to control the rendering of the page.

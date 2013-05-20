@@ -1,6 +1,7 @@
 <?php
+namespace AZ\Framework\HTTP;
 
-namespace AZ\Framework;
+use AZ\Framework\Kernel\ParameterBag;
 
 class Request{
   

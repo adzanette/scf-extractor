@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AZ\Framework;
+namespace AZ\Framework\HTTP;
 
 /**
  * Response represents an HTTP response.

@@ -1,5 +1,5 @@
 <?php
-namespace AZ\Framework;
+namespace AZ\Framework\Kernel;
 
 class Autoloader{
   private $namespaces = array();

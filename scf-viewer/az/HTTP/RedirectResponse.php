@@ -1,6 +1,6 @@
 <?php
 
-namespace AZ\Framework;
+namespace AZ\Framework\HTTP;
 
 class RedirectResponse extends Response{
   protected $redirectUrl;
