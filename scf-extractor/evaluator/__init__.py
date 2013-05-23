@@ -13,18 +13,19 @@ class Evaluator():
     self.increment = config.evaluator.increment
     self.operator = config.evaluator.operator
     self.output = config.evaluator.output
+    self.verbList = config.evaluator.verbList
 
-  def verbHistogram(self, verbString, cutoff=10, output=None):
+  def verbHistogram(self, verbString):
 
     verb = Verb.get(Verb.verb == verbString)
-    frequencies = [frame.frequency for frame in verb.frames if frame.frequency > cutoff ]
+    frequencies = [frame.frequency for frame in verb.frames if frame.frequency > self.value ]
     frequencies.sort(reverse=True)
 
     plotter = Plotter()
-    plotter.drawBars(frequencies, facecolor='green', edgecolor="#cccccc")
+    plotter.drawBars(frequencies, edgecolor="#cccccc")
     plotter.title('Verb '+verbString+' Histogram')
     plotter.labels("Frames", 'Frequency')
-    plotter.output(output)
+    plotter.output()
 
   def evaluateByVerbList(self,verbList):
     
@@ -44,9 +45,9 @@ class Evaluator():
       filters.filter()
 
       retrieved = Frame.select().where(Frame.filtered == False).count()
-      
+      print retrieved
       intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
-      
+      print intersect
       p = float(intersect)/float(retrieved)
       r = float(intersect)/float(golden)
       f = (2*p*r)/(p+r) 
@@ -61,22 +62,20 @@ class Evaluator():
     self.plot()  
 
 
-  def evaluate(self,filterType, maxValue, increment, frel, fabsf, fabsv):
+  def evaluate(self):
     
     self.values = []
     self.precision = []
     self.recall = []
     self.fmeasure = []
 
-    filterType = filterType.lower()
-
     try:
-      i = eval(filterType)
+      i = eval(self.filterType)
     except:
       print "Invalid filter type!"
       return -1   
 
-    while(eval(filterType) <= maxValue):
+    while(eval(self.filterType) <= self.max):
 
       golden = ReferenceFrame.select().join(Verb).where(Verb.frequency >= fabsv).count()
 

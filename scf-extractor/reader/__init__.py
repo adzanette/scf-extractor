@@ -4,4 +4,5 @@ __all__ = [
             ,'ExampleDatabaseCorpusIterator'
             ,'FrameDatabaseIterator'
             ,'XmlFileIterator'
+            ,'NILCLexiconIterator'
           ]

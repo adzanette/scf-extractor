@@ -1,6 +1,7 @@
 
 from modules.Configuration import *
 from models.scf import SCF
+from models.scf import Element
 from models.palavras import *
 import re
 
@@ -23,16 +24,17 @@ class Extractor():
   # @return Dict Frames to be built
   def extract(self, sentence):
     frames = []
-    verb = re.search(self.reVerbs, line)
-    subcats = verb.group("subs").split(".")
-    prepositions = verb.group("preps")[0:len(verb.group("preps"))-1].split(".")    
+    matches = re.search(self.reVerbs, sentence.raw)
+    verb = matches.group("verb")
+    subcats = matches.group("subs").split(".")
+    prepositions = matches.group("preps")[0:len(matches.group("preps"))-1].split(".")    
 
     for subcat in subcats:
       if subcat == 'BI' or subcat == 'TI':
         for prep in prepositions:
-          frames += self.buildFrames(subcat, prep)
+          frames += self.buildFrame(verb, subcat, prep)
       else:
-        frames += self.buildFrames(subcat)  
+        frames += self.buildFrame(verb, subcat)  
     
     return frames
 

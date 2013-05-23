@@ -54,7 +54,10 @@ class Filter:
   # @version 1.0
   # @return Boolean 
   def filterVerbs(self, verbList):
-    verbs = Verb.update(filtered = True).where(Verb.verb <<  verbList).execute()
+    Verb.update(filtered = False).execute()
+    sql = "UPDATE "+Verb._meta.db_table+" SET "+Verb.filtered.db_column+" = 1 WHERE "+Verb.verb.db_column+" NOT IN ('"+("','".join(verbList))+"') "
+    print sql
+    database.execute_sql(sql)
   
   ## get an attribute from an object
   # @author Adriano Zanette

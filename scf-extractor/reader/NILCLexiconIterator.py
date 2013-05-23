@@ -1,4 +1,5 @@
 
+from modules.Configuration import *
 from models.corpus import Sentence
 from CorpusIterator import *
 from FileCorpusIterator import FileCorpusIterator
@@ -18,6 +19,8 @@ class Iterator(CorpusIterator):
   def __init__(self):
     self.reVerbs = re.compile(r'^(?P<verb>.+)=<V\.\[(?P<subs>[A-Z.]+)\].+N\.\[(?P<preps>[^\]]*)\]', re.L)
     self.id = 1
+    path = config.reader.fileReader.path  
+    self.corpus = open(path)
  
   ## Create a new sentence
   # @author Adriano Zanette
@@ -39,14 +42,13 @@ class Iterator(CorpusIterator):
   # @return Sentence
   def next(self):
 
-    if self.corpus.EOF:
+    line = self.corpus.readline()
+    if not line:    
       raise StopIteration
-    
-    verbLine = ''
-    for line in self.corpus:
+    else:
       isVerb = re.search(self.reVerbs, line)
       if isVerb:
-        verbLine = line
-        break
-    
-    return self.makeSentence(verbLine, verbLine)
+        return self.makeSentence(line, line)
+      else:
+        return self.next()
+
