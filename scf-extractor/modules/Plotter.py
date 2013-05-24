@@ -13,7 +13,7 @@ class Plotter():
     pylab.title(title)
 
   def drawLine(self, x, y, label):
-    pylab.plot(x, y,'-', label)
+    pylab.plot(x, y,'-', label=label)
 
   def drawBars(self, data, color='green', edgecolor = '#cccccc'):
     pylab.bar(range(0,len(data)), data, facecolor='green', edgecolor="#cccccc")

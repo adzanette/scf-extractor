@@ -41,16 +41,17 @@ class Evaluator():
 
     while(self.value <= self.max):
 
+      filters.resetFrameFilters()
       filters.setComparator(self.filter, self.operator, self.value)
       filters.filter()
 
       retrieved = Frame.select().where(Frame.filtered == False).count()
-      print retrieved
       intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
-      print intersect
+
       p = float(intersect)/float(retrieved)
       r = float(intersect)/float(golden)
       f = (2*p*r)/(p+r) 
+      print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
 
       self.values.append(self.value)
       self.precision.append(p)
@@ -60,6 +61,42 @@ class Evaluator():
       self.value += self.increment
       
     self.plot()  
+
+  def evaluate2(self):
+    
+    self.values = []
+    self.precision = []
+    self.recall = []
+    self.fmeasure = []
+
+    filters = Filter()
+    filters.filterVerbs(verbList)
+
+    while(self.value <= self.max):
+
+      filters.resetFrameFilters()
+      filters.setComparator(self.filter, self.operator, self.value)
+      filters.filter()
+      
+      golden = ReferenceFrame.select().join(Verb).where(Verb.filtered == False).count()
+
+      retrieved = Frame.select().where(Frame.filtered == False).count()
+      intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
+
+      p = float(intersect)/float(retrieved)
+      r = float(intersect)/float(golden)
+      f = (2*p*r)/(p+r) 
+      print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
+
+      self.values.append(self.value)
+      self.precision.append(p)
+      self.recall.append(r)
+      self.fmeasure.append(f)
+
+      self.value += self.increment
+      
+    self.plot()  
+
 
 
   def evaluate(self):

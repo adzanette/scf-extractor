@@ -15,6 +15,7 @@ class Extractor():
   # @version 0.1
   # @return Extractor
   def __init__(self):
+    self.allowedTags = ['BI', 'TI', 'TD', 'AUX', 'INT']
     self.reVerbs = re.compile(r'^(?P<verb>.+)=<V\.\[(?P<subs>[A-Z.]+)\].+N\.\[(?P<preps>[^\]]*)\]', re.L)
     
   ## It extracts frames
@@ -33,7 +34,7 @@ class Extractor():
       if subcat == 'BI' or subcat == 'TI':
         for prep in prepositions:
           frames += self.buildFrame(verb, subcat, prep)
-      else:
+      elif subcat in self.allowedTags:
         frames += self.buildFrame(verb, subcat)  
     
     return frames
@@ -55,22 +56,30 @@ class Extractor():
       element = Element(sintax = 'AUX', element='AUX', position = 1, relevance = 1)  
       frame.elements.append(element)   
     elif subcat == 'TI':
-      element = Element(sintax = 'PP', element='PP[%s]' % (prep), position = 1, relevance = 2)  
+      complement = ''
+      if prep:
+        complement = '[%s]' % (prep)
+      element = Element(sintax = 'PP', element='PP%s' % (complement), position = 1, relevance = 2)  
       frame.elements.append(element)   
     elif subcat == 'BI':
+      complement = ''
+      if prep:
+        complement = '[%s]' % (prep)
       element = Element(sintax = 'NP', element='NP', position = 1, relevance = 1)  
       frame.elements.append(element) 
-      element = Element(sintax = 'PP', element='PP[%s]' % (prep), position = 2, relevance = 2)  
+      element = Element(sintax = 'PP', element='PP%s' % (complement), position = 2, relevance = 2)  
       frame.elements.append(element)  
       if config.builder.order == 'position':
         frames.append(frame)
 
         frame = SCF()
         frame.verb = verb
-        element = Element(sintax = 'PP', element='PP[%s]' % (prep), position = 1, relevance = 2)  
+        element = Element(sintax = 'PP', element='PP%s' % (complement), position = 1, relevance = 2)  
         frame.elements.append(element) 
         element = Element(sintax = 'NP', element='NP', position = 2, relevance = 1)  
         frame.elements.append(element) 
+    elif subcat == 'INT':
+      element = Element()
     
     frames.append(frame)
     

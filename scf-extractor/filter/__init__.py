@@ -56,7 +56,6 @@ class Filter:
   def filterVerbs(self, verbList):
     Verb.update(filtered = False).execute()
     sql = "UPDATE "+Verb._meta.db_table+" SET "+Verb.filtered.db_column+" = 1 WHERE "+Verb.verb.db_column+" NOT IN ('"+("','".join(verbList))+"') "
-    print sql
     database.execute_sql(sql)
   
   ## get an attribute from an object
@@ -104,6 +103,12 @@ class Filter:
       if field >= value[0] and field <= value[1]: return True
 
     return False
+
+  def resetFrameFilters(self):
+    Frame.update(filtered = False).execute()
+    self.query = ''
+    self.where = ''
+    self.parameters = []
 
   ## Reset scfs filtered
   # @author Adriano Zanette

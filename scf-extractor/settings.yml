@@ -11,7 +11,7 @@ reader:
   databaseReader:
     pageSize: 100 
   fileReader:
-    path: /home/adriano/src/lexico2004u.txt
+    path: /home/adriano/src/lexicoNilc.txt
 
 extractor:
   module: NILCLexicon # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
@@ -26,7 +26,7 @@ builder:
     password: zanette
     dbName: scf-cardiologia
     scfReferenceTable: nilc_frames
-  ignoreClasses: ['AUX', 'SUBJ']
+  ignoreClasses: ['V', 'SUBJ']
   extractArguments: true
   createTables: false
   clearTables: true
