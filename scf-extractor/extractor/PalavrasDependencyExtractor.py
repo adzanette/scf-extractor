@@ -23,13 +23,13 @@ class Extractor():
   def extract(self, sentence):
     
     palavrasSentence = self.buildSentence(sentence)
-    
+    #sentence.html = palavrasSentence.toHTML()
+
     verbs = palavrasSentence.getVerbs()
     frames = []
     for verb in verbs:
 
       frame = SCF()
-      frame.verb = verb.lemma
       
       isVerbSer = False
       
@@ -49,6 +49,8 @@ class Extractor():
         verb.coreVerb = verbCore
         verb.hasAuxiliary = True
 
+      frame.verb = verb.lemma
+      frame.position = verb.id
       verbElement = Element(sintax = 'V', element = 'V', relevance = 0, position = verb.id, raw = verbWord)
       frame.elements.append(verbElement)
 
@@ -108,30 +110,41 @@ class Extractor():
   # @param token Token
   # @return Dict Element built
   def buildElement(self, token):
-    whiteList = ['N', 'V', 'ADJ', 'NUM']
     
     element = None
       
-    if "SUBJ" == token.function:
-      element = Element(sintax = 'SUBJ', element = 'SUJ[NP]', argument = 'SUBJECT', relevance = 1)
+    if token.function in ["SUBJ", "ICL-SUBJ", "FS-SUBJ"]:
+      element = Element(sintax = 'SUBJ', element = 'SUBJ[NP]', argument = 'SUBJECT', relevance = 1)
     elif "ACC-PASS" in token.function or 'refl' in token.semantics:
       element = Element(sintax = 'REFL', element = 'REFL', argument = 'REFLEXIVE.OBJECT', relevance = 2)
     elif "ACC" == token.function:
-      element = Element(sintax = 'NP', element = 'NP', argument = 'DIRECT.OBJECT', relevance = 2)
-    elif "PIV" == token.function:
-      element = Element(sintax = 'PP', element = "PP[%s]" % (token.lemma), argument = 'INDIRECT.OBJECT', relevance = 3)
+      element = Element(sintax = 'NP', element = 'NP', argument = 'DIRECT.OBJECT', relevance = 3)
+    elif token.function in ['PIV', 'SA', 'PASS']:
+      element = Element(sintax = 'PP', element = "PP[%s]" % (token.lemma), argument = 'INDIRECT.OBJECT', relevance = 4)
+      if token.function == 'PASS':
+        element.argument = 'PASSIVE.AGENT'
     elif "ADVL" == token.function and not "ADV" in token.morphos:
-      element = Element(sintax = 'PP', element = "PP[%s]" % (token.lemma), argument = 'ADJUNCT.ADVERBIAL', relevance = 5)
-    elif "ADVL" == token.function and "ADV" in token.morphos and 'ks' in token.semantics:
-      element = Element(sintax = 'PP', element = "PP[%s]" % (token.lemma), argument = 'ADJUNCT.ADVERBIAL', relevance = 5)
+      element = Element(sintax = 'PP', element = "PP[%s]" % (token.lemma), argument = 'ADVERBIAL.ADJUNCT', relevance = 4)
+    elif "DAT" == token.function:
+      element = Element(sintax = 'DAT', element = "PP[%s]" % (token.lemma), argument = 'PRONOMINAL.INDIRECT.OBJECT', relevance = 2)
+    elif token.function in ["FS-ACC", 'ICL-ACC']:
+      element = Element(sintax = 'OCL', element = "NP", argument = 'CLAUSAL.DIRECT.OBJECT', relevance = 3)
+    elif token.function in ["SC", 'ICL-SC', 'FS-SC', 'OC', 'ICL-OC', 'FS-OC']:
+      element = Element(sintax = 'PR', element = "PR", argument = 'PREDICATIVE', relevance = 4)
+      if "PRP" in token.morphos:
+        element.sintax = "PP"
+        element.element = "PP[%s]" % (token.lemma)
+      elif token.morphos[0] == 'N' or token.morphos[0] == 'NUM':
+        element.sintax = "NP"
+        element.element = "NP"
     elif token.morphos and token.morphos[0]:
       if token.morphos[0] == 'N' or token.morphos[0] == 'NUM':
-        element = Element(sintax = 'NP', element = "NP", argument = None, relevance = 4)
+        element = Element(sintax = 'NP', element = "NP", argument = None, relevance = 3)
       elif token.morphos[0] == "ADJ":
-        element = Element(sintax = 'ADJP', element = "ADJP", argument = None, relevance = 3)
+        element = Element(sintax = 'ADJP', element = "ADJP", argument = None, relevance = 5)
       elif token.morphos[0] == "V":
-        element = Element(sintax = 'SINF', element = "SINF", argument = None, relevance = 4)
-        
+        element = Element(sintax = 'SINF', element = "SINF", argument = None, relevance = 5)
+
     if not element:
       return element
     

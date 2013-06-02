@@ -100,7 +100,7 @@ class Sentence(BaseModel):
   id = PrimaryKeyField(db_column='id_sentence')
   raw = TextField(db_column='raw_sentence')
   parsed = TextField(db_column='parsed_sentence')  
-
+  html = TextField(db_column='html_sentence', null=True)
   class Meta:
     db_table = 'sentences'
 
@@ -112,6 +112,7 @@ class Example(BaseModel):
   sentence = ForeignKeyField(Sentence, db_column='id_sentence', related_name='examples')
   frame = ForeignKeyField(Frame, db_column='id_frame', related_name='examples')
   semanticFrame = ForeignKeyField(SemanticFrame, db_column='id_semantic_frame', null=True, related_name='examples')
+  position = IntegerField()
   active = BooleanField(default=True)
 
   class Meta:
@@ -163,5 +164,6 @@ class SCF():
   def __init__(self):
     self.scf = ''
     self.verb = ''
+    self.position = -1
     self.isPassive = False
     self.elements = []

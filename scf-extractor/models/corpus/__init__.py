@@ -27,6 +27,7 @@ class Sentence(BaseModel):
   id = PrimaryKeyField(db_column='ID')
   raw = TextField(db_column='Sentence')
   parsed = TextField(db_column='RaspDepParse')  
+  html = TextField(db_column='RaspDepParse')
 
   class Meta:
     db_table = 'sentences'

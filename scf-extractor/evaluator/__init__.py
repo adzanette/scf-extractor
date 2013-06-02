@@ -62,15 +62,20 @@ class Evaluator():
       
     self.plot()  
 
-  def evaluate2(self):
+  def evaluate(self):
     
     self.values = []
     self.precision = []
     self.recall = []
     self.fmeasure = []
 
+    verbFilter = 1
+    if 'verb.frequency' in self.filter:
+      verbFilter = self.filter['verb.frequency']
+    elif 'verbFrequency' in self.filter:
+      verbFilter = self.filter['verbFrequency']
+
     filters = Filter()
-    filters.filterVerbs(verbList)
 
     while(self.value <= self.max):
 
@@ -78,7 +83,7 @@ class Evaluator():
       filters.setComparator(self.filter, self.operator, self.value)
       filters.filter()
       
-      golden = ReferenceFrame.select().join(Verb).where(Verb.filtered == False).count()
+      golden = ReferenceFrame.select().join(Verb).where(Verb.frequency > verbFilter).count()
 
       retrieved = Frame.select().where(Frame.filtered == False).count()
       intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
@@ -96,48 +101,6 @@ class Evaluator():
       self.value += self.increment
       
     self.plot()  
-
-
-
-  def evaluate(self):
-    
-    self.values = []
-    self.precision = []
-    self.recall = []
-    self.fmeasure = []
-
-    try:
-      i = eval(self.filterType)
-    except:
-      print "Invalid filter type!"
-      return -1   
-
-    while(eval(self.filterType) <= self.max):
-
-      golden = ReferenceFrame.select().join(Verb).where(Verb.frequency >= fabsv).count()
-
-      retrieved = Frame.select().where(Frame.relativeFrequency >= frel, Frame.verbFrequency >= fabsv, Frame.frequency >= fabsf).count()
-      
-      intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.relativeFrequency >= frel, Frame.verbFrequency >= fabsv, Frame.frequency >= fabsf).count()
-      
-      p = float(intersect)/float(retrieved)
-      r = float(intersect)/float(golden)
-      f = (2*p*r)/(p+r) 
-
-      self.values.append(eval(filterType))
-      self.precision.append(p)
-      self.recall.append(r)
-      self.fmeasure.append(f)
-
-      if filterType == "frel":
-        frel += increment
-      elif filterType == "fabsf":
-        fabsf += increment
-      elif filterType == "fabsv":
-        fabsv += increment
-  
-    self.plot()
-  
 
   def plot(self):
     plotter = Plotter()

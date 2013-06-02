@@ -107,8 +107,9 @@ class Builder:
   # @param sentence Sentence to be strored
   # @return None
   def saveSentence(self, sentence):
+    #return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed, html = sentence.html)
     return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed)
-  
+   
   ## Store SCF on database 
   # @author Adriano Zanette
   # @version 0.1
@@ -130,7 +131,7 @@ class Builder:
     except:
       scf = Frame.create(frame=frame.scf, verb=verb, isPassive = frame.isPassive)
 
-    example = Example.create(frame=scf, sentence=sentence)
+    example = Example.create(frame=scf, sentence=sentence, position=frame.position)
     if self.extractArguments:
       for element in frame.elements:
         if element.argument:

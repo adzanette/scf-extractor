@@ -119,7 +119,8 @@ class ORM{
     }
 
     //if(isset($this->data[static::$key]) AND ! $this->loaded) $this->load();
-    return array_key_exists($key, $this->data) ? $this->data[$key] : $this->related($key);
+    $value = array_key_exists($key, $this->data) ? $this->data[$key] : $this->related($key);
+    return is_string($value) ? utf8_encode($value) : $value;
   }
 
 

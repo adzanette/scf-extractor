@@ -1,7 +1,7 @@
-command: Evaluate # [ExtractSCF]
+command: ExtractSCF # [ExtractSCF]
 
 reader:
-  module: NILCLexicon # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
+  module: PalavrasFileCorpus # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
   database:
     engine: mysql 
     host: localhost
@@ -11,13 +11,13 @@ reader:
   databaseReader:
     pageSize: 100 
   fileReader:
-    path: /home/adriano/src/lexicoNilc.txt
+    path: /home/adriano/src/cardiologia/
 
 extractor:
-  module: NILCLexicon # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
+  module: PalavrasDependency # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
 
 builder:
-  module: ReferenceFrames # [SCF, SemanticFramesDatabase, ReferenceFrames, NILCLexicon]
+  module: SCF # [SCF, SemanticFramesDatabase, ReferenceFrames, NILCLexicon]
   order: position # [position, relevance]
   database:
     engine: mysql
@@ -26,7 +26,7 @@ builder:
     password: zanette
     dbName: scf-cardiologia
     scfReferenceTable: nilc_frames
-  ignoreClasses: ['V', 'SUBJ']
+  ignoreClasses: ['V', 'SUBJ', 'REFL', 'PR', 'ADJP', 'SINF']
   extractArguments: true
   createTables: false
   clearTables: true
@@ -46,7 +46,7 @@ filter:
 evaluator:
   scfReferenceTable: framenet_frames
   filter: relativeFrequency
-  verbList: ['ser', 'poder', 'ter', 'utilizar']
+  verbList: []
   minValue: 0
   maxValue: 1
   increment: 0.1

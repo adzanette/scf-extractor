@@ -73,7 +73,15 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
       <div id="example<?php echo $exampleId; ?>" class="accordion-body collapse in">
         <div class="accordion-inner">     
             <span class="label label-info"><?php echo $template->translate('annotation'); ?></span>
-            <pre><?php echo $sentence->parsed_sentence; ?></pre>
+            <style>
+              #example<?php echo $exampleId; ?> #token-id-<?php echo $example->position; ?>{
+                background-color: rgb(255, 158, 69);
+              }
+            </style>
+            <?php 
+            //echo $sentence->html_sentence; 
+            ?>
+            <pre><?php echo htmlentities($sentence->parsed_sentence); ?></pre>
           </div>
         </div>
       </div>

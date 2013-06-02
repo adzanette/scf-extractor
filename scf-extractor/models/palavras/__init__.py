@@ -20,6 +20,7 @@ class Token(object):
     self.father = None
     self.word = ''
     self.lemma = ''
+    self.function = ''
     self.morphos = []
     self.semantics = []
     self.relationship = ''
@@ -89,6 +90,23 @@ class Token(object):
       return True
     return False
 
+  def toHTML(self):
+    html = '<li>'
+    html += '<a href="#" id="token-id-'+str(self.id)+'">'
+    html += self.lemma + '<br/>'
+    html += '@'+self.function 
+    if self.morphos and self.morphos[0]:
+      html += '  ' + self.morphos[0]
+    html += '</a>'
+    if len(self.children) > 0:
+      html += '<ul>'
+      for child in self.children:
+        html += child.toHTML()
+      html += '</ul>'
+    html += '</li>'
+    return html
+
+
 ## Model for sentences
 # @author Adriano Zanette
 # @version 0.1        
@@ -103,6 +121,7 @@ class Sentence(object):
     self.raw = sentence.raw
     self.parsed = sentence.parsed
     self.tokens = {}
+    self.root = None
 
   ## Process token relationships after all token were added in sentence
   # @author Adriano Zanette
@@ -116,6 +135,8 @@ class Sentence(object):
         father = self.tokens[fatherId]
         token.father = father
         father.children.append(token)
+      elif not token.word.startswith('$'):
+        self.root = token
     
   ## Process a token line
   # @author Adriano Zanette
@@ -132,18 +153,24 @@ class Sentence(object):
       return None
     
     token.word = infos.pop(0)
-    
+    hasRelationship = False
+
     for info in infos:
       if info[0] == "[":
         token.lemma = info.translate(None, "[]")
       elif info[0] == "@":
         token.function = info.translate(None, "@<>")
       elif info[0] == "#":
+        hasRelationship = True
         token.setRelationship(info)
       elif info[0] == "<":
         token.semantics.append(info.translate(None, "<>"))
       else:
         token.morphos.append(info)
+
+    if not hasRelationship:
+      print line
+      return None
 
     return token
 
@@ -181,3 +208,9 @@ class Sentence(object):
       if token.isVerb():
         verbs.append(token)
     return verbs
+
+  def toHTML(self):
+    html = '<div class="tree"><ul>'
+    html += self.root.toHTML()
+    html += '</ul></div>'
+    return html

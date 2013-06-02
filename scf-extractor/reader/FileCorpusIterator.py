@@ -33,6 +33,7 @@ class FileCorpusIterator(CorpusIterator):
       return False
 
     filename = self.files.pop()
+    print filename
     self.filePointer = stream = open(filename, 'r')
     return True
     
