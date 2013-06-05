@@ -1,5 +1,5 @@
 
-__all__ = ['ExtractSCF', 'Evaluate']
+__all__ = ['ExtractSCF', 'Evaluate', 'RunStatistcs']
 
 from modules.Configuration import *
 from reader import *
@@ -38,14 +38,6 @@ class ExtractSCF:
       frames = extractor.extract(sentence)
       builder.buildFrames(sentence, frames)
 
-    statistics = Statistics()
-    if statistics.execute:
-      statistics.run()
-
-      scfFilter = Filter()
-      scfFilter.filter()
-
-
 class Evaluate:
 
   ## Class constuctor
@@ -69,5 +61,24 @@ class Evaluate:
     else:
       evaluator.evaluateByVerbList(verbList)
 
+class RunStatistcs:
+
+  ## Class constuctor
+  # @author Adriano Zanette
+  # @version 0.1
+  # @return RunStatistcs
+  def __init__(self):
+    pass
+
+  ## Read, extract and store SCF's
+  # @author Adriano Zanette
+  # @version 0.10
+  def run(self):
+    
+    statistics = Statistics()
+    statistics.run()
+
+    scfFilter = Filter()
+    scfFilter.filter()
 
 

@@ -2,7 +2,7 @@
 __all__ = ['Filter']
 
 from modules.Configuration import *
-from models.scf import Frame, Verb, database
+from models.scf import Frame, Verb, ReferenceFrame, database
 from reader import *
 
 ## This class filter scf based on cutoffs
@@ -49,6 +49,25 @@ class Filter:
           frame.save()
           break
 
+  def countGoldenFrames(self):
+    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf JOIN verbs as v on v.id_verb = rf.id_verb WHERE v.id_verb in '
+    sql += '( SELECT id_verb FROM frames '+self.buildWhere()+' )'
+    result = database.execute_sql(sql)
+    return result.fetchone()[0]
+
+  def countIntersection(self):
+    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf JOIN frames as f '+ self.buildWhere() +' AND f.id_verb = rf.id_verb AND f.frame = rf.frame'
+    result = database.execute_sql(sql)
+    return result.fetchone()[0]
+
+
+
+  def countNotFilteredFrames(self):
+    sql = "SELECT COUNT(*) FROM "+Frame._meta.db_table + ' ' + self.buildWhere()
+    result = database.execute_sql(sql)
+    return result.fetchone()[0]
+
+
   ## Filters verbs
   # @author Adriano Zanette
   # @version 1.0
@@ -57,7 +76,30 @@ class Filter:
     Verb.update(filtered = False).execute()
     sql = "UPDATE "+Verb._meta.db_table+" SET "+Verb.filtered.db_column+" = 1 WHERE "+Verb.verb.db_column+" NOT IN ('"+("','".join(verbList))+"') "
     database.execute_sql(sql)
+
+  def filterFrames(self):
+    Frame.update(filtered = False).execute()
+    sql = "UPDATE "+Frame._meta.db_table+" SET "+Frame.filtered.db_column+" = 1 "+ self.buildWhere()
+    database.execute_sql(sql)
+
   
+  def buildWhere(self):
+    where = ''
+    first = True
+    for field in self.comparators:
+      operator = self.comparators[field]['operator']
+      value = self.comparators[field]['value']    
+      if first:
+        where += ' WHERE '
+        first = False
+      else:
+        where += ' AND '
+      where += self.getFieldName(field) + ' ' + self.getExpression(operator, value)
+    return where
+
+  def getFieldName(self, field):
+    return getattr(Frame, field).db_column
+
   ## get an attribute from an object
   # @author Adriano Zanette
   # @version 1.0
@@ -103,6 +145,19 @@ class Filter:
       if field >= value[0] and field <= value[1]: return True
 
     return False
+
+  def getExpression(self, operator, value):
+    operator = operator.strip()
+
+    if operator in ['=', '>', '>=', '<', '<=', '<>']:
+      return ' '+ operator +' '+ str(value) + ' '
+    elif operator in ['in', 'notin']:
+      return ' '+ operator +' ('+ ','.join(value) + ') '
+    elif operator == 'between':
+      return ' '+ operator +' '+ str(value[0]) + ' and ' + str(value[1]) + ' '
+
+    return ''
+
 
   def resetFrameFilters(self):
     Frame.update(filtered = False).execute()

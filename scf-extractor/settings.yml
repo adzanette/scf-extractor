@@ -1,7 +1,7 @@
-command: ExtractSCF # [ExtractSCF]
+command: Evaluate # [ExtractSCF, Evaluate, RunStatistcs]
 
 reader:
-  module: PalavrasFileCorpus # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
+  module: NILCLexicon # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
   database:
     engine: mysql 
     host: localhost
@@ -11,13 +11,14 @@ reader:
   databaseReader:
     pageSize: 100 
   fileReader:
-    path: /home/adriano/src/cardiologia/
+    #path: /home/adriano/src/cardiologia/
+    path: /home/adriano/src/lexicoNilc.txt
 
 extractor:
-  module: PalavrasDependency # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
+  module: NILCLexicon # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
 
 builder:
-  module: SCF # [SCF, SemanticFramesDatabase, ReferenceFrames, NILCLexicon]
+  module: ReferenceFrames # [SCF, SemanticFramesDatabase, , ReferenceFrames]
   order: position # [position, relevance]
   database:
     engine: mysql
@@ -29,26 +30,26 @@ builder:
   ignoreClasses: ['V', 'SUBJ', 'REFL', 'PR', 'ADJP', 'SINF']
   extractArguments: true
   createTables: false
-  clearTables: true
+  clearTables: false
 
 statistics:
-  run: false
-  modules: ['frequency', 'power-law', 'loglikelihood', 't-score']
+  modules: ['frequency', 'loglikelihood', 't-score'] #['frequency', 'power-law', 'loglikelihood', 't-score']
 
 filter: 
-  #columns: ['verbFrequency', 'frequency', 'relativeFrequency', 'verb.alpha']
+  #columns: ['verbFrequency', 'frequency', 'relativeFrequency', 'frameFrequency']
   #values: [0, 0, 0, 0.5]
   #operators: ['<', '<', '<', '<']
-  columns: ['relativeFrequency']
-  values: [0.03]
-  operators: ['<']
+  columns: ['verbFrequency', 'frequency']
+  values: [50, 5]
+  operators: ['>', '>', '>']
 
 evaluator:
-  scfReferenceTable: framenet_frames
+  scfReferenceTable: nilc_frames
   filter: relativeFrequency
   verbList: []
-  minValue: 0
-  maxValue: 1
-  increment: 0.1
-  operator: '<' 
+  minValue: 0.001
+  maxValue: 0.4
+  increment: 0.01
+  operator: '>' 
+  #output: '/home/adriano/relative.jpg'
   output: ''

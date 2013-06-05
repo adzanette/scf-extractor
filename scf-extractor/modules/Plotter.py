@@ -28,6 +28,6 @@ class Plotter():
   def show(self):
     pylab.show()
 
-  def save(filename):
+  def save(self, filename):
     pylab.savefig(filename)
 

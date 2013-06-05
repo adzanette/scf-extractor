@@ -41,10 +41,9 @@ class Evaluator():
 
     while(self.value <= self.max):
 
-      filters.resetFrameFilters()
       filters.setComparator(self.filter, self.operator, self.value)
-      filters.filter()
-
+      filters.filterFrames()
+      
       retrieved = Frame.select().where(Frame.filtered == False).count()
       intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
 
@@ -79,18 +78,20 @@ class Evaluator():
 
     while(self.value <= self.max):
 
-      filters.resetFrameFilters()
       filters.setComparator(self.filter, self.operator, self.value)
-      filters.filter()
+      filters.filterFrames()
       
-      golden = ReferenceFrame.select().join(Verb).where(Verb.frequency > verbFilter).count()
+      golden = filters.countGoldenFrames()
 
-      retrieved = Frame.select().where(Frame.filtered == False).count()
-      intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
+      retrieved = filters.countNotFilteredFrames()
+      #retrieved = Frame.select().where(Frame.filtered == False).count()
+      #intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
+      intersect = filters.countIntersection()
 
       p = float(intersect)/float(retrieved)
       r = float(intersect)/float(golden)
       f = (2*p*r)/(p+r) 
+      print 'value: %s, ints: %s, retr: %s, gold: %s ' % (str(self.value), str(intersect), str(retrieved), str(golden))
       print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
 
       self.values.append(self.value)
@@ -110,6 +111,6 @@ class Evaluator():
     plotter.title('SCFExtractor Evaluation')
     plotter.labels("Cutoff", '%')
     if self.output:
-      plotter.output(output)
+      plotter.output(self.output)
     else:
       plotter.show()

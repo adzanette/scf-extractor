@@ -40,7 +40,7 @@ class Extractor():
         verb = verbCore[len(verbCore)-1]
           
         for verbSer in verbCore:
-          if verbSer.lemma == 'ser' and verb.father.id == verbSer.id:
+          if verbSer.lemma == 'ser' and verb.father and verb.father.id == verbSer.id:
             isVerbSer = True
             
         if isVerbSer and len(verb.morphos) > 1 and 'PCP' in verb.morphos:

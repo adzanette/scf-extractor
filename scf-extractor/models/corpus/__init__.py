@@ -24,10 +24,10 @@ class BaseModel(Model):
 # @author Adriano Zanette
 # @version 0.1
 class Sentence(BaseModel):
-  id = PrimaryKeyField(db_column='ID')
-  raw = TextField(db_column='Sentence')
-  parsed = TextField(db_column='RaspDepParse')  
-  html = TextField(db_column='RaspDepParse')
+  id = PrimaryKeyField(db_column='id')
+  raw = TextField(db_column='sentence')
+  parsed = TextField(db_column='parsed')  
+  html = TextField(db_column='html')
 
   class Meta:
     db_table = 'sentences'

@@ -169,7 +169,6 @@ class Sentence(object):
         token.morphos.append(info)
 
     if not hasRelationship:
-      print line
       return None
 
     return token

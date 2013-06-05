@@ -19,7 +19,6 @@ class Statistics:
   # @param filename String File name
   # @return Boolean 
   def __init__(self):
-    self.execute = config.statistics.run
     self.modules = config.statistics.modules
 
   ## test if a file exists
@@ -28,16 +27,15 @@ class Statistics:
   # @param filename String File name
   # @return Boolean 
   def run(self):
-    if self.execute:
-      if 'frequency' in self.modules:
-        self.calculateRelativeFrequencies()
-        
-      if 'loglikelihood' in self.modules or 't-score' in self.modules:
-        self.calculateLogLikelihood()
+    if 'frequency' in self.modules:
+      self.calculateRelativeFrequencies()
+      
+    if 'loglikelihood' in self.modules or 't-score' in self.modules:
+      self.calculateLogLikelihood()
 
-      if 'power-law' in self.modules:
-        self.calculateAlphas()
-        
+    if 'power-law' in self.modules:
+      self.calculateAlphas()
+      
   ## test if a file exists
   # @author Adriano Zanette
   # @version 1.0
