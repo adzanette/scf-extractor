@@ -69,10 +69,6 @@ class Evaluator():
     self.fmeasure = []
 
     verbFilter = 1
-    if 'verb.frequency' in self.filter:
-      verbFilter = self.filter['verb.frequency']
-    elif 'verbFrequency' in self.filter:
-      verbFilter = self.filter['verbFrequency']
 
     filters = Filter()
 
@@ -91,8 +87,9 @@ class Evaluator():
       p = float(intersect)/float(retrieved)
       r = float(intersect)/float(golden)
       f = (2*p*r)/(p+r) 
-      print 'value: %s, ints: %s, retr: %s, gold: %s ' % (str(self.value), str(intersect), str(retrieved), str(golden))
-      print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
+      #print 'value: %s, ints: %s, retr: %s, gold: %s ' % (str(self.value), str(intersect), str(retrieved), str(golden))
+      #print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
+      print '%s,%s,%s,%s' % (str(self.value), str(p*100), str(r*100), str(f*100))
 
       self.values.append(self.value)
       self.precision.append(p)

@@ -3,6 +3,7 @@ namespace SCFViewer\Controller;
 
 use AZ\Framework\Database;
 use AZ\Framework\ORM;
+use AZ\Framework\HTTP\Response;
 use AZ\Framework\HTTP\JsonResponse;
 use SCFViewer\Model\Verb;
 use SCFViewer\Model\Frame;
@@ -28,6 +29,12 @@ class SiteController extends \AZ\Framework\Kernel\Controller{
     $return = array();
     $return['databases'] = $databases;
     return $this->render('select-corpus.html.php', $return); 
+  }
+
+  public function show404(){
+    $html = '<pre>';
+    $html .= print_r($this->context, true);
+    return new Response($html); 
   }
 
   public function selectCorpus(){

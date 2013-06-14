@@ -108,7 +108,10 @@ class Builder:
   # @return None
   def saveSentence(self, sentence):
     #return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed, html = sentence.html)
-    return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed)
+    if self.extractArguments:
+      return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed)
+    else:
+      return None
    
   ## Store SCF on database 
   # @author Adriano Zanette
@@ -131,16 +134,17 @@ class Builder:
     except:
       scf = Frame.create(frame=frame.scf, verb=verb, isPassive = frame.isPassive)
 
-    example = Example.create(frame=scf, sentence=sentence, position=frame.position)
     if self.extractArguments:
+      example = Example.create(frame=scf, sentence=sentence, position=frame.position)
       for element in frame.elements:
-        if element.argument:
-          Argument.create(
-            example = example,
-            argument = element.raw,
-            sintax = element.argument,
-            position = element.position,
-            positionFirstWord = element.begin,
-            positionLasttWord = element.end,
-            relevance = element.relevance
-          )
+        #if element.argument:
+        Argument.create(
+          example = example,
+          argument = element.raw,
+          element = element.element,
+          sintax = element.argument,
+          position = element.position,
+          positionFirstWord = element.begin,
+          positionLasttWord = element.end,
+          relevance = element.relevance
+        )

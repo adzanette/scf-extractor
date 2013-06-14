@@ -1,7 +1,7 @@
-command: Evaluate # [ExtractSCF, Evaluate, RunStatistcs]
+command: ExtractSCF # [ExtractSCF, Evaluate, RunStatistcs]
 
 reader:
-  module: NILCLexicon # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
+  module: PalavrasFileCorpus # [SentenceDatabaseCorpus, ExampleDatabaseCorpus, PalavrasFileCorpus, NILCLexicon, XmlFile]
   database:
     engine: mysql 
     host: localhost
@@ -11,15 +11,15 @@ reader:
   databaseReader:
     pageSize: 100 
   fileReader:
-    #path: /home/adriano/src/cardiologia/
-    path: /home/adriano/src/lexicoNilc.txt
+    path: /home/adriano/src/cardiologia/
+    #path: /home/adriano/src/lexicoNilc.txt
 
 extractor:
-  module: NILCLexicon # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
+  module: PalavrasDependency # [SintaticRaspDependency, SemanticFrames, PalavrasDependency, NILCLexicon, Verbnet, Framenet]
 
 builder:
-  module: ReferenceFrames # [SCF, SemanticFramesDatabase, , ReferenceFrames]
-  order: position # [position, relevance]
+  module: SCF # [SCF, SemanticFramesDatabase, , ReferenceFrames]
+  order: relevance # [position, relevance]
   database:
     engine: mysql
     host: localhost
@@ -28,9 +28,9 @@ builder:
     dbName: scf-cardiologia
     scfReferenceTable: nilc_frames
   ignoreClasses: ['V', 'SUBJ', 'REFL', 'PR', 'ADJP', 'SINF']
-  extractArguments: true
+  extractArguments: false
   createTables: false
-  clearTables: false
+  clearTables: true
 
 statistics:
   modules: ['frequency', 'loglikelihood', 't-score'] #['frequency', 'power-law', 'loglikelihood', 't-score']
@@ -40,16 +40,20 @@ filter:
   #values: [0, 0, 0, 0.5]
   #operators: ['<', '<', '<', '<']
   columns: ['verbFrequency', 'frequency']
-  values: [50, 5]
-  operators: ['>', '>', '>']
+  #values: [100, 2]
+  #verb 81, 114, 172
+  #f: 2, rf: 0.008, vf:114, p: 0.644444444444, r: 0.537037037037, f: 0.585858585859
+  #f: 4, rf: 0.008, vf: 172, p: 0.574074074074, r: 0.607843137255, f: 0.590476190476 
+  values: [172, 4]
+  operators: ['>', '>']
 
 evaluator:
   scfReferenceTable: nilc_frames
   filter: relativeFrequency
   verbList: []
   minValue: 0.001
-  maxValue: 0.4
-  increment: 0.01
+  maxValue: 0.041
+  increment: 0.0001
   operator: '>' 
   #output: '/home/adriano/relative.jpg'
   output: ''

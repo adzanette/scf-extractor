@@ -56,7 +56,7 @@ class Application{
   }
 
   public function handleRequest(){  
-    $path = $this->request->server->get('PHP_SELF');
+    $path = $this->request->server->get('REQUEST_URI');
 
     list($route, $params) = $this->router->route($path);
     

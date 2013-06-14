@@ -84,7 +84,7 @@ class Statistics:
   # @param filename String File name
   # @return Boolean 
   def logL(self, p, k, n):
-    return k * math.log(p) + (n -k) * math.log(1-p)
+    return k * math.log(p, 10) + (n -k) * math.log(1-p, 10)
 
   ## test if a file exists
   # @author Adriano Zanette
@@ -92,7 +92,8 @@ class Statistics:
   # @param filename String File name
   # @return Boolean 
   def alpha(self, n, p):
-    return n*p*(1-p)
+    fraction = (p*(1-p))/n
+    return math.sqrt(fraction)
 
   ## test if a file exists
   # @author Adriano Zanette
@@ -113,8 +114,8 @@ class Statistics:
   def calculateLogLikelihood(self):
 
     query = database.execute_sql("""
-      SELECT SUM("""+Verb.frequency.db_column+""") AS totalFrequency 
-      FROM """+Verb._meta.db_table)
+      SELECT SUM("""+Frame.frequency.db_column+""") AS totalFrequency 
+      FROM """+Frame._meta.db_table)
     totalFrequency = query.fetchall()[0][0]
 
     frames = FrameDatabaseIterator.Iterator()

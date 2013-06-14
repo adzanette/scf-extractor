@@ -43,7 +43,7 @@ class Token(object):
   # @version 0.1
   # @return Boolean
   def isVerb(self):
-    if 'VFIN' in self.morphos:
+    if 'VFIN' in self.morphos or 'IND' in self.morphos:
       return True
     return False
 
@@ -131,11 +131,11 @@ class Sentence(object):
     for tokenId in self.tokens:
       token = self.tokens[tokenId]
       fatherId = token.relationship[1]
-      if fatherId <> 0:
+      if fatherId <> 0 and fatherId in self.tokens:
         father = self.tokens[fatherId]
         token.father = father
         father.children.append(token)
-      elif not token.word.startswith('$'):
+      elif not token.word.startswith('$'):  
         self.root = token
     
   ## Process a token line
@@ -193,9 +193,11 @@ class Sentence(object):
     verbalPhrase += verb.word + ' '
     if 'aux' not in verb.semantics and 'V' in verb.morphos:
       return core, verbalPhrase[:-1]
-    else:
+    elif verb.id+1 in self.tokens:
       verb = self.tokens[verb.id+1]
       return self.searchCoreVerb(verb, core, verbalPhrase)
+    else:
+      return None, None
 
   ## Gets all verbs from a sentence
   # @author Adriano Zanette

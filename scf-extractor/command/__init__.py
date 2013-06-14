@@ -78,7 +78,7 @@ class RunStatistcs:
     statistics = Statistics()
     statistics.run()
 
-    scfFilter = Filter()
-    scfFilter.filter()
+    #scfFilter = Filter()
+    #scfFilter.filter()
 
 

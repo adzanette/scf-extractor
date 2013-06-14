@@ -51,7 +51,7 @@ $conf['database'] = array(
 $conf['databases'] = array(
     'scf-cardiologia' => 'database.cardiologia',
     'scf-diario-gaucho' => 'database.diario',
-    'scf-lacio' => 'database.lacio',
+    'scf-bosque' => 'database.bosque',
     'scf-teste' => 'database.teste'
 );
 

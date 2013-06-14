@@ -36,7 +36,11 @@ class Extractor():
       verbWord = verb.word
       if verb.isAuxialiary():
         verbCore, verbWord = palavrasSentence.searchCoreVerb(verb)
-
+        
+        if not verbCore:
+          continue
+        
+        frames.append(self.buildAuxiliaryFrame(verb))
         verb = verbCore[len(verbCore)-1]
           
         for verbSer in verbCore:
@@ -103,6 +107,14 @@ class Extractor():
     palavrasSentence.processRelationships()
 
     return palavrasSentence
+
+  def buildAuxiliaryFrame(self, verb):
+    frame = SCF()
+    frame.verb = verb.lemma
+    frame.position = verb.id
+    verbElement = Element(sintax = 'AUX', element = 'AUX', relevance = 0, position = verb.id, raw = verb.word)
+    frame.elements.append(verbElement)
+    return frame
 
   ## Extract information from a token
   # @author Adriano Zanette
