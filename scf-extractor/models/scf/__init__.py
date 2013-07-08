@@ -36,10 +36,10 @@ class BaseModel(Model):
 # @version 0.1
 class Verb(BaseModel):
   id = PrimaryKeyField(db_column='id_verb')
-  verb = CharField(max_length=100, unique=True)
-  frequency = FloatField(default=1)
+  verb = CharField(max_length=100, unique=True, index=True)
+  frequency = IntegerField(default=1, index=True)
   alpha = FloatField(default=0)
-  filtered = BooleanField(default=False)
+  filtered = BooleanField(default=False, index=True)
   
   class Meta:
     db_table = 'verbs'
@@ -50,15 +50,15 @@ class Verb(BaseModel):
 class Frame(BaseModel):
   id = PrimaryKeyField(db_column='id_frame')
   verb = ForeignKeyField(Verb,  db_column='id_verb', related_name='frames')
-  frame = CharField(max_length=255)
-  frequency = FloatField(default=1)
-  frameFrequency = FloatField(default=0, db_column='frame_frequency')
-  relativeFrequency = FloatField(default=0, db_column='relative_frequency')
-  verbFrequency = FloatField(default=0, db_column='verb_frequency')
+  frame = CharField(max_length=255, index=True)
+  frequency = IntegerField(default=1, index=True)
+  frameFrequency = IntegerField(default=0, db_column='frame_frequency')
+  relativeFrequency = FloatField(default=0, db_column='relative_frequency', index=True)
+  verbFrequency = IntegerField(default=0, db_column='verb_frequency', index=True)
   logLikelihoodRatio = FloatField(default=0, db_column='log_likelihood_ratio')
   tscore = FloatField(default=0, db_column='t_score')
-  isPassive = BooleanField(default=False, db_column='is_passive')
-  filtered = BooleanField(default=False)
+  isPassive = BooleanField(default=False, db_column='is_passive', index=True)
+  filtered = BooleanField(default=False, index=True)
 
   def referenceFrame(self):
     try:
@@ -75,11 +75,14 @@ class Frame(BaseModel):
 class ReferenceFrame(BaseModel):
   id = PrimaryKeyField(db_column='id_frame')
   verb = ForeignKeyField(Verb,  db_column='id_verb', related_name='referenceFrames')
-  frame = CharField(max_length=255)
-  isPassive = BooleanField(default=False, db_column='is_passive')
+  frame = CharField(max_length=255, index=True)
+  isPassive = BooleanField(default=False, db_column='is_passive', index=True)
   
   class Meta:
     db_table = dbConfig.scfReferenceTable
+    indexes = (
+                (('frame', 'verb'), True),
+              )
 
 ## Model for semantic frames
 # @author Adriano Zanette
@@ -88,7 +91,7 @@ class SemanticFrame(BaseModel):
   id = PrimaryKeyField(db_column='id_frame')
   verb = ForeignKeyField(Verb,  db_column='id_verb', related_name='semanticFrames')
   frame = CharField(max_length=255)
-  frequency = FloatField(default=1)
+  frequency = IntegerField(default=1)
   
   class Meta:
     db_table = 'semantic_frames'

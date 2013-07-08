@@ -52,6 +52,6 @@ class Builder(SCFBuilder):
     
     if verb:
       try:
-        scf = RerferenceFrame.get(Frame.frame == frame.scf, Frame.verb == verb)
-      except:
         scf = ReferenceFrame.create(frame=frame.scf, verb=verb)
+      except:
+        pass

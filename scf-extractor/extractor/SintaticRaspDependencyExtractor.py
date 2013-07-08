@@ -31,7 +31,7 @@ class Extractor(RaspDependencyExtractor):
     elif token.relation in ['dobj', 'obj2', 'obj']:
       element = Element(sintax = 'NP', element = 'NP', argument = 'DIRECT.OBJECT', relevance = 1)
     elif token.relation in ['iobj', 'pcomp', 'pmod']:
-      element = Element(sintax = 'PP', element = "PP[%s]" % (token.word), argument = 'INDIRECT.OBJECT', relevance = 1)
+      element = Element(sintax = 'PP', element = "PP[%s]"% (token.word), argument = 'INDIRECT.OBJECT', relevance = 1)
     elif token.morpho.startswith('R'):
       element = Element(sintax = 'ADVP', element = "ADVP", argument = 'ADJUNCT.ADVERBIAL', relevance = 1)
     elif token.morpho.startswith('J'):

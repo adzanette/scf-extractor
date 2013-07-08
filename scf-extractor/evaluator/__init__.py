@@ -78,16 +78,13 @@ class Evaluator():
       filters.filterFrames()
       
       golden = filters.countGoldenFrames()
-
       retrieved = filters.countNotFilteredFrames()
-      #retrieved = Frame.select().where(Frame.filtered == False).count()
-      #intersect = Frame.select().join(Verb).join(ReferenceFrame).where(Frame.verb == ReferenceFrame.verb, Frame.frame == ReferenceFrame.frame, Frame.filtered == False).count()
       intersect = filters.countIntersection()
 
+      #print 'value: %s, ints: %s, retr: %s, gold: %s ' % (str(self.value), str(intersect), str(retrieved), str(golden))
       p = float(intersect)/float(retrieved)
       r = float(intersect)/float(golden)
       f = (2*p*r)/(p+r) 
-      #print 'value: %s, ints: %s, retr: %s, gold: %s ' % (str(self.value), str(intersect), str(retrieved), str(golden))
       #print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
       print '%s,%s,%s,%s' % (str(self.value), str(p*100), str(r*100), str(f*100))
 

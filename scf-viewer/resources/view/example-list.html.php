@@ -23,7 +23,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
   foreach($examples as $example){
     $exampleId = $example->id_example;
     $sentence = $example->sentence;
-    $arguments = $example->arguments(array('active = 1'));
+    $arguments = $example->arguments(array('active = 1', 'sintax is not null', 'sintax <> \'\''));
     ?>  
     <div class="accordion-group" id="<?php echo $exampleId; ?>">
       <div class="accordion-heading">

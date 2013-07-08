@@ -143,6 +143,8 @@ class Sentence(object):
 
     fatherToken = self.getToken(father)
     childToken = self.getToken(child)
+    if not fatherToken or not childToken:
+      return None
 
     fatherToken.children.append(childToken)
     childToken.father = fatherToken
@@ -179,6 +181,9 @@ class Sentence(object):
   # @param strToken String Token line
   # @return Token
   def getToken(self, strToken):
+
+    if strToken == '\;':
+      return None
 
     position, word, modifier, morpho = self.processToken(strToken)
 

@@ -138,17 +138,13 @@ class Extractor():
     elif "ADVL" == token.function and not "ADV" in token.morphos:
       element = Element(sintax = 'PP', element = "PP[%s]" % (token.lemma), argument = 'ADVERBIAL.ADJUNCT', relevance = 4)
     elif "DAT" == token.function:
-      element = Element(sintax = 'DAT', element = "PP[%s]" % (token.lemma), argument = 'PRONOMINAL.INDIRECT.OBJECT', relevance = 2)
+      element = Element(sintax = 'DAT', element = "DAT" % (token.lemma), argument = 'PRONOMINAL.INDIRECT.OBJECT', relevance = 2)
     elif token.function in ["FS-ACC", 'ICL-ACC']:
-      element = Element(sintax = 'OCL', element = "NP", argument = 'CLAUSAL.DIRECT.OBJECT', relevance = 3)
+      element = Element(sintax = 'OCL', element = "OCL", argument = 'CLAUSAL.DIRECT.OBJECT', relevance = 3)
     elif token.function in ["SC", 'ICL-SC', 'FS-SC', 'OC', 'ICL-OC', 'FS-OC']:
       element = Element(sintax = 'PR', element = "PR", argument = 'PREDICATIVE', relevance = 4)
       if "PRP" in token.morphos:
-        element.sintax = "PP"
-        element.element = "PP[%s]" % (token.lemma)
-      elif token.morphos[0] == 'N' or token.morphos[0] == 'NUM':
-        element.sintax = "NP"
-        element.element = "NP"
+        element.element = "PR[%s]" % (token.lemma)
     elif token.morphos and token.morphos[0]:
       if token.morphos[0] == 'N' or token.morphos[0] == 'NUM':
         element = Element(sintax = 'NP', element = "NP", argument = None, relevance = 3)

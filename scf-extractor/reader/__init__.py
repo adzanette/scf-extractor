@@ -5,4 +5,5 @@ __all__ = [
             ,'FrameDatabaseIterator'
             ,'XmlFileIterator'
             ,'NILCLexiconIterator'
+            ,'RaspFileCorpusIterator'
           ]

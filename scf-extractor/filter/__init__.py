@@ -28,61 +28,66 @@ class Filter:
         'value' : self.values[index]
       }
 
+  ## update a comparator
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param column String Column name
+  # @param operator String A valid comparator in SQL
+  # @param value String Value to compare
   def setComparator(self, column, operator, value):
     self.comparators[column] = {
       'operator' : operator,
       'value' : value
     }
 
-  ## Filters scfs
+  ## retrieve the number of golden frames not filtered
   # @author Adriano Zanette
   # @version 1.0
-  # @return Boolean 
-  def filter(self):
-    frames = FrameDatabaseIterator.Iterator()
-    for frame in frames:
-      for attribute in self.comparators:
-        operator = self.comparators[attribute]['operator']
-        value = self.comparators[attribute]['value']
-        if self.testField(self.getField(frame, attribute), operator, value):
-          frame.filtered = 1
-          frame.save()
-          break
-
+  # @return Integer 
   def countGoldenFrames(self):
-    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf JOIN verbs as v on v.id_verb = rf.id_verb WHERE v.id_verb in '
-    sql += '( SELECT id_verb FROM frames '+self.buildWhere()+' )'
+    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf WHERE id_verb in '
+    sql += '( SELECT DISTINCT(id_verb) FROM frames as f where f.filtered = 0 )'
     result = database.execute_sql(sql)
     return result.fetchone()[0]
 
-  def countIntersection(self):
-    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf JOIN frames as f '+ self.buildWhere() +' AND f.id_verb = rf.id_verb AND f.frame = rf.frame'
-    result = database.execute_sql(sql)
-    return result.fetchone()[0]
-
-
-
-  def countNotFilteredFrames(self):
-    sql = "SELECT COUNT(*) FROM "+Frame._meta.db_table + ' ' + self.buildWhere()
-    result = database.execute_sql(sql)
-    return result.fetchone()[0]
-
-
-  ## Filters verbs
+  ## retrieve the size of intersection between golden frames and frames extracted not filtered
   # @author Adriano Zanette
   # @version 1.0
-  # @return Boolean 
+  # @return Integer 
+  def countIntersection(self):
+    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf JOIN frames as f ON f.id_verb = rf.id_verb AND f.frame = rf.frame AND rf.is_passive = f.is_passive WHERE f.filtered = 0 '
+    result = database.execute_sql(sql)
+    return result.fetchone()[0]
+
+  ## retrieve the number of frames extracted not filtered
+  # @author Adriano Zanette
+  # @version 1.0
+  # @return Integer 
+  def countNotFilteredFrames(self):
+    sql = "SELECT COUNT(*) FROM "+Frame._meta.db_table + ' as f where filtered = 0'
+    result = database.execute_sql(sql)
+    return result.fetchone()[0]
+
+  ## filter verbs that aren't in a list
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param verbList List A list of verbs
   def filterVerbs(self, verbList):
     Verb.update(filtered = False).execute()
     sql = "UPDATE "+Verb._meta.db_table+" SET "+Verb.filtered.db_column+" = 1 WHERE "+Verb.verb.db_column+" NOT IN ('"+("','".join(verbList))+"') "
     database.execute_sql(sql)
 
+  ## Filters frames based on the list of comparators
+  # @author Adriano Zanette
+  # @version 1.0
   def filterFrames(self):
     Frame.update(filtered = False).execute()
-    sql = "UPDATE "+Frame._meta.db_table+" SET "+Frame.filtered.db_column+" = 1 "+ self.buildWhere()
+    sql = "UPDATE "+Frame._meta.db_table+" as f SET "+Frame.filtered.db_column+" = 1 "+ self.buildWhere()
     database.execute_sql(sql)
-
   
+  ## Builds where clause based on the list of comparators
+  # @author Adriano Zanette
+  # @version 1.0
   def buildWhere(self):
     where = ''
     first = True
@@ -90,62 +95,27 @@ class Filter:
       operator = self.comparators[field]['operator']
       value = self.comparators[field]['value']    
       if first:
-        where += ' WHERE '
+        where += ' WHERE ('
         first = False
       else:
-        where += ' AND '
-      where += self.getFieldName(field) + ' ' + self.getExpression(operator, value)
-    return where
+        where += ' OR '
+      where += 'f.' + self.getFieldName(field) + ' ' + self.getExpression(operator, value)
+    return where + ')'
 
+  ## Get name of fields in a table
+  # @author Adriano Zanette
+  # @version 1.0
+  # @param field String Field name
+  # @return String Fild name on table
   def getFieldName(self, field):
     return getattr(Frame, field).db_column
 
-  ## get an attribute from an object
+  ## Get a restriction on sql query
   # @author Adriano Zanette
   # @version 1.0
-  # @param obj Object
-  # @param field String Field name, if has '.' searches in a subclass
-  # @return Object Field value 
-  def getField(self, obj, field):
-    if '.' in field:
-      items = field.split('.')
-      attribute = items.pop(0)
-      obj = getattr(obj, attribute)
-      field = '.'.join(items)
-      return self.getField(obj, field)
-    else:
-      return getattr(obj, field)
-
-  ## This method compare two values with a comparator
-  # @author Adriano Zanette
-  # @version 1.0
-  # @param obj Object
-  # @param field String Field name, if has '.' searches in a subclass
-  # @return Boolean
-  def testField(self, field, operator, value):
-    operator = operator.strip()
-
-    if operator == '=':
-      if field == value: return True
-    elif operator == '>':
-      if field > value: return True
-    elif operator == '>=':
-      if field >= value: return True  
-    elif operator == '<':
-      if field < value: return True
-    elif operator == '<=':
-      if field <= value: return True
-    elif operator == '<>':
-      if field <> value: return True
-    elif operator == 'in':
-      if field in value: return True
-    elif operator == 'notin':
-      if field not in value: return True
-    elif operator == 'between':
-      if field >= value[0] and field <= value[1]: return True
-
-    return False
-
+  # @param operator String Operator type
+  # @param value String Value
+  # @return String SQL restriction
   def getExpression(self, operator, value):
     operator = operator.strip()
 
@@ -157,20 +127,3 @@ class Filter:
       return ' '+ operator +' '+ str(value[0]) + ' and ' + str(value[1]) + ' '
 
     return ''
-
-
-  def resetFrameFilters(self):
-    Frame.update(filtered = False).execute()
-    self.query = ''
-    self.where = ''
-    self.parameters = []
-
-  ## Reset scfs filtered
-  # @author Adriano Zanette
-  # @version 1.0
-  def resetFilters(self):
-    Verb.update(filtered=False).execute()
-    Frame.update(filtered = False).execute()
-    self.query = ''
-    self.where = ''
-    self.parameters = []

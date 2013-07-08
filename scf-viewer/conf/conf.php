@@ -49,9 +49,12 @@ $conf['database'] = array(
 );
 
 $conf['databases'] = array(
+    'scf-amazonia' => 'database.amazonia',
     'scf-cardiologia' => 'database.cardiologia',
     'scf-diario-gaucho' => 'database.diario',
     'scf-bosque' => 'database.bosque',
+    'scf-bosquefull' => 'database.bosque.completo',
+    'scf-lacio' => 'database.verbnet',
     'scf-teste' => 'database.teste'
 );
 
