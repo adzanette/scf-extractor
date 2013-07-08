@@ -1,8 +1,5 @@
 
-from modules.Configuration import *
 from models.scf import SCF, Element
-from models.palavras import *
-import re
 
 ## Extractor for Verbnet reference frames
 # @author Adriano Zanette

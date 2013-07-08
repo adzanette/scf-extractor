@@ -11,7 +11,7 @@ __all__ = [
             ,'SCF'
           ]
 
-from modules.Configuration import *
+config = getConfig()
 from lib.peewee import *
 
 

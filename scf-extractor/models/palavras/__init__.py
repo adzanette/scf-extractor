@@ -42,7 +42,7 @@ class Token(object):
   # @author Adriano Zanette
   # @version 0.1
   # @return Boolean
-  def isVerb(self):
+  def isMainVerb(self):
     if 'VFIN' in self.morphos or 'IND' in self.morphos:
       return True
     return False
@@ -206,7 +206,7 @@ class Sentence(object):
   def getVerbs(self):
     verbs = []
     for key, token in self.tokens.iteritems():
-      if token.isVerb():
+      if token.isMainVerb():
         verbs.append(token)
     return verbs
 

@@ -1,7 +1,7 @@
 
 __all__ = ['Statistics']
 
-from modules.Configuration import *
+config = getConfig()
 from models.scf import Verb, Frame, database
 from reader import *
 from lib.peewee import *

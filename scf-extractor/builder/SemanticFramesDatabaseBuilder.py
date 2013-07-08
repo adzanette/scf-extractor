@@ -1,5 +1,5 @@
+config = getConfig()
 
-from modules.Configuration import *
 from builder.SCFBuilder import Builder as SCFBuilder
 from models.scf import *
 import operator

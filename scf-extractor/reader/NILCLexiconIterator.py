@@ -1,5 +1,5 @@
 
-from modules.Configuration import *
+config = getConfig()
 from models.corpus import Sentence
 from CorpusIterator import *
 from FileCorpusIterator import FileCorpusIterator

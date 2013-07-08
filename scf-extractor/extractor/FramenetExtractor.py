@@ -1,9 +1,6 @@
 
-from modules.Configuration import *
 from modules.XmlUtils import XmlUtils
 from models.scf import SCF, Element
-from models.palavras import *
-import re
 
 ## Extractor for PALAVRAS dependency format
 # @author Adriano Zanette

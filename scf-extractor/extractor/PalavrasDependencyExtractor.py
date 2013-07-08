@@ -1,7 +1,6 @@
 
 from models.scf import Element, SCF
 from models.palavras import *
-import re
 
 ## Extractor for PALAVRAS dependency format
 # @author Adriano Zanette

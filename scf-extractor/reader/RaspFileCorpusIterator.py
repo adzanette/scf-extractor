@@ -71,7 +71,7 @@ class Iterator(CorpusIterator):
       elif not line:
         continue
 
-      if re.search(self.startGR, line):
+      if not self.readingSentence and re.search(self.startGR, line):
         self.readingSentence = True
         continue
 

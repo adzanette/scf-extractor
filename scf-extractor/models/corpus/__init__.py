@@ -1,7 +1,7 @@
 
 __all__ = ['Sentence']
 
-from modules.Configuration import *
+config = getConfig()
 from lib.peewee import *
 
 dbConfig = config.reader.database

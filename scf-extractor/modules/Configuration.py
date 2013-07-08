@@ -17,5 +17,7 @@ def construct_map(self, node):
  
 yaml.add_constructor('tag:yaml.org,2002:map', construct_map)
 
-configFile = file('settings.yml')
-config = yaml.load(configFile)
+def loadConfig(filename):
+  configFile = file(filename)
+  config = yaml.load(configFile)
+  return config

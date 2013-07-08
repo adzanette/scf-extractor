@@ -1,0 +1,25 @@
+input: 
+  path: /home/adriano/src/verbnet-3.2/
+
+output:
+  database:
+    engine: mysql
+    host: localhost
+    user: root
+    password: zanette
+    dbName: scf-english
+  createTables: false
+  clearTables: true
+
+reader:
+  module: PalavrasFileCorpus
+
+extractor:
+  module: PalavrasDependency 
+
+builder:
+  module: SCF 
+  order: position 
+  ignoreClasses: ['REFL', 'PR', 'OCL', 'DAT']
+  extractArguments: false
+

@@ -1,9 +1,8 @@
 
 __all__ = ['Filter']
 
-from modules.Configuration import *
+config = getConfig()
 from models.scf import Frame, Verb, ReferenceFrame, database
-from reader import *
 
 ## This class filter scf based on cutoffs
 # @author Adriano Zanette
@@ -15,8 +14,6 @@ class Filter:
   # @version 1.0
   # @return Filter
   def __init__(self):
-    self.query = ''
-    self.where = ''
     self.parameters = []
     self.columns = config.filter.columns
     self.operators = config.filter.operators
@@ -39,35 +36,7 @@ class Filter:
       'operator' : operator,
       'value' : value
     }
-
-  ## retrieve the number of golden frames not filtered
-  # @author Adriano Zanette
-  # @version 1.0
-  # @return Integer 
-  def countGoldenFrames(self):
-    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf WHERE id_verb in '
-    sql += '( SELECT DISTINCT(id_verb) FROM frames as f where f.filtered = 0 )'
-    result = database.execute_sql(sql)
-    return result.fetchone()[0]
-
-  ## retrieve the size of intersection between golden frames and frames extracted not filtered
-  # @author Adriano Zanette
-  # @version 1.0
-  # @return Integer 
-  def countIntersection(self):
-    sql = "SELECT COUNT(*) FROM "+ReferenceFrame._meta.db_table + ' as rf JOIN frames as f ON f.id_verb = rf.id_verb AND f.frame = rf.frame AND rf.is_passive = f.is_passive WHERE f.filtered = 0 '
-    result = database.execute_sql(sql)
-    return result.fetchone()[0]
-
-  ## retrieve the number of frames extracted not filtered
-  # @author Adriano Zanette
-  # @version 1.0
-  # @return Integer 
-  def countNotFilteredFrames(self):
-    sql = "SELECT COUNT(*) FROM "+Frame._meta.db_table + ' as f where filtered = 0'
-    result = database.execute_sql(sql)
-    return result.fetchone()[0]
-
+ 
   ## filter verbs that aren't in a list
   # @author Adriano Zanette
   # @version 1.0
@@ -82,7 +51,7 @@ class Filter:
   # @version 1.0
   def filterFrames(self):
     Frame.update(filtered = False).execute()
-    sql = "UPDATE "+Frame._meta.db_table+" as f SET "+Frame.filtered.db_column+" = 1 "+ self.buildWhere()
+    sql = "UPDATE "+Frame._meta.db_table+" AS f SET "+Frame.filtered.db_column+" = 1 "+ self.buildWhere()
     database.execute_sql(sql)
   
   ## Builds where clause based on the list of comparators
@@ -124,6 +93,6 @@ class Filter:
     elif operator in ['in', 'notin']:
       return ' '+ operator +' ('+ ','.join(value) + ') '
     elif operator == 'between':
-      return ' '+ operator +' '+ str(value[0]) + ' and ' + str(value[1]) + ' '
+      return ' '+ operator +' '+ str(value[0]) + ' AND ' + str(value[1]) + ' '
 
     return ''
