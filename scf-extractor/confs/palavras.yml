@@ -1,15 +1,16 @@
-input: 
-  path: /home/adriano/src/verbnet-3.2/
+corpora: 
+  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\bosque.txt
 
-output:
+frames:
   database:
     engine: mysql
     host: localhost
     user: root
     password: zanette
-    dbName: scf-english
+    dbName: scftest
   createTables: false
   clearTables: true
+  referenceTable: nilc_scf
 
 reader:
   module: PalavrasFileCorpus

@@ -1,5 +1,5 @@
 
-config = getConfig()
+from modules.Configuration import config
 from CorpusIterator import *
 
 ## This class reads sentences from a database

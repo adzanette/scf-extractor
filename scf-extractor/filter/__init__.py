@@ -1,7 +1,7 @@
 
 __all__ = ['Filter']
 
-config = getConfig()
+from modules.Configuration import config
 from models.scf import Frame, Verb, ReferenceFrame, database
 
 ## This class filter scf based on cutoffs

@@ -1,10 +1,11 @@
 
 __all__ = ['Sentence']
 
-config = getConfig()
+from modules.Configuration import config
+
 from lib.peewee import *
 
-dbConfig = config.reader.database
+dbConfig = config.frames.database
 
 if dbConfig.engine == 'mysql':
   host = dbConfig.host

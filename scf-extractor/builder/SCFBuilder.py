@@ -1,4 +1,5 @@
-config = getConfig()
+from modules.Configuration import config
+from builder.DatabaseBuilderException import DatabaseBuilderException
 from models.scf import *
 import operator
 
@@ -21,13 +22,13 @@ class Builder:
 
     self.extractArguments = config.builder.extractArguments
 
-    if config.builder.createTables:
+    if config.frames.createTables:
       try:
         self.createTables()
       except:
         raise DatabaseBuilderException('Error creating tables')
 
-    if config.builder.clearTables:
+    if config.frames.clearTables:
       try:
         self.clearTables()
       except:
@@ -56,7 +57,7 @@ class Builder:
       if len(scfParts) == 0:
         scf = 'INTRANS'
       else:
-        scf = scfParts.join('_')
+        scf = '_'.join(scfParts)
 
       frame.scf = scf
       self.saveFrame(frame, scfSentence)

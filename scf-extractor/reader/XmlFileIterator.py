@@ -1,5 +1,5 @@
 
-config = getConfig()
+from modules.Configuration import config
 from modules.FileUtils import FileUtils
 from CorpusIterator import *
 import xml.etree.ElementTree as xml

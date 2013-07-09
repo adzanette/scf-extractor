@@ -1,17 +1,19 @@
+from modules.Configuration import config
+from command import *
 
-class CommandHandler():
+class CommandHandler:
 
   def __init__(self):
     pass
 
   def run(self, command):
     if command == 'extract-scf':
-      operation = ExtractSCF()
+      operation = ExtractSCF.ExtractSCF()
     elif command == 'evaluate':
-      operation = Evaluate()
-    elif command == 'run-statistcs'
-      operation = RunStatistcs()
+      operation = Evaluate.Evaluate()
+    elif command == 'run-statistcs':
+      operation = Evaluate.RunStatistcs()
     else:
       raise Exception("unknown command")
 
-    opertion.run()
+    operation.run()

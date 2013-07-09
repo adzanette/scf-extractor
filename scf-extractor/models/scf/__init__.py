@@ -11,11 +11,11 @@ __all__ = [
             ,'SCF'
           ]
 
-config = getConfig()
+from modules.Configuration import config
 from lib.peewee import *
 
 
-dbConfig = config.builder.database
+dbConfig = config.frames.database
 
 if dbConfig.engine == 'mysql':
   host = dbConfig.host
@@ -82,7 +82,7 @@ class ReferenceFrame(BaseModel):
   isPassive = BooleanField(default=False, db_column='is_passive', index=True)
   
   class Meta:
-    db_table = dbConfig.scfReferenceTable
+    db_table = config.frames.referenceTable
     indexes = (
                 (('frame', 'verb'), True),
               )

@@ -1,5 +1,4 @@
-config = getConfig()
-
+from modules.Configuration import config
 from builder.SCFBuilder import Builder as SCFBuilder
 from models.scf import *
 import operator
@@ -47,7 +46,7 @@ class Builder:
       scfParts.append(strElement)
       
     if len(scfParts) > 0:
-      scf = scfParts.join('+')
+      scf = '+'.join(scfParts)
       self.saveFrame(scf, example)
 
   ## Store Semantic SCF on database 

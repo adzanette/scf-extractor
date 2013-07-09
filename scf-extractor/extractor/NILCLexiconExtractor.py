@@ -1,5 +1,5 @@
 
-config = getConfig()
+from modules.Configuration import config
 from models.scf import SCF, Element
 import re
 

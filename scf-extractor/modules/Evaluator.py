@@ -1,5 +1,4 @@
-config = getConfig()
-
+from modules.Configuration import config
 from models.scf import Frame, ReferenceFrame, Verb, database
 from modules.Plotter import Plotter
 from filter import Filter

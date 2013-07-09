@@ -1,5 +1,5 @@
 
-config = getConfig()
+from modules.Configuration import config
 from modules.FileUtils import FileUtils
 from CorpusIterator import *
 
@@ -16,7 +16,7 @@ class FileCorpusIterator(CorpusIterator):
     self.filePointer = None
     self.EOF = False
     self.files = []
-    path = config.reader.fileReader.path  
+    path = config.corpora.path  
     self.files = FileUtils.getFiles(path)
     self.openNextFile()
 

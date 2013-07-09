@@ -1,4 +1,4 @@
-input: 
+corpora: 
   path: /home/adriano/src/verbnet-3.2/
 
 output:
