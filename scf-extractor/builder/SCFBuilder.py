@@ -1,13 +1,6 @@
 config = getConfig()
-
 from models.scf import *
 import operator
-
-## Exception for error creating or deleting tables
-# @author Adriano Zanette
-# @version 0.1
-class DatabaseBuilderException(Exception):
-  pass
 
 ## Builder receives as argument an set of elements and builds scfs and stores on database
 # @author Adriano Zanette
@@ -52,20 +45,19 @@ class Builder:
     scfSentence = self.saveSentence(sentence)
 
     for frame in frames:
-
+      scfParts = []
+      
       elements = frame.elements
-     
-      scf  = ''
       elements.sort(key = operator.attrgetter(self.order))
       for element in elements:
         if element.sintax not in self.ignoreClasses:
-          if scf  == '' :
-            scf = element.element
-          else:
-            scf += "_" + element.element
+          scfParts.append(element.element)
 
-      if scf == '':
+      if len(scfParts) == 0:
         scf = 'INTRANS'
+      else:
+        scf = scfParts.join('_')
+
       frame.scf = scf
       self.saveFrame(frame, scfSentence)
 
@@ -107,8 +99,8 @@ class Builder:
   # @param sentence Sentence to be strored
   # @return None
   def saveSentence(self, sentence):
-    #return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed, html = sentence.html)
     if self.extractArguments:
+      #return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed, html = sentence.html)
       return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed)
     else:
       return None
@@ -121,23 +113,18 @@ class Builder:
   # @return None
   def saveFrame(self, frame, sentence):
     try:
-      verb = Verb.get(Verb.verb == frame.verb)
-      verb.frequency = verb.frequency + 1
-      verb.save()
-    except:
       verb = Verb.create(verb=frame.verb)
+    except:
+      Verb.update(frequency = Verb.frequency+1).where(Verb.verb == frame.verb).execute()
       
     try:
-      scf = Frame.get(Frame.frame == frame.scf, Frame.verb == verb, Frame.isPassive == frame.isPassive)
-      scf.frequency = scf.frequency + 1
-      scf.save()
-    except:
       scf = Frame.create(frame=frame.scf, verb=verb, isPassive = frame.isPassive)
-
+    except:
+      Frame.update(frequency = Frame.frequency+1).where(Frame.frame == frame.scf, Frame.verb == verb, Frame.isPassive == frame.isPassive).execute()
+    
     if self.extractArguments:
       example = Example.create(frame=scf, sentence=sentence, position=frame.position)
       for element in frame.elements:
-        #if element.argument:
         Argument.create(
           example = example,
           argument = element.raw,

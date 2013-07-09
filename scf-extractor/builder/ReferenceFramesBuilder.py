@@ -1,5 +1,4 @@
 config = getConfig()
-
 from builder.SCFBuilder import Builder as SCFBuilder
 from models.scf import *
 import operator

@@ -9,7 +9,6 @@ import operator
 # @version 0.1
 class Builder:
 
-
   ## Class constuctor
   # @author Adriano Zanette
   # @version 0.1
@@ -39,19 +38,16 @@ class Builder:
   # @param frame models.scf.SCF Frames for a sentence
   # @return None
   def buildFrames(self, example, frame):
-
+    scfParts = []
     elements = frame.elements
-   
-    scf  = ''
     elements.sort(key = operator.attrgetter(self.order))
+
     for element in elements:
       strElement = '%s<%s>' % (element.argument, element.semantic)
-      if scf  == '' :
-        scf = strElement
-      else:
-        scf += '+' + strElement
-  
-    if scf <> '':
+      scfParts.append(strElement)
+      
+    if len(scfParts) > 0:
+      scf = scfParts.join('+')
       self.saveFrame(scf, example)
 
   ## Store Semantic SCF on database 
@@ -61,15 +57,12 @@ class Builder:
   # @param example models.scf.Example
   # @return None
   def saveFrame(self, frame, example):
-    
     verb = example.frame.verb
     
     try:
-      scf = SemanticFrame.get(SemanticFrame.frame == frame, SemanticFrame.verb == verb)
-      scf.frequency = scf.frequency + 1
-      scf.save()
-    except:
       scf = SemanticFrame.create(frame=frame, verb=verb)
-
+    except:
+      SemanticFrame.update(frequency = SemanticFrame.frequency+1).where(SemanticFrame.frame == frame, SemanticFrame.verb == verb).execute()
+  
     example.semanticFrame = scf
     example.save()

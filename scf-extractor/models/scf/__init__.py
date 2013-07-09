@@ -68,6 +68,9 @@ class Frame(BaseModel):
   
   class Meta:
     db_table = 'frames'
+    indexes = (
+                (('frame', 'verb', 'isPassive'), True),
+              )
 
 ## Model for reference frames
 # @author Adriano Zanette
@@ -95,6 +98,9 @@ class SemanticFrame(BaseModel):
   
   class Meta:
     db_table = 'semantic_frames'
+    indexes = (
+                (('frame', 'verb'), True),
+              )
 
 ## Model for sentences
 # @author Adriano Zanette
