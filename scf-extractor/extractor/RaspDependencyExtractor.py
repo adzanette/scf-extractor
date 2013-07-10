@@ -21,13 +21,8 @@ class RaspDependencyExtractor:
   # @param sentence Sentence 
   # @return Dict Frames to be built
   def extract(self, sentence):
+    raspSentence = self.buildSentence(sentence)
     
-    try:
-      raspSentence = self.buildSentence(sentence)
-    except Exception as e:
-      print sentence.parsed
-      raise e
-
     verbs = raspSentence.getVerbs()
     frames = []
     for verb in verbs:

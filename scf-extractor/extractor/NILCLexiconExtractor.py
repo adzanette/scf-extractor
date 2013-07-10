@@ -3,7 +3,7 @@ from modules.Configuration import config
 from models.scf import SCF, Element
 import re
 
-## Extractor for NILC lexicon
+## Extractor for NILC reference lexicon
 # @author Adriano Zanette
 # @version 0.1
 class Extractor():
@@ -16,17 +16,18 @@ class Extractor():
     self.allowedTags = ['BI', 'TI', 'TD', 'AUX', 'INT']
     self.reVerbs = re.compile(r'^(?P<verb>.+)=<V\.\[(?P<subs>[A-Z.]+)\].+N\.\[(?P<preps>[^\]]*)\]', re.L)
     
-  ## It extracts frames
+  ## It extracts reference frames
   # @author Adriano Zanette
   # @version 0.1
   # @param sentence String 
-  # @return Dict Frames to be built
+  # @return List Frames to be built
   def extract(self, sentence):
     frames = []
     matches = re.search(self.reVerbs, sentence.raw)
     verb = matches.group("verb")
     subcats = matches.group("subs").split(".")
-    prepositions = matches.group("preps")[0:len(matches.group("preps"))-1].split(".")    
+    preps = matches.group("preps")
+    prepositions = preps[0:len(preps)-1].split(".")    
 
     for subcat in subcats:
       if subcat == 'BI' or subcat == 'TI':
@@ -37,7 +38,7 @@ class Extractor():
     
     return frames
 
-  ## Extract information from a token
+  ## Build a frame based on lexicon annotation
   # @author Adriano Zanette
   # @version 0.1
   # @param token Token

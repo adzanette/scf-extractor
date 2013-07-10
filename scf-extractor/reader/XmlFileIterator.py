@@ -15,7 +15,7 @@ class Iterator(CorpusIterator):
   # @return FileReader
   def __init__(self):
     self.files = []
-    path = config.reader.fileReader.path  
+    path = config.corpora.path  
     self.files = FileUtils.getFiles(path, extensions = ['.xml'])
 
   ## Read a line from a file

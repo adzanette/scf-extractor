@@ -1,5 +1,5 @@
 corpora: 
-  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\bosque.txt
+  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\framenet\
 
 frames:
   database:
@@ -10,17 +10,17 @@ frames:
     dbName: scftest
   createTables: false
   clearTables: true
-  referenceTable: nilc_scf
+  referenceTable: framenet_scf
 
 reader:
-  module: PalavrasFileCorpus
+  module: XmlFile
 
 extractor:
-  module: PalavrasDependency 
+  module: Framenet 
 
 builder:
-  module: SCF 
+  module: ReferenceFrames 
   order: position 
   ignoreClasses: ['REFL', 'PR', 'OCL', 'DAT']
-  extractArguments: true
+  extractArguments: false
 

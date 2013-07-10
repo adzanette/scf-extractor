@@ -1,6 +1,8 @@
-
 from modules.Evaluator import Evaluator
 
+## This command evaluates system's performance
+# @author Adriano Zanette
+# @version 0.1
 class Evaluate:
 
   ## Class constuctor
@@ -10,7 +12,7 @@ class Evaluate:
   def __init__(self):
     pass
 
-  ## Read, extract and store SCF's
+  ## Execute the evaluation
   # @author Adriano Zanette
   # @version 0.1
   def run(self):

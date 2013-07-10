@@ -13,11 +13,11 @@ class Extractor():
   def __init__(self):
     pass
     
-  ## It extracts frames
+  ## It extracts reference frames
   # @author Adriano Zanette
   # @version 0.1
   # @param sentence Sentence 
-  # @return Dict Frames to be built
+  # @return List Frames to be built
   def extract(self, verbnetItem):
     frames = []
 
@@ -26,8 +26,7 @@ class Extractor():
     subclasses = verbnetItem.findall('SUBCLASSES/VNSUBCLASS') 
 
     if subclasses:
-      for subclass in subclasses:
-        frames += self.extract(subclass)
+      frames += [ self.extract(subclass) for subclass in subclasses ]
     
     return frames
 
@@ -37,20 +36,14 @@ class Extractor():
   # @param verbClass XML
   # @return Dict Frames to be buiilt
   def extractVerbClassFrames(self, verbClass):
-    frames = []
-    verbs = []
+
     verbTags = verbClass.findall('MEMBERS/MEMBER') 
-    for tag in verbTags:
-      verbs.append(tag.attrib['name'])
-
-    verbnetFrames = []
+    verbs = [ tag.attrib['name'] for tag in verbTags ]
+    
     frameTags = verbClass.findall('FRAMES/FRAME/DESCRIPTION') 
-    for tag in frameTags:
-      verbnetFrames.append(tag.attrib['primary'])
-
-    for verb in verbs:
-      for frame in verbnetFrames:
-        frames.append(self.buildFrame(verb, frame))
+    verbnetFrames = [ tag.attrib['primary'] for tag in frameTags ]
+    
+    frames = [ self.buildFrame(verb, frame) for verb in verbs for frame in verbnetFrames ]
 
     return frames
 

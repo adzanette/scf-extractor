@@ -1,6 +1,8 @@
-
 from statistics import *
 
+## This command run statistics modules over the frames
+# @author Adriano Zanette
+# @version 0.1
 class RunStatistcs:
 
   ## Class constuctor
@@ -10,7 +12,7 @@ class RunStatistcs:
   def __init__(self):
     pass
 
-  ## Read, extract and store SCF's
+  ## Run statistics modules over the frames
   # @author Adriano Zanette
   # @version 0.10
   def run(self):

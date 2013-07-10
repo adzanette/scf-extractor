@@ -52,12 +52,14 @@ class Extractor():
         verb.coreVerb = verbCore
         verb.hasAuxiliary = True
 
+      # insert verb on the frame
       frame.verb = verb.lemma
       frame.position = verb.id
       verbElement = Element(sintax = 'V', element = 'V', relevance = 0, position = verb.id, raw = verbWord)
       frame.elements.append(verbElement)
 
       hasSubject = False
+      # build frame on main verb dependencies
       for child in verb.children:
         element = self.buildElement(child)
         if element:
@@ -65,6 +67,7 @@ class Extractor():
             hasSubject = True
           frame.elements.append(element)
 
+      # if sentence has a auxiliary verb needs a correction to point SUBJ to main verb
       if verb.hasAuxiliary:
         core = verb.coreVerb
         auxiliary = palavrasSentence.tokens[core[0].id]
@@ -74,7 +77,8 @@ class Extractor():
             if element:
               frame.elements.append(element)
               hasSubject = True
-  
+      
+      # frame has not subject, create a hidden subject
       if not hasSubject:
         token = Token()
         token.word = 'HIDDEN'
@@ -107,6 +111,11 @@ class Extractor():
 
     return palavrasSentence
 
+  ## Builds a frame for auxiliary verbs
+  # @author Adriano Zanette
+  # @version 0.1
+  # @param verb String 
+  # @return SCF
   def buildAuxiliaryFrame(self, verb):
     frame = SCF()
     frame.verb = verb.lemma

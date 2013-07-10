@@ -1,8 +1,7 @@
-
 from modules.XmlUtils import XmlUtils
 from models.scf import SCF, Element
 
-## Extractor for PALAVRAS dependency format
+## Extractor for Framenet reference frames
 # @author Adriano Zanette
 # @version 0.1
 class Extractor():
@@ -14,7 +13,7 @@ class Extractor():
   def __init__(self):
     self.namespace = 'http://framenet.icsi.berkeley.edu'
   
-  ## It extracts frames
+  ## It extracts reference frames
   # @author Adriano Zanette
   # @version 0.1
   # @param framenetItem XMLNode 
@@ -26,8 +25,6 @@ class Extractor():
     if sintax <> 'V':
       return frames
 
-    lexeme = XmlUtils.findall(self.namespace, framenetItem, 'lexeme')[0].attrib['name']   
-    
     verb = XmlUtils.findall(self.namespace, framenetItem, 'lexeme')[0].attrib['name']
     scfs = XmlUtils.findall(self.namespace, framenetItem, './valences/FEGroupRealization/pattern')
     
@@ -47,15 +44,15 @@ class Extractor():
     return frames
       
 
-  ## Extract information from a token
+  ## Build an element from framenet information
   # @author Adriano Zanette
   # @version 0.1
   # @param xmlElement XML element
   # @return models.scf.Element Element built
   def buildElement(self, xmlElement):
     sintax = xmlElement.attrib['PT']
-    semantic = xmlElement.attrib['FE']
-    elementType = xmlElement.attrib['GF']
+    #semantic = xmlElement.attrib['FE']
+    #elementType = xmlElement.attrib['GF']
     
     element = None
 

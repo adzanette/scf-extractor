@@ -3,7 +3,7 @@ from extractor import *
 from builder import *
 from modules.Configuration import config
 
-## This class extracts SCF's from a raw source and stores the data processed in another
+## This command extracts SCF's from a raw source and stores the data processed in another
 # @author Adriano Zanette
 # @version 0.1
 class ExtractSCF:
