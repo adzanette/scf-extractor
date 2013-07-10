@@ -19,7 +19,7 @@ class Iterator(CorpusIterator):
   def __init__(self):
     self.reVerbs = re.compile(r'^(?P<verb>.+)=<V\.\[(?P<subs>[A-Z.]+)\].+N\.\[(?P<preps>[^\]]*)\]', re.L)
     self.id = 1
-    path = config.reader.fileReader.path  
+    path = config.corpora.path  
     self.corpus = open(path)
  
   ## Create a new sentence

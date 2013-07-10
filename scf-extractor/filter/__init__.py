@@ -2,7 +2,8 @@
 __all__ = ['Filter']
 
 from modules.Configuration import config
-from models.scf import Frame, Verb, ReferenceFrame, database
+from modules.Comparator import Comparator
+from models.scf import Frame, Verb, database
 
 ## This class filter scf based on cutoffs
 # @author Adriano Zanette
@@ -15,15 +16,14 @@ class Filter:
   # @return Filter
   def __init__(self):
     self.parameters = []
-    self.columns = config.filter.columns
-    self.operators = config.filter.operators
-    self.values = config.filter.values
     self.comparators = {}
-    for index, column in enumerate(self.columns):
-      self.comparators[column] = {
-        'operator' : self.operators[index],
-        'value' : self.values[index]
-      }
+    
+    columns = config.filter.columns
+    operators = config.filter.operators
+    values = config.filter.values
+    for index, column in enumerate(columns):
+      column = column.strip()
+      self.comparators[column] = Comparator(column, operators[index].strip(), values[index])
 
   ## update a comparator
   # @author Adriano Zanette
@@ -32,10 +32,7 @@ class Filter:
   # @param operator String A valid comparator in SQL
   # @param value String Value to compare
   def setComparator(self, column, operator, value):
-    self.comparators[column] = {
-      'operator' : operator,
-      'value' : value
-    }
+    self.comparators[column] = Comparator(column, operator, value)
  
   ## filter verbs that aren't in a list
   # @author Adriano Zanette
@@ -57,42 +54,14 @@ class Filter:
   ## Builds where clause based on the list of comparators
   # @author Adriano Zanette
   # @version 1.0
-  def buildWhere(self):
-    where = ''
-    first = True
-    for field in self.comparators:
-      operator = self.comparators[field]['operator']
-      value = self.comparators[field]['value']    
-      if first:
-        where += ' WHERE ('
-        first = False
-      else:
-        where += ' OR '
-      where += 'f.' + self.getFieldName(field) + ' ' + self.getExpression(operator, value)
-    return where + ')'
+  def buildWhere(self, useWhere = True):
+    
+    expressions = [ ' f.%s %s ' % (comparator.getFieldName(), comparator.getExpression()) for comparator in self.comparators.itervalues() ]
+    where = '(' + ' OR '.join(expressions) + ')'
+    if useWhere:
+      where =  ' WHERE  %s ' % (where)
 
-  ## Get name of fields in a table
-  # @author Adriano Zanette
-  # @version 1.0
-  # @param field String Field name
-  # @return String Fild name on table
-  def getFieldName(self, field):
-    return getattr(Frame, field).db_column
+    return where
 
-  ## Get a restriction on sql query
-  # @author Adriano Zanette
-  # @version 1.0
-  # @param operator String Operator type
-  # @param value String Value
-  # @return String SQL restriction
-  def getExpression(self, operator, value):
-    operator = operator.strip()
+ 
 
-    if operator in ['=', '>', '>=', '<', '<=', '<>']:
-      return ' '+ operator +' '+ str(value) + ' '
-    elif operator in ['in', 'notin']:
-      return ' '+ operator +' ('+ ','.join(value) + ') '
-    elif operator == 'between':
-      return ' '+ operator +' '+ str(value[0]) + ' AND ' + str(value[1]) + ' '
-
-    return ''

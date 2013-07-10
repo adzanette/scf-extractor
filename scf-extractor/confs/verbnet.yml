@@ -1,5 +1,5 @@
 corpora: 
-  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\bosque.txt
+  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\verbnet\
 
 frames:
   database:
@@ -8,19 +8,19 @@ frames:
     user: root
     password: zanette
     dbName: scftest
-  createTables: false
+  createTables: true
   clearTables: false
-  referenceTable: nilc_scf
+  referenceTable: verbnet_scf
 
 reader:
-  module: PalavrasFileCorpus
+  module: XmlFile
 
 extractor:
-  module: PalavrasDependency 
+  module: Verbnet 
 
 builder:
-  module: SCF 
+  module: ReferenceFrames 
   order: position 
   ignoreClasses: ['REFL', 'PR', 'OCL', 'DAT']
-  extractArguments: true
+  extractArguments: false
 

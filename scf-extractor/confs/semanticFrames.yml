@@ -1,0 +1,33 @@
+corpora: 
+   database:
+    engine: mysql
+    host: localhost
+    user: root
+    password: zanette
+    dbName: scftest
+
+frames:
+  database:
+    engine: mysql
+    host: localhost
+    user: root
+    password: zanette
+    dbName: scftest
+  createTables: true
+  clearTables: false
+  referenceTable: verbnet_scf
+
+pageSize: 100
+
+reader:
+  module: ExampleDatabaseCorpus
+
+extractor:
+  module: SemanticFrames 
+
+builder:
+  module: SemanticFramesDatabase 
+  order: position 
+  ignoreClasses: ['REFL', 'PR', 'OCL', 'DAT']
+  extractArguments: false
+

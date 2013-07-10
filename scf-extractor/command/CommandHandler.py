@@ -22,8 +22,8 @@ class CommandHandler:
       operation = ExtractSCF.ExtractSCF()
     elif command == 'evaluate':
       operation = Evaluate.Evaluate()
-    elif command == 'run-statistcs':
-      operation = Evaluate.RunStatistcs()
+    elif command == 'run-statistics':
+      operation = RunStatistics.RunStatistics()
     else:
       raise Exception("unknown command")
 

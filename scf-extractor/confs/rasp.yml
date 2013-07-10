@@ -1,15 +1,16 @@
 corpora: 
-  path: /home/adriano/src/verbnet-3.2/
+  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\rasp.txt
 
-output:
+frames:
   database:
     engine: mysql
     host: localhost
     user: root
     password: zanette
-    dbName: scf-english
+    dbName: scftest
   createTables: false
   clearTables: true
+  referenceTable: vebnet_scf
 
 reader:
   module: RaspFileCorpus
@@ -21,5 +22,5 @@ builder:
   module: SCF 
   order: position 
   ignoreClasses: ['REFL', 'PR', 'OCL', 'DAT']
-  extractArguments: false
+  extractArguments: true
 

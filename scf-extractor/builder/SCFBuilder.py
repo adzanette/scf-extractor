@@ -1,3 +1,4 @@
+import sys
 from modules.Configuration import config
 from builder.DatabaseBuilderException import DatabaseBuilderException
 from models.scf import *
@@ -23,16 +24,23 @@ class Builder:
     self.extractArguments = config.builder.extractArguments
 
     if config.frames.createTables:
+      print 'Creating tables...'
       try:
         self.createTables()
-      except:
-        raise DatabaseBuilderException('Error creating tables')
+        print 'Tables created!'
+      except Exception as e:
+        print 'Error creating tables'
+        print e
 
     if config.frames.clearTables:
+      print 'truncating tables...'
       try:
         self.clearTables()
-      except:
-        raise DatabaseBuilderException('Error truncating tables')
+        print 'Tables truncated!'
+      except Exception as e:
+        print 'Error truncating tables'
+        print e
+        sys.exit()
 
   ## Builds frames
   # @author Adriano Zanette
@@ -117,12 +125,14 @@ class Builder:
       verb = Verb.create(verb=frame.verb)
     except:
       Verb.update(frequency = Verb.frequency+1).where(Verb.verb == frame.verb).execute()
+      verb = Verb.get(Verb.verb == frame.verb)
       
     try:
       scf = Frame.create(frame=frame.scf, verb=verb, isPassive = frame.isPassive)
     except:
       Frame.update(frequency = Frame.frequency+1).where(Frame.frame == frame.scf, Frame.verb == verb, Frame.isPassive == frame.isPassive).execute()
-    
+      scf = Frame.get(Frame.frame == frame.scf, Frame.verb == verb, Frame.isPassive == frame.isPassive)
+
     if self.extractArguments:
       example = Example.create(frame=scf, sentence=sentence, position=frame.position)
       for element in frame.elements:

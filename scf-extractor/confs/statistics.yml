@@ -1,0 +1,16 @@
+frames:
+  database:
+    engine: mysql
+    host: localhost
+    user: root
+    password: zanette
+    dbName: scftest
+  createTables: false
+  clearTables: false
+  referenceTable: nilc_scf
+
+reader:
+  pageSize: 100
+
+statistics:
+  modules: ['frequency','power-law', 'loglikelihood', 't-score'] #['frequency', 'power-law', 'loglikelihood', 't-score']

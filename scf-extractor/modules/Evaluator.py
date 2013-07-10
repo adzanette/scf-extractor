@@ -30,9 +30,9 @@ class Evaluator():
   def evaluateByVerbList(self,verbList):
     
     self.values = []
-    self.precision = []
-    self.recall = []
-    self.fmeasure = []
+    self.precisionValues = []
+    self.recallValues = []
+    self.fmeasureValues = []
 
     filters = Filter()
     filters.filterVerbs(verbList)
@@ -53,9 +53,9 @@ class Evaluator():
       print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
 
       self.values.append(self.value)
-      self.precision.append(p)
-      self.recall.append(r)
-      self.fmeasure.append(f)
+      self.precisionValues.append(p)
+      self.recallValues.append(r)
+      self.fmeasureValues.append(f)
 
       self.value += self.increment
       
@@ -64,9 +64,9 @@ class Evaluator():
   def evaluate(self):
     
     self.values = []
-    self.precision = []
-    self.recall = []
-    self.fmeasure = []
+    self.precisionValues = []
+    self.recallValues = []
+    self.fmeasureValues = []
 
     verbFilter = 1
 
@@ -81,17 +81,17 @@ class Evaluator():
       retrieved = self.countNotFilteredFrames()
       intersect = self.countIntersection()
 
-      #print 'value: %s, ints: %s, retr: %s, gold: %s ' % (str(self.value), str(intersect), str(retrieved), str(golden))
-      p = float(intersect)/float(retrieved)
-      r = float(intersect)/float(golden)
-      f = (2*p*r)/(p+r) 
+      print 'value: %s, ints: %s, retr: %s, gold: %s ' % (str(self.value), str(intersect), str(retrieved), str(golden))
+      p = self.precision(intersect, retrieved)
+      r = self.recall(intersect, golden)
+      f = self.fmeasure(p, r)
       #print 'value: %s, p: %s, r: %s, f: %s ' % (str(self.value), str(p), str(r), str(f))
-      print '%s,%s,%s,%s' % (str(self.value), str(p*100), str(r*100), str(f*100))
+      print '%s,%s,%s,%s' % (str(self.value), str(p), str(r), str(f))
 
       self.values.append(self.value)
-      self.precision.append(p)
-      self.recall.append(r)
-      self.fmeasure.append(f)
+      self.precisionValues.append(p)
+      self.recallValues.append(r)
+      self.fmeasureValues.append(f)
 
       self.value += self.increment
       
@@ -118,6 +118,24 @@ class Evaluator():
 
     return {'golden': goldenSQL, 'intersection': intersectionSQL, 'extracted': extractedSQL}
 
+  def precision(self, intersect, retrieved):
+    if intersect == 0 :
+      return 0
+    
+    return (float(intersect)/float(retrieved))*100
+
+  def recall(self, intersect, golden):
+    if intersect == 0 :
+      return 0
+    
+    return (float(intersect)/float(golden))*100
+
+  def fmeasure(self, precision, recall):
+    if precision == 0 or recall == 0 :
+      return 0
+    
+    return (2*precision*recall)/(precision+recall)
+  
   ## retrieve the number of golden frames not filtered
   # @author Adriano Zanette
   # @version 1.0
@@ -147,9 +165,9 @@ class Evaluator():
 
   def plot(self):
     plotter = Plotter()
-    plotter.drawLine(self.values, self.precision, 'precision')
-    plotter.drawLine(self.values, self.recall, 'recall')
-    plotter.drawLine(self.values, self.fmeasure, 'fmeasure')
+    plotter.drawLine(self.values, self.precisionValues, 'precision')
+    plotter.drawLine(self.values, self.recallValues, 'recall')
+    plotter.drawLine(self.values, self.fmeasureValues, 'fmeasure')
     plotter.title('SCFExtractor Evaluation')
     plotter.labels("Cutoff", '%')
     if self.output:

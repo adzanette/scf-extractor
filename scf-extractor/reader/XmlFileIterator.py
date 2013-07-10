@@ -27,5 +27,6 @@ class Iterator(CorpusIterator):
       raise StopIteration
 
     filename = self.files.pop()
+    print 'Processing file %s...' % (filename)
     verbclass = xml.parse(filename).getroot()
     return verbclass
