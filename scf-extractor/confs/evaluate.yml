@@ -9,16 +9,14 @@ frames:
   clearTables: false
   referenceTable: nilc_scf
 
-
 filter:   
   columns: ['isPassive'] #['verbFrequency', 'frequency', 'relativeFrequency', 'frameFrequency']
   values: [1]
   operators: ['=']
 
 evaluator:
-  scfReferenceTable: nilc_frames
   filter: verbFrequency
-  verbList: []
+  verbList: [] #['estrear', 'ser', 'poder']
   minValue: 0
   maxValue: 3
   increment: 1

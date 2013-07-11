@@ -1,5 +1,5 @@
 from modules.Configuration import config
-from command import *
+#from command import *
 
 ## This class run the command specified
 # @author Adriano Zanette
@@ -19,11 +19,14 @@ class CommandHandler:
   # @param command String Command to be executed
   def run(self, command):
     if command == 'extract-scf':
-      operation = ExtractSCF.ExtractSCF()
+      from command.ExtractSCF import ExtractSCF
+      operation = ExtractSCF()
     elif command == 'evaluate':
-      operation = Evaluate.Evaluate()
+      from command.Evaluate import Evaluate
+      operation = Evaluate()
     elif command == 'run-statistics':
-      operation = RunStatistics.RunStatistics()
+      from command.RunStatistics import RunStatistics
+      operation = RunStatistics()
     else:
       raise Exception("unknown command")
 

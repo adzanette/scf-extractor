@@ -3,7 +3,7 @@ from statistics import *
 ## This command run statistics modules over the frames
 # @author Adriano Zanette
 # @version 0.1
-class RunStatistcs:
+class RunStatistics:
 
   ## Class constuctor
   # @author Adriano Zanette

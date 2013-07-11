@@ -1,5 +1,6 @@
 corpora: 
-  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\lexicoNilc.txt
+  #path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\lexicoNilc.txt
+  path: /home/adriano/src/lexicoNilc_sample.txt
 
 frames:
   database:

@@ -1,4 +1,3 @@
-  
 
 ## This class has static methods for xml handling
 # @author Adriano Zanette

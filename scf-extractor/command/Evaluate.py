@@ -16,7 +16,6 @@ class Evaluate:
   # @author Adriano Zanette
   # @version 0.1
   def run(self):
-  
     evaluator = Evaluator()
     verbList = evaluator.verbList
     if len(verbList) == 0:
@@ -24,4 +23,4 @@ class Evaluate:
     elif len(verbList) == 1:
       evaluator.verbHistogram(verbList[0])
     else:
-      evaluator.evaluateByVerbList(verbList)
+      evaluator.evaluate(verbList)

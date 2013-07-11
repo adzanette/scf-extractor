@@ -1,5 +1,6 @@
 corpora: 
-  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\bosque.txt
+  #path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\bosque.txt
+  path: /home/adriano/src/bosque_sample.txt
 
 frames:
   database:
