@@ -119,7 +119,7 @@ class Sentence(BaseModel):
 class Example(BaseModel):
   id = PrimaryKeyField(db_column='id_example')
   sentence = ForeignKeyField(Sentence, db_column='id_sentence', related_name='examples')
-  frame = ForeignKeyField(Frame, db_column='id_frame', related_name='examples')
+  frame = ForeignKeyField(Frame, db_column='id_frame', related_name='examples', null=True)
   semanticFrame = ForeignKeyField(SemanticFrame, db_column='id_semantic_frame', null=True, related_name='examples')
   position = IntegerField()
   active = BooleanField(default=True)

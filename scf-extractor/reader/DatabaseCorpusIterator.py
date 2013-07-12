@@ -1,6 +1,6 @@
 
 from modules.Configuration import config
-from CorpusIterator import *
+from reader import CorpusIterator
 
 ## This class reads sentences from a database
 # @author Adriano Zanette

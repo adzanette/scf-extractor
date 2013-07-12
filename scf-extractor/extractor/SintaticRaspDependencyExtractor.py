@@ -1,11 +1,11 @@
 
 from models.scf import Element
-from RaspDependencyExtractor import RaspDependencyExtractor
+from extractor import RaspDependencyExtractor
 
 ## It extracts frames with sintatic information
 # @author Adriano Zanette
 # @version 0.1
-class Extractor(RaspDependencyExtractor):
+class SintaticRaspDependencyExtractor(RaspDependencyExtractor):
 
   ## Class constuctor
   # @author Adriano Zanette

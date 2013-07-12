@@ -1,13 +1,11 @@
-
-from CorpusIterator import *
-from FileCorpusIterator import FileCorpusIterator
+from reader import CorpusIterator, FileCorpusIterator
 from models.corpus import Sentence
 import re
 
 ## Reads a RASP annoted corpus from files
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(CorpusIterator):
+class RaspFileCorpusIterator(CorpusIterator):
   
   ## Class constructor
   # @author Adriano Zanette

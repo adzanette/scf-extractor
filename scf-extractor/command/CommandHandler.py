@@ -1,4 +1,3 @@
-
 ## This class run the command specified
 # @author Adriano Zanette
 # @version 0.1
@@ -15,17 +14,18 @@ class CommandHandler:
   # @author Adriano Zanette
   # @version 0.10
   # @param command String Command to be executed
-  def run(self, command):
-    if command == 'extract':
-      from command.ExtractSCF import ExtractSCF
-      operation = ExtractSCF()
-    elif command == 'evaluate':
-      from command.Evaluate import Evaluate
-      operation = Evaluate()
-    elif command == 'statistics':
-      from command.RunStatistics import RunStatistics
-      operation = RunStatistics()
+  def run(self, cmd):
+    if cmd == 'extract':
+      cmd = 'ExtractSCF'
+    elif cmd == 'rebuild':
+      cmd = 'RebuildSCF'
+    elif cmd == 'evaluate':
+      cmd = 'Evaluate'
+    elif cmd == 'statistics':
+      cmd = 'RunStatistics'
     else:
       raise Exception("unknown command")
 
-    operation.run()
+    exec "from command import %s as Command" % (cmd)
+    command = Command()
+    command.run()

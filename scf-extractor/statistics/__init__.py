@@ -2,13 +2,13 @@
 __all__ = ['Statistics']
 
 from modules.Configuration import config
-from statistics.FrameFrequency import FrameFrequency
-from statistics.RelativeFrequency import RelativeFrequency
-from statistics.VerbFrequency import VerbFrequency
-from statistics.PowerLaw import PowerLaw
-from statistics.LogLikelihood import LogLikelihood
-from statistics.TScore import TScore
-from statistics.TScoreKorhonen import TScoreKorhonen
+from FrameFrequency import FrameFrequency
+from RelativeFrequency import RelativeFrequency
+from VerbFrequency import VerbFrequency
+from PowerLaw import PowerLaw
+from LogLikelihood import LogLikelihood
+from TScore import TScore
+from TScoreKorhonen import TScoreKorhonen
 
 ## This class generates scf statistics
 # @author Adriano Zanette

@@ -1,11 +1,10 @@
-
 from models.scf import Element, SCF
 from models.palavras import *
 
 ## Extractor for PALAVRAS dependency format
 # @author Adriano Zanette
 # @version 0.1
-class Extractor():
+class PalavrasDependencyExtractor():
 
   ## Class constuctor
   # @author Adriano Zanette

@@ -1,4 +1,3 @@
-
 from models.scf import Element, SCF
 from models.rasp import *
 import re

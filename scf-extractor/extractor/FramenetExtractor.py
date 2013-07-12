@@ -1,10 +1,10 @@
-from modules.XmlUtils import XmlUtils
+from modules import XmlUtils
 from models.scf import SCF, Element
 
 ## Extractor for Framenet reference frames
 # @author Adriano Zanette
 # @version 0.1
-class Extractor():
+class FramenetExtractor():
 
   ## Class constuctor
   # @author Adriano Zanette

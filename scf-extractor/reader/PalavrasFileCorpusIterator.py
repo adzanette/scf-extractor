@@ -1,13 +1,12 @@
 
-from CorpusIterator import *
-from FileCorpusIterator import FileCorpusIterator
+from reader import FileCorpusIterator, CorpusIterator
 from models.corpus import Sentence
 import re
 
 ## Reads a PALAVRAS annoted corpus from files
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(CorpusIterator):  
+class PalavrasFileCorpusIterator(CorpusIterator):  
   
   ## Class constructor
   # @author Adriano Zanette

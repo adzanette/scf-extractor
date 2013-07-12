@@ -6,7 +6,7 @@ import re
 ## Extractor for NILC reference lexicon
 # @author Adriano Zanette
 # @version 0.1
-class Extractor():
+class NILCLexiconExtractor():
 
   ## Class constuctor
   # @author Adriano Zanette

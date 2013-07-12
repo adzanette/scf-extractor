@@ -1,12 +1,12 @@
 from modules.Configuration import config
-from builder.SCFBuilder import Builder as SCFBuilder
+from builder import SCFBuilder
 from models.scf import *
 import operator
 
 ## Builder for reference frames table
 # @author Adriano Zanette
 # @version 0.1
-class Builder(SCFBuilder):
+class ReferenceFramesBuilder(SCFBuilder):
 
   ## Create database structure
   # @author Adriano Zanette

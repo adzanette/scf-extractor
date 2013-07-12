@@ -4,3 +4,5 @@ __all__ = [
             ,'Plotter'
             ,'XmlUtils'
           ]
+
+from modules.XmlUtils import XmlUtils

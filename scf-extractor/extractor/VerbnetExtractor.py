@@ -1,10 +1,9 @@
-
 from models.scf import SCF, Element
 
 ## Extractor for Verbnet reference frames
 # @author Adriano Zanette
 # @version 0.1
-class Extractor():
+class VerbnetExtractor():
 
   ## Class constuctor
   # @author Adriano Zanette

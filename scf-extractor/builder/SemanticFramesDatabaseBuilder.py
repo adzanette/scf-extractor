@@ -1,12 +1,12 @@
 from modules.Configuration import config
-from builder.SCFBuilder import Builder as SCFBuilder
+from builder import SCFBuilder
 from models.scf import *
 import operator
 
 ## Builder receives as argument an set of elements and builds semantic scfs and stores on database
 # @author Adriano Zanette
 # @version 0.1
-class Builder:
+class SemanticFramesDatabaseBuilder:
 
   ## Class constuctor
   # @author Adriano Zanette

@@ -1,13 +1,12 @@
-
 from modules.Configuration import config
 from modules.FileUtils import FileUtils
-from CorpusIterator import *
+from reader import CorpusIterator
 import xml.etree.ElementTree as xml
 
 ## Reads corpus from xmls files
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(CorpusIterator):
+class XmlFileIterator(CorpusIterator):
   
   ## Class constructor
   # @author Adriano Zanette

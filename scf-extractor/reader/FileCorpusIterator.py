@@ -1,7 +1,7 @@
 
 from modules.Configuration import config
 from modules.FileUtils import FileUtils
-from CorpusIterator import *
+from reader import CorpusIterator
 
 ## Reads corpus from a file or all file of a folder
 # @author Adriano Zanette

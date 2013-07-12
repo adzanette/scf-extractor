@@ -1,11 +1,10 @@
-
 from models.corpus import Sentence
-from DatabaseCorpusIterator import DatabaseCorpusIterator
+from reader import DatabaseCorpusIterator
 
 ## This class reads sentences from a database
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(DatabaseCorpusIterator):
+class SentenceDatabaseCorpusIterator(DatabaseCorpusIterator):
   
   ## Reads a set of sentences from a database
   # @author Adriano Zanette

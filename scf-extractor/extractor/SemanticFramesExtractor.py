@@ -1,11 +1,10 @@
-
 from models.scf import Element, SCF
 import re
 
 ## Extractor for semantic frames
 # @author Adriano Zanette
 # @version 0.1
-class Extractor():
+class SemanticFramesExtractor():
 
   ## Class constuctor
   # @author Adriano Zanette

@@ -1,13 +1,13 @@
 import sys
 from modules.Configuration import config
-from builder.DatabaseBuilderException import DatabaseBuilderException
+from builder import DatabaseBuilderException
 from models.scf import *
 import operator
 
 ## Builder receives as argument an set of elements and builds scfs and stores on database
 # @author Adriano Zanette
 # @version 0.1
-class Builder:
+class SCFBuilder:
 
   ## Class constuctor
   # @author Adriano Zanette

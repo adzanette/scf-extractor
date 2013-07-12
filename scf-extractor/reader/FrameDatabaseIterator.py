@@ -1,11 +1,11 @@
 
 from models.scf import Frame
-from DatabaseCorpusIterator import DatabaseCorpusIterator
+from reader import DatabaseCorpusIterator
 
 ## This class reads frames from a database
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(DatabaseCorpusIterator):
+class FrameDatabaseIterator(DatabaseCorpusIterator):
   
   ## Reads a set of frames from a database
   # @author Adriano Zanette

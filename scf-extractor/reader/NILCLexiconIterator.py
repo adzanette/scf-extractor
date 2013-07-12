@@ -1,14 +1,13 @@
 
 from modules.Configuration import config
 from models.corpus import Sentence
-from CorpusIterator import *
-from FileCorpusIterator import FileCorpusIterator
+from reader import FileCorpusIterator, CorpusIterator
 import re
 
 ## Reads a NILC lexicon file
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(CorpusIterator):  
+class NILCLexiconIterator(CorpusIterator):  
   
   ## Class constructor
   # @author Adriano Zanette
