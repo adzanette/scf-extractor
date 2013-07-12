@@ -19,5 +19,5 @@ class FrameFrequency:
                                    ) AS faux
                                 ON faux."""+Frame.frame.db_column+""" = f."""+Frame.frame.db_column+"""
                             SET """+Frame.frameFrequency.db_column+""" = faux.summer """)
-    
+
     

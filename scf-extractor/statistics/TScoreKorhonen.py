@@ -1,6 +1,4 @@
-from reader.FrameDatabaseIterator import Iterator as FrameIterator
 from models.scf import Frame, database
-import math
 
 import warnings, MySQLdb
 warnings.filterwarnings("ignore", category=MySQLdb.Warning)
