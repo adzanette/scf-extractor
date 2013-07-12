@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore", category=MySQLdb.Warning)
 ## This class calculates t-score for each frame
 # @author Adriano Zanette
 # @version 1.0
-class TScore:
+class TScoreKorhonen:
 
   ## Calculates t-scores
   # @author Adriano Zanette
@@ -29,7 +29,7 @@ class TScore:
                                 FROM """+Frame._meta.db_table+""") AS total
                        ) AS faux 
                   ON faux."""+Frame.id.db_column+""" = f."""+Frame.id.db_column+"""
-                  SET """+Frame.tscore.db_column+""" = (p1-p2)/SQRT(POW(n1*p1*(1-p1),2) + POW(n1*p1*(1-p1),2))"""
+                  SET """+Frame.tscore.db_column+""" = (p1-p2)/SQRT(POW(SQRT(p1*(1-p1)/n1),2) + POW(SQRT(p2*(1-p2)/n2),2))"""
     query = database.execute_sql(sql)
     
     sql = """ UPDATE """+Frame._meta.db_table+""" AS f

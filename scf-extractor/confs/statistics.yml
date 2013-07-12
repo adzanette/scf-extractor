@@ -4,7 +4,7 @@ frames:
     host: localhost
     user: root
     password: zanette
-    dbName: scftest
+    dbName: scf-amazonia
   createTables: false
   clearTables: false
   referenceTable: nilc_scf
@@ -13,4 +13,4 @@ reader:
   pageSize: 100
 
 statistics:
-  modules: ['frequency','power-law', 'loglikelihood', 't-score'] #['frequency', 'power-law', 'loglikelihood', 't-score']
+  modules: [ 't-score'] #['frequency', 'power-law', 'loglikelihood', 't-score', 't-scoreK']

@@ -8,6 +8,7 @@ from statistics.VerbFrequency import VerbFrequency
 from statistics.PowerLaw import PowerLaw
 from statistics.LogLikelihood import LogLikelihood
 from statistics.TScore import TScore
+from statistics.TScoreKorhonen import TScoreKorhonen
 
 ## This class generates scf statistics
 # @author Adriano Zanette
@@ -36,7 +37,9 @@ class Statistics:
     if 't-score' in self.modules:
       TScore.calculate()
 
+    if 't-scoreK' in self.modules:
+      TScoreKorhonen.calculate()
+
     if 'power-law' in self.modules:
       PowerLaw.calculate()
-
 
