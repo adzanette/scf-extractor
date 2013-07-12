@@ -1,16 +1,15 @@
 #!/usr/bin/python
-import argparse
-from modules.Configuration import loadConfig, getConfig
 
-parser = argparse.ArgumentParser(description='SCFExtractor')
-parser.add_argument('-o','--options', help='Configuration file',required=True)
-parser.add_argument('-c','--command',help='Command to be executed [extract-scf|run-statistics|evaluate]', required=True)
+import argparse
+from modules.Configuration import loadConfig
+from command.CommandHandler import CommandHandler
+
+parser = argparse.ArgumentParser(description='SCFExtractor', version='2.0')
+parser.add_argument('command', metavar='command', choices=('extract','statistics','evaluate'), help='Command to be executed')
+parser.add_argument('configuration', metavar='configuration', type=str, help='Configuration file')
 args = parser.parse_args()
 
+loadConfig(args.configuration)
 
-loadConfig(args.options)
-conf = getConfig()
-
-from command.CommandHandler import CommandHandler
 command = CommandHandler()
 command.run(args.command)

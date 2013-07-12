@@ -1,5 +1,3 @@
-from modules.Configuration import config
-#from command import *
 
 ## This class run the command specified
 # @author Adriano Zanette
@@ -18,13 +16,13 @@ class CommandHandler:
   # @version 0.10
   # @param command String Command to be executed
   def run(self, command):
-    if command == 'extract-scf':
+    if command == 'extract':
       from command.ExtractSCF import ExtractSCF
       operation = ExtractSCF()
     elif command == 'evaluate':
       from command.Evaluate import Evaluate
       operation = Evaluate()
-    elif command == 'run-statistics':
+    elif command == 'statistics':
       from command.RunStatistics import RunStatistics
       operation = RunStatistics()
     else:

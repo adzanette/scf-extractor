@@ -2,7 +2,7 @@
 from models.corpus import Sentence
 from DatabaseCorpusIterator import DatabaseCorpusIterator
 
-## This class reads examples from a database
+## This class reads sentences from a database
 # @author Adriano Zanette
 # @version 0.1
 class Iterator(DatabaseCorpusIterator):

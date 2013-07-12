@@ -4,12 +4,10 @@ from FileCorpusIterator import FileCorpusIterator
 from models.corpus import Sentence
 import re
 
-
 ## Reads a PALAVRAS annoted corpus from files
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(CorpusIterator):
-  
+class Iterator(CorpusIterator):  
   
   ## Class constructor
   # @author Adriano Zanette

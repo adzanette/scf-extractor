@@ -5,12 +5,10 @@ from CorpusIterator import *
 from FileCorpusIterator import FileCorpusIterator
 import re
 
-
-## Reads a NILV lexicon file
+## Reads a NILC lexicon file
 # @author Adriano Zanette
 # @version 0.1
-class Iterator(CorpusIterator):
-  
+class Iterator(CorpusIterator):  
   
   ## Class constructor
   # @author Adriano Zanette

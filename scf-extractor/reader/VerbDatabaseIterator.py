@@ -1,5 +1,5 @@
 
-from models.scf import Frame
+from models.scf import Verb
 from DatabaseCorpusIterator import DatabaseCorpusIterator
 
 ## This class reads frames from a database
@@ -12,6 +12,6 @@ class Iterator(DatabaseCorpusIterator):
   # @version 0.1
   # @return peewee.QueryResultWrapper    
   def getRowSet(self):
-    frames = Frame.select().limit(self.pageSize).offset(self.last).execute()
-    return frames
+    verbs = Verb.select().limit(self.pageSize).offset(self.last).execute()
+    return verbs
 
