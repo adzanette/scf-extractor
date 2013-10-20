@@ -42,7 +42,7 @@ class SiteController extends \AZ\Framework\Kernel\Controller{
     $router = $this->get('router');
     
     $corpus = $post->get('corpus');
-    $url = $router->generate('verb-list', array('corpus' => $corpus, 'page' => 1));
+    $url = $router->generate('verb-list', array('corpus' => $corpus, 'page' => 1, true));
 
     return $this->redirect($url); 
   }
@@ -207,7 +207,7 @@ class SiteController extends \AZ\Framework\Kernel\Controller{
     list($sql, $params) = $database->select('frame, SUM(frequency) AS count', SemanticFrame::$table, null, $limit, $offset, array('count' => 'DESC'), array('frame'));
     $semanticFrames = $database->fetch($sql, $params);
     
-    $count = $database->column("SELECT count(*) as total FROM (SELECT DISTINCT(frame) FROM semantic_frames) as frames;");
+    $count = $database->column("SELECT COUNT(*) AS total FROM (SELECT DISTINCT(frame) FROM semantic_frames) AS frames;");
    
     $return = array();
     $return['frames'] = $semanticFrames; 
@@ -221,17 +221,17 @@ class SiteController extends \AZ\Framework\Kernel\Controller{
     $database = Verb::$db;  
     
     $query = "SELECT v.*, 
-            (select frequency 
-              from semantic_frames as sf 
-              where frame = '".$frame."' 
-              and sf.id_verb = v.id_verb) 
-              as frequency
-          FROM verbs as v
-          WHERE id_verb in (
+                ( SELECT frequency 
+                  FROM semantic_frames AS sf 
+                  WHERE frame = '".$frame."' 
+                    AND sf.id_verb = v.id_verb) 
+              AS frequency
+          FROM verbs AS v
+          WHERE id_verb IN (
             SELECT id_verb
             FROM semantic_frames
             WHERE frame = '".$frame."'
-          ) order by frequency desc;";
+          ) ORDER BY frequency DESC;";
     $statement = $database->query($query);
     $verbs = $statement->fetchAll(\PDO::FETCH_OBJ);
     
@@ -248,13 +248,14 @@ class SiteController extends \AZ\Framework\Kernel\Controller{
 
     $verb = Verb::row(array('id_verb = '.$verbId));
     
-    $query = "select sentences.* from sentences where id_sentence in (
+    $query = "SELECT sentences.* FROM sentences WHERE id_sentence in (
               SELECT id_sentence 
               FROM examples
               WHERE id_semantic_frame = (
                 SELECT id_frame
                 FROM semantic_frames
-                WHERE frame = '".$frame."' and id_verb = '".$verbId."'
+                WHERE frame = '".$frame."' 
+                  AND id_verb = '".$verbId."'
               ));";
     $statement = $database->query($query);
     $sentences = $statement->fetchAll(\PDO::FETCH_OBJ);

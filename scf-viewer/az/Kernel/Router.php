@@ -50,8 +50,12 @@ class Router{
       }
       
       $url = $this->ignore.$url;
-      if ($absolute) $url = $this->domain.$url;
-
+      if ($absolute){
+        $url = $this->domain.$url;
+      }else if ($url[0] != '/'){
+        $url = '/'.$url;
+      }
+      
       return $url;
     }else{
       return null;
@@ -64,6 +68,14 @@ class Router{
 
 
   public function route($path){
+    
+    // accepting repeated slashes
+    $path = preg_replace("/\/+/", "/", $path);
+
+    // removing trailer slash
+    $path = trim($path, '/');
+
+    // ignoring some initial path
     if (substr($path, 0, strlen($this->ignore)) == $this->ignore) {
       if (strlen($path) === strlen($this->ignore)){
         $path = '';
@@ -72,19 +84,24 @@ class Router{
       }
     } 
 
+    // if blank is index
     if($path === ''){
       return array('index', array());
     }
 
     foreach($this->routes as $route => $controller){
+      // skipping index
       if($route == 'index') continue;
 
+      // generating regex from route pattern and defaults
       $defaults = @$controller['defaults'];
       $restrictions = @$controller['restrictions'];
       $pattern = $this->replaceNamedGroups($controller['pattern'], $restrictions, $defaults);
       $regex = str_replace('/','\/',$pattern);
       
+      // matching pattern and path
       if (preg_match("/^$regex\/?$/i", $path, $matches) === 1) {
+        // if match, get path parameters
         $complete = array_shift($matches);
         foreach ($matches as $key => $value){
           if (is_numeric($key)){
@@ -92,6 +109,7 @@ class Router{
           }
         }
 
+        // getting defaults, if not matched
         if (is_array($defaults)){
           foreach ($defaults as $key => $value){
             if (!array_key_exists($key, $matches)){
@@ -99,10 +117,12 @@ class Router{
             }
           }
         }
+
         return array($route, $matches);
       }
     }
 
+    // if doesnt found route, goes to 404
     return array('404', array());
   }
 }

@@ -5,7 +5,7 @@ $conf['name'] = 'SCFViewer';
 $conf['title'] = 'site.title';
 $conf['version'] = '1.0';
 
-$conf['http-host'] = 'http://localhost/scf-viewer/';
+$conf['http-host'] = 'http://zanette.extractor/';
 $conf['url-media'] = $conf['http-host'].'resources/web/';
 
 $conf['template'] = array(
@@ -25,8 +25,8 @@ $conf['session'] = array(
 );
 
 $conf['router'] = array(
-  'domain' => 'http://127.0.0.1',
-  'ignore' => '/scf-viewer/index.php/'
+  'domain' => $conf['http-host'],
+  'ignore' => ''
 );
 
 $conf['translator'] = array(
@@ -42,8 +42,8 @@ $conf['cache'] = array(
 
 $conf['database'] = array(
     'dsn' => 'mysql:host=127.0.0.1;port=3306;',
-    'dbname' => 'scf-teste',
-    'username' => 'root',
+    'dbname' => 'scf-test',
+    'username' => 'zanette',
     'password' => 'zanette',
     'params' => array()
 );
@@ -55,7 +55,7 @@ $conf['databases'] = array(
     'scf-bosque' => 'database.bosque',
     'scf-bosquefull' => 'database.bosque.completo',
     'scf-lacio' => 'database.verbnet',
-    'scf-teste' => 'database.teste'
+    'scf-test' => 'database.teste'
 );
 
 $conf['roles'] = array(
