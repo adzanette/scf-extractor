@@ -219,7 +219,8 @@ class SiteController extends \AZ\Framework\Kernel\Controller{
 
   public function showVerbSemanticFramesList($corpus, $framePage, $frame){
     $database = Verb::$db;  
-    
+    $frame = urldecode($frame);
+
     $query = "SELECT v.*, 
                 ( SELECT frequency 
                   FROM semantic_frames AS sf 
@@ -245,7 +246,8 @@ class SiteController extends \AZ\Framework\Kernel\Controller{
 
   public function showSemanticFrameExamples($corpus, $framePage, $frame, $verbId){
     $database = Example::$db;  
-
+    $frame = urldecode($frame);
+    
     $verb = Verb::row(array('id_verb = '.$verbId));
     
     $query = "SELECT sentences.* FROM sentences WHERE id_sentence in (

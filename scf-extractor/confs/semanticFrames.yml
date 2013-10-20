@@ -2,17 +2,17 @@ corpora:
    database:
     engine: mysql
     host: localhost
-    user: root
+    user: zanette
     password: zanette
-    dbName: scftest
+    dbName: scf-test
 
 frames:
   database:
     engine: mysql
     host: localhost
-    user: root
+    user: zanette
     password: zanette
-    dbName: scftest
+    dbName: scf-test
   createTables: true
   clearTables: false
   referenceTable: verbnet_scf

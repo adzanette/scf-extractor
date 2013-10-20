@@ -14,7 +14,7 @@ class DatabaseCorpusIterator(CorpusIterator):
   def __init__(self):
     self.last = 0
     self.rowset = None
-    self.pageSize = int(config.reader.pageSize)
+    self.pageSize = int(config.pageSize)
 
   ## Reads a set of sentences from a database
   # @author Adriano Zanette

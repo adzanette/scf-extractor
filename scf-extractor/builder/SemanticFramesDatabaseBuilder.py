@@ -62,6 +62,7 @@ class Builder:
       scf = SemanticFrame.create(frame=frame, verb=verb)
     except:
       SemanticFrame.update(frequency = SemanticFrame.frequency+1).where(SemanticFrame.frame == frame, SemanticFrame.verb == verb).execute()
+      scf = SemanticFrame.get(SemanticFrame.frame == frame, SemanticFrame.verb == verb)
   
     example.semanticFrame = scf
     example.save()

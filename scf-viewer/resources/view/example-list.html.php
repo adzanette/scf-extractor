@@ -9,15 +9,16 @@ $verb = $frame->verb;
 $pagination = $template->paginate($page, $count, 'example-list', array('corpus' => $corpus, 'verbId' => $verb->id_verb, 'verbPage' => $verbPage, 'frameId' => $frame->id_frame, 'framePage' => $framePage));
 
 ?>
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span12 well text-center">
-        <h1><?php echo $template->translate('example.title', array('verb' => $verb->verb, 'frame' => $frame->frame))?></h1>
-        <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
-        <?php echo $pagination; ?>
-      </div>
-    </div>
-  <div class="accordion" id="examples">
+<div class="row">
+  <div class="col-lg-12 well text-center">
+    <h1><?php echo $template->translate('example.title', array('verb' => $verb->verb, 'frame' => $frame->frame))?></h1>
+    <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
+    <?php echo $pagination; ?>
+  </div>
+</div>
+<div class="row page-list">
+  <div class="col-lg-10 col-lg-offset-1">
+
   <?php
   $count = $offset + 1;
   foreach($examples as $example){
@@ -26,9 +27,8 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
     $arguments = $example->arguments(array('active = 1', 'sintax is not null', 'sintax <> \'\''));
     ?>  
     <div class="accordion-group" id="<?php echo $exampleId; ?>">
-      <div class="accordion-heading">
-        <button type="button" class="btn btn-danger btn-mini delete-example" title="<?php echo $template->translate('delete-example')?>">
-          <i class="icon-remove icon-white"></i>
+        <button type="button" class="btn btn-danger btn-xs delete-example" title="<?php echo $template->translate('delete-example')?>">
+          <i class="glyphicon glyphicon-remove icon-white"></i>
         </button>
         <span class="label label-info"><?php echo $template->translate('example.number', array('i' => $count++))?></span>
         <h4>&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($sentence->raw_sentence); ?></h4>
@@ -38,15 +38,15 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
         foreach($arguments as $argument){
           $argumentId = $argument->id_argument;
           ?>
-          <div id="argument-<?php echo $argument->id_argument; ?>">
-            <div class="row-fluid">
-              <div class="span1 offset1"><?php echo $template->translate('argument.number', array('i' => $i))?></div>
-              <div class="span2"><?php echo $argument->argument; ?></div>
-              <div class="span2">
-                <input type="text" name="syntax_<?php echo $argument->id_argument; ?>" value="<?php echo $argument->sintax; ?>" />
+          <div class="argument" id="argument-<?php echo $argument->id_argument; ?>">
+            <div class="row form-group">
+              <div class="col-lg-2 col-lg-offset-1"><?php echo $template->translate('argument.number', array('i' => $i))?></div>
+              <div class="col-lg-2"><?php echo $argument->argument; ?></div>
+              <div class="col-lg-3">
+                <input class="form-control" type="text" name="syntax_<?php echo $argument->id_argument; ?>" value="<?php echo $argument->sintax; ?>" />
               </div>
-              <div class="span3">
-                <select name="role_<?php echo $argumentId; ?>" id ="role_argument_<?php echo $argumentId; ?>">
+              <div class="col-lg-2">
+                <select class="form-control" name="role_<?php echo $argumentId; ?>" id ="role_argument_<?php echo $argumentId; ?>">
                   <option value=""><?php echo $template->translate('select.role')?></option>
                   <?php
                   $semantic = $argument->semantic;
@@ -59,7 +59,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
                   ?>
                 </select>
               </div>
-              <div class="span3">
+              <div class="col-lg-2">
                 <button class="btn btn-info save-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.save'); ?></button>
                 <button class="btn btn-danger delete-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.delete'); ?></button>
               </div>
@@ -69,9 +69,6 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
           $i++;
         }
         ?>
-      </div>
-      <div id="example<?php echo $exampleId; ?>" class="accordion-body collapse in">
-        <div class="accordion-inner">     
             <span class="label label-info"><?php echo $template->translate('annotation'); ?></span>
             <style>
               #example<?php echo $exampleId; ?> #token-id-<?php echo $example->position; ?>{
@@ -84,17 +81,15 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
             <pre><?php echo htmlentities($sentence->parsed_sentence); ?></pre>
           </div>
         </div>
-      </div>
-    </div>
   <?php      
    
   }
   ?>
-  <div class="row-fluid">
-      <div class="span12 well text-center">
-        <?php echo $pagination;?>
-        <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
-      </div>
-    </div>
-  </div>  
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 well text-center">
+    <?php echo $pagination;?>
+    <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
+  </div>
 </div>

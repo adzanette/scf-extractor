@@ -17,12 +17,12 @@ $template->setTitle('example.list');
       <div class="accordion-group" id="<?php echo $id; ?>">
         <div class="accordion-heading">
           <span class="label label-info"><?php echo $template->translate('example.number', array('i' => $e++)); ?></span>
-          <h4>&nbsp;&nbsp;&nbsp;<?php echo htmlentities($sentence->raw_sentence); ?></h4>
+          <h4>&nbsp;&nbsp;&nbsp;<?php echo $sentence->raw_sentence; ?></h4>
         </div>
         <div id="example<?php echo $id; ?>" class="accordion-body collapse in">
           <div class="accordion-inner">     
               <span class="label label-info"><?php echo $template->translate('annotation')?></span>
-              <pre><?php echo htmlentities($sentence->parsed_sentence); ?></pre>
+              <?php echo '<pre>'.$sentence->parsed_sentence.'</pre>'; ?>
           </div>
         </div>
       </div>

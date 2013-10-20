@@ -29,7 +29,7 @@ class Paginator{
     $totalPages = ceil($this->total/$this->pageSize);
     
     $html = '';
-    $html .= '<div class="pagination pagination-small"><ul>';
+    $html .= '<div ><ul class="pagination">';
 
     if($this->page == 1) {
       $html .= '<li class="disabled"><a href="#">&lt;&lt;</a></li>';

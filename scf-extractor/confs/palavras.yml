@@ -9,7 +9,7 @@ frames:
     user: zanette
     password: zanette
     dbName: scf-test
-  createTables: false
+  createTables: true
   clearTables: false
   referenceTable: nilc_scf
 
