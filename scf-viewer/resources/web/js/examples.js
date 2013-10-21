@@ -43,7 +43,7 @@ $(document).ready(function($){
  });
  
  $(".delete-example").click(function(){
-    var id = $(this).parent().parent().attr('id');
+    var id = $(this).parent().attr('id');
     
     $.ajax({
       type: 'POST',

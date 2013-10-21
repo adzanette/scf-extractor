@@ -21,7 +21,7 @@ $template->setTitle('verb.list');
     foreach($verbs as $verb){
       ?>
       <tr>
-        <td><?php echo $verb->verb; ?></td>
+        <td><?php echo htmlentities($verb->verb); ?></td>
         <td><?php echo $verb->frequency; ?></td>
         <td>
           <a class="btn btn-info" href="<?php echo $template->getLink('semantic-frame-examples', array('corpus' => $corpus, 'frame' => urlencode($frame), 'verbId' => $verb->id_verb, 'framePage' => $framePage)); ?>">

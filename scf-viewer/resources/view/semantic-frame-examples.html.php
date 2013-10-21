@@ -33,6 +33,6 @@ $template->setTitle('example.list');
 </div>
 <div class="row">
   <div class="col-lg-12 well text-center">
-    <a class="btn btn-warning" href="semanticFramesVerbs.php?corpus=<?php echo $corpus; ?>&frame_page=<?php echo $frame_page; ?>&frame=<?php echo $frame; ?>"><?php echo $template->translate('verb.list.back'); ?></a>
+    <a class="btn btn-warning" href="<?php echo $template->getLink('semantic-frames-verbs', array('corpus' => $corpus, 'framePage' => $framePage, 'frame' => urlencode($frame)));?>"><?php echo $template->translate('verb.list.back'); ?></a>
   </div>
 </div>

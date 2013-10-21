@@ -40,7 +40,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
           ?>
           <div class="argument" id="argument-<?php echo $argument->id_argument; ?>">
             <div class="row form-group">
-              <div class="col-lg-2 col-lg-offset-1"><?php echo $template->translate('argument.number', array('i' => $i))?></div>
+              <div class="col-lg-1 col-lg-offset-1"><?php echo $template->translate('argument.number', array('i' => $i))?></div>
               <div class="col-lg-2"><?php echo $argument->argument; ?></div>
               <div class="col-lg-3">
                 <input class="form-control" type="text" name="syntax_<?php echo $argument->id_argument; ?>" value="<?php echo $argument->sintax; ?>" />
@@ -59,7 +59,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
                   ?>
                 </select>
               </div>
-              <div class="col-lg-2">
+              <div class="col-lg-3">
                 <button class="btn btn-info save-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.save'); ?></button>
                 <button class="btn btn-danger delete-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.delete'); ?></button>
               </div>
