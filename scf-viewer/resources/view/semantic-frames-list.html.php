@@ -3,13 +3,13 @@ $template->setTitle('semantic.frame.list');
 $pagination = $template->paginate($page, $count, 'semantic-frames-list', array('corpus' => $corpus));
 ?>
 <div class="row">
-  <div class="col-lg-12 well text-center">
+  <div class="col-md-12 well text-center">
     <h1><?php echo $template->translate('semantic.frame.list')?></h1>
     <?php echo $pagination;?>
   </div>
 </div>
 <div class="row page-list">
-  <div class="col-lg-10 col-lg-offset-1 text-center">
+  <div class="col-md-10 col-md-offset-1 text-center">
   <table class="table table-bordered table-hover">
   <thead>
     <tr class="header">
@@ -37,7 +37,7 @@ $pagination = $template->paginate($page, $count, 'semantic-frames-list', array('
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-12 well text-center">
+  <div class="col-md-12 well text-center">
     <?php echo $pagination;?>
   </div>
 </div>

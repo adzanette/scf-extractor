@@ -12,7 +12,7 @@ frames:
     host: localhost
     user: zanette
     password: zanette
-    dbName: scf-test
+    dbName: scf-bosque
   createTables: true
   clearTables: false
   referenceTable: verbnet_scf

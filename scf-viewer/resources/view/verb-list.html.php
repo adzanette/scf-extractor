@@ -3,7 +3,7 @@ $template->setTitle('verb.list');
 $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => $corpus));
 ?>
 <div class="row">
-  <div class="col-lg-12 well text-center">
+  <div class="col-md-12 well text-center">
     <h1><?php echo $template->translate('verb.list')?></h1>
     <a href="<?php echo $template->getLink('semantic-frames-list', array('corpus' => $corpus), true, true); ?>" target="_blank" class="btn btn-info"><?php echo $template->translate('see.semantic.frames')?></a>
     <a class="btn btn-warning" href="<?php echo $template->getLink('index'); ?>"><?php echo $template->translate('change.corpus')?></a>
@@ -11,7 +11,7 @@ $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => 
   </div>
 </div>
 <div class="row page-list">
-  <div class="col-lg-10 col-lg-offset-1 text-center">
+  <div class="col-md-10 col-md-offset-1 text-center">
     <table class="table table-bordered table-hover">
       <thead>
         <tr class="header">
@@ -45,7 +45,7 @@ $pagination = $template->paginate($page, $count, 'verb-list', array('corpus' => 
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-12 text-center">
+  <div class="col-md-12 text-center">
     <?php echo $pagination;?>
     <a class="btn btn-warning" href="<?php echo $template->getLink('index'); ?>"><?php echo $template->translate('change.corpus')?></a>
   </div>

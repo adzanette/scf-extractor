@@ -1,37 +1,38 @@
 {
   "site.title": "SCF Viewer"
 
-  ,"select.corpus": "Select a corpus"
+  ,"select.corpus": "Select Corpus"
   ,"select.a.corpus": "Select a corpus"
   ,"default.select": "Select"
   ,"select": "Select"
   ,"database.cardiologia": "Cardiology"
-  ,"database.diario": "Diário Gaúcho Newspaper"
+  ,"database.diario": "Diário Gaúcho"
   ,"database.lacio": "Lácio"
   ,"database.teste": "Test"
   ,"database.bosque": "Bosque"
   ,"database.amazonia": "Amazônia"
 
-  ,"verb.list": "Verb list"
-  ,"see.semantic.frames": "Go to semantic frames list"
-  ,"change.corpus": "Change corpus"
+  ,"verb.list": "Verb List"
+  ,"see.semantic.frames": "Go to Semantic Frame List"
+  ,"change.corpus": "Change Corpus"
   ,"verb.table.verb": "Verb"
   ,"verb.table.frequency": "Frequency"
   ,"verb.table.frames": "Frames"
   ,"verb.table.semantic.frames": "Semantic Frames"
 
   ,"frame.list": "Frame List"
-  ,"frame.list.verb": "Frame list of verb '{verb}'"
-  ,"verb.list.back": "Go back to verb list"
+  ,"frame.list.verb": "Frame List"
+  ,"verb.subtitle": "Verb: '{verb}'"
+  ,"verb.list.back":"Back to Verb List"
   ,"frame.table.frame": "Frame"
-  ,"frame.table.type": "Type"
+  ,"frame.table.type": "Form"
   ,"frame.table.frequency": "Frequency"
   ,"frame.table.examples": "Examples"
 
   ,"example.list": "Example List"
-  ,"example.title": "Example list of frame '{frame}' with verb '{verb}'"
-  ,"frame.list.back": "Go back to frame list"
-  ,"delete.example": "Delete exampĺe"
+  ,"frame.subtitle": "Frame: '{frame}'"
+  ,"frame.list.back": "Back to Frame List"
+  ,"delete.example": "Delete Example"
   ,"example.number": "Example {i}"
   ,"argument.number": "ARG_{i}"
   ,"select.role": "Select"
@@ -46,12 +47,10 @@
   ,"argument.delete": "Delete"
   ,"annotation": "Annotation"
 
-  ,"semantic.frame.list": "Semantic Frames List"
-  ,"semantic.frame.title": "Semantic frame list of verb '{verb}'"
-
+  ,"semantic.frame.list": "Semantic Frame List"
+  
   ,"frame.table.verbs": "Verbss"
 
-  ,"semantic.frames.verb": "Verb list of semantic frame '{frame}'"
+  ,"semantic.frame.subtitle": "Semantic Frame: '{frame}'"
 
-  ,"semantic.frames.examples": "Example List of semantic frame '{frame}' with verb '{verb}'"
 }

@@ -161,7 +161,7 @@ class Template {
     $this->defaultLocale = $conf['locale'];
 
     $this->setPaginator($conf['page-size'], $conf['page-window']);
-    
+    $this->addMetaTagName("viewport", "width=device-width, initial-scale=1.0");
     $this->addMetaTagHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1');
     $this->addCss('bootstrap.min.css');
     $this->addJs('bootstrap.min.js');

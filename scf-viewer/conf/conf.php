@@ -10,7 +10,7 @@ $conf['url-media'] = $conf['http-host'].'resources/web/';
 
 $conf['template'] = array(
   'title' => $conf['title'],
-  'locale' => 'pt',
+  'locale' => 'en',
   'version' => $conf['version'],
   'url-media' => $conf['url-media'],
   'url-media-css' => $conf['url-media'].'css/',

@@ -2,13 +2,15 @@
 $template->setTitle('example.list');
 ?>
 <div class="row">
-  <div class="col-lg-12 well text-center">
-    <h1><?php echo $template->translate('semantic.frames.examples', array('frame' => htmlentities($frame), 'verb' => $verb->verb)); ?></h1>
+  <div class="col-md-12 well text-center">
+    <h1><?php echo $template->translate('semantic.frame.list'); ?></h1>
+    <h3><?php echo $template->translate('semantic.frame.subtitle', array('frame' => htmlentities($frame)))?></h3>
+    <h3><?php echo $template->translate('verb.subtitle', array('verb' => $verb->verb))?></h3>
     <a class="btn btn-warning" href="<?php echo $template->getLink('semantic-frames-verbs', array('corpus' => $corpus, 'framePage' => $framePage, 'frame' => urlencode($frame)));?>"><?php echo $template->translate('verb.list.back'); ?></a>
   </div>
 </div>
 <div class="row page-list">
-  <div class="col-lg-10 col-lg-offset-1">
+  <div class="col-md-10 col-md-offset-1">
     <?php
     $e = 1;
     foreach ($sentences as $sentence){
@@ -32,7 +34,7 @@ $template->setTitle('example.list');
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-12 well text-center">
+  <div class="col-md-12 well text-center">
     <a class="btn btn-warning" href="<?php echo $template->getLink('semantic-frames-verbs', array('corpus' => $corpus, 'framePage' => $framePage, 'frame' => urlencode($frame)));?>"><?php echo $template->translate('verb.list.back'); ?></a>
   </div>
 </div>

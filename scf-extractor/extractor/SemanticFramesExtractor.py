@@ -24,6 +24,8 @@ class Extractor():
     element = None
 
     sintax = argument.sintax
+    if not sintax:
+      return None
 
     if sintax.startswith('SUBJECT'):
       element = Element(argument = sintax.replace('SUBJECT', 'SUJ'), relevance = 1)

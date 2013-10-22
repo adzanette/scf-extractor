@@ -10,14 +10,16 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
 
 ?>
 <div class="row">
-  <div class="col-lg-12 well text-center">
-    <h1><?php echo $template->translate('example.title', array('verb' => $verb->verb, 'frame' => $frame->frame))?></h1>
+  <div class="col-md-12 well text-center">
+    <h1><?php echo $template->translate('example.list')?></h1>
+    <h3><?php echo $template->translate('verb.subtitle', array('verb' => $verb->verb))?></h3>
+    <h3><?php echo $template->translate('frame.subtitle', array('frame' => $frame->frame))?></h3>
     <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
     <?php echo $pagination; ?>
   </div>
 </div>
 <div class="row page-list">
-  <div class="col-lg-10 col-lg-offset-1">
+  <div class="col-md-10 col-md-offset-1">
 
   <?php
   $count = $offset + 1;
@@ -39,13 +41,13 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
           $argumentId = $argument->id_argument;
           ?>
           <div class="argument" id="argument-<?php echo $argument->id_argument; ?>">
-            <div class="row form-group">
-              <div class="col-lg-1 col-lg-offset-1"><?php echo $template->translate('argument.number', array('i' => $i))?></div>
-              <div class="col-lg-2"><?php echo $argument->argument; ?></div>
-              <div class="col-lg-3">
+            <div class="row">
+              <div class="col-md-1 col-md-offset-1"><?php echo $template->translate('argument.number', array('i' => $i))?></div>
+              <div class="col-md-2"><?php echo $argument->argument; ?></div>
+              <div class="col-md-3">
                 <input class="form-control" type="text" name="syntax_<?php echo $argument->id_argument; ?>" value="<?php echo $argument->sintax; ?>" />
               </div>
-              <div class="col-lg-2">
+              <div class="col-md-2">
                 <select class="form-control" name="role_<?php echo $argumentId; ?>" id ="role_argument_<?php echo $argumentId; ?>">
                   <option value=""><?php echo $template->translate('select.role')?></option>
                   <?php
@@ -59,7 +61,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
                   ?>
                 </select>
               </div>
-              <div class="col-lg-3">
+              <div class="col-md-3">
                 <button class="btn btn-info save-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.save'); ?></button>
                 <button class="btn btn-danger delete-argument" id_argument="<?php echo $argument->id_argument; ?>"><?php echo $template->translate('argument.delete'); ?></button>
               </div>
@@ -78,7 +80,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
             <?php 
             //echo $sentence->html_sentence; 
             ?>
-            <pre><?php echo htmlentities($sentence->parsed_sentence); ?></pre>
+            <pre><?php echo $sentence->parsed_sentence; ?></pre>
           </div>
         </div>
   <?php      
@@ -88,7 +90,7 @@ $pagination = $template->paginate($page, $count, 'example-list', array('corpus' 
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-12 well text-center">
+  <div class="col-md-12 well text-center">
     <?php echo $pagination;?>
     <a class="btn btn-warning" href="<?php echo $template->getLink('frame-list', array('corpus' => $corpus, 'page' => $framePage, 'verbPage' => $verbPage, 'verbId' => $verb->id_verb)); ?>"><?php echo $template->translate('frame.list.back')?></a>
   </div>

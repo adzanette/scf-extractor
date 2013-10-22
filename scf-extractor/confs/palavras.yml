@@ -1,6 +1,7 @@
 corpora: 
   #path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\bosque.txt
-  path: /home/zanette/vm-share/scf-extractor/tests/corpora/bosque.txt
+  #path: /home/zanette/vm-share/scf-extractor/tests/corpora/bosque.txt
+  path: /home/zanette/vm-share/bosque/
 
 frames:
   database:
@@ -8,9 +9,9 @@ frames:
     host: localhost
     user: zanette
     password: zanette
-    dbName: scf-test
-  createTables: true
-  clearTables: false
+    dbName: scf-bosque
+  createTables: false
+  clearTables: true
   referenceTable: nilc_scf
 
 reader:
@@ -21,7 +22,7 @@ extractor:
 
 builder:
   module: SCF 
-  order: position 
-  ignoreClasses: ['REFL', 'PR', 'OCL', 'DAT']
+  order: relevance 
+  ignoreClasses: []
   extractArguments: true
 

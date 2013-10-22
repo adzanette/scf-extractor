@@ -21,7 +21,8 @@
   ,"verb.table.semantic.frames": "Frames Semânticos"
 
   ,"frame.list": "Lista de Frames"
-  ,"frame.list.verb": "Lista de frames do verbo '{verb}'"
+  ,"frame.list.verb": "Lista de frames"
+  ,"verb.subtitle": "Verbo: '{verb}'"
   ,"verb.list.back":"Voltar para lista de verbos"
   ,"frame.table.frame": "Frame"
   ,"frame.table.type": "Forma"
@@ -29,7 +30,7 @@
   ,"frame.table.examples": "Exemplos"
 
   ,"example.list": "Lista de Exemplos"
-  ,"example.title": "Lista de exemplos do frame '{frame}' com o verbo '{verb}'"
+  ,"frame.subtitle": "Frame: '{frame}'"
   ,"frame.list.back": "Voltar para lista de frames"
   ,"delete.example": "Excluir exemplo"
   ,"example.number": "Exemplo {i}"
@@ -51,7 +52,7 @@
 
   ,"frame.table.verbs": "Verbos"
 
-  ,"semantic.frames.verb": "Lista de verbos com o frame semântico '{frame}'"
+  ,"semantic.frame.subtitle": "Frame Semântico: '{frame}'"
 
   ,"semantic.frames.examples": "Lista de exemplos do frame semântico '{frame}' com o verbo '{verb}'"
 }

@@ -7449,6 +7449,9 @@ body{
 }
 .arguments{margin-top: 10px;}
 .argument{margin-bottom: 10px;}
+.argument .row div{
+  margin-bottom: 10px;
+}
 .tree ul {
   padding-top: 20px; position: relative;
   
