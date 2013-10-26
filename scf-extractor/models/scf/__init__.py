@@ -107,6 +107,7 @@ class SemanticFrame(BaseModel):
 # @version 0.1
 class Sentence(BaseModel):
   id = PrimaryKeyField(db_column='id_sentence')
+  code = CharField(max_length=100, null=True)
   raw = TextField(db_column='raw_sentence')
   parsed = TextField(db_column='parsed_sentence')  
   html = TextField(db_column='html_sentence', null=True)

@@ -63,7 +63,8 @@ class FileUtils(object):
       files = [path]
     elif FileUtils.isDir(path):
       files = FileUtils.getFilesFromDir(path, extensions)
-
+    else:
+      print 'ERROR: Cannot open '+path
     return files
 
   ## get all files from a dir

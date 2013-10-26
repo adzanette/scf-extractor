@@ -19,14 +19,16 @@ class ExtractSCF:
   # @author Adriano Zanette
   # @version 0.10
   def run(self):
+    moduleBuilder = config.builder.module
+    builder = eval(moduleBuilder+"Builder.Builder()")
+
     moduleReader = config.reader.module
     corpus = eval(moduleReader+"Iterator.Iterator()")
     
     moduleExtractor = config.extractor.module
     extractor = eval(moduleExtractor+"Extractor.Extractor()")
 
-    moduleBuilder = config.builder.module
-    builder = eval(moduleBuilder+"Builder.Builder()")
+   
 
     for sentence in corpus:  
       frames = extractor.extract(sentence)

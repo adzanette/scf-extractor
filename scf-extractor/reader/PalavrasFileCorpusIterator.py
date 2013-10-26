@@ -1,7 +1,7 @@
 
 from CorpusIterator import *
 from FileCorpusIterator import FileCorpusIterator
-from models.corpus import Sentence
+from models.scf import Sentence
 import re
 
 ## Reads a PALAVRAS annoted corpus from files

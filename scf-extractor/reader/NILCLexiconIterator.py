@@ -1,6 +1,6 @@
 
 from modules.Configuration import config
-from models.corpus import Sentence
+from models.scf import Sentence
 from CorpusIterator import *
 from FileCorpusIterator import FileCorpusIterator
 import re

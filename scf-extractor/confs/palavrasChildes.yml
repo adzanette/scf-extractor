@@ -1,7 +1,11 @@
 corpora: 
-  #path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\bosque.txt
-  path: /home/zanette/vm-share/scf-extractor/tests/corpora/bosque.txt
-  #path: /home/zanette/vm-share/bosque/
+   database:
+    engine: mysql
+    host: localhost
+    user: zanette
+    password: zanette
+    dbName: childes_pt
+    table: utterance_pt
 
 frames:
   database:
@@ -9,13 +13,15 @@ frames:
     host: localhost
     user: zanette
     password: zanette
-    dbName: scf-test
+    dbName: scf-childes-pt
   createTables: false
   clearTables: true
   referenceTable: nilc_scf
 
+pageSize: 100
+
 reader:
-  module: PalavrasFileCorpus
+  module: SentenceDatabaseCorpus
 
 extractor:
   module: PalavrasDependency 

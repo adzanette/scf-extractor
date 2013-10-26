@@ -1,6 +1,7 @@
 
 from models.scf import Element, SCF
-from models.palavras import *
+from models.palavras import Token
+from models.palavras import Sentence as Sentence
 
 ## Extractor for PALAVRAS dependency format
 # @author Adriano Zanette
@@ -146,7 +147,7 @@ class Extractor():
     elif "ADVL" == token.function and not "ADV" in token.morphos:
       element = Element(sintax = 'PP', element = "PP[%s]" % (token.lemma), argument = 'ADVERBIAL.ADJUNCT', relevance = 4)
     elif "DAT" == token.function:
-      element = Element(sintax = 'DAT', element = "DAT" % (token.lemma), argument = 'PRONOMINAL.INDIRECT.OBJECT', relevance = 2)
+      element = Element(sintax = 'DAT', element = "DAT", argument = 'PRONOMINAL.INDIRECT.OBJECT', relevance = 2)
     elif token.function in ["FS-ACC", 'ICL-ACC']:
       element = Element(sintax = 'OCL', element = "OCL", argument = 'CLAUSAL.DIRECT.OBJECT', relevance = 3)
     elif token.function in ["SC", 'ICL-SC', 'FS-SC', 'OC', 'ICL-OC', 'FS-OC']:
@@ -154,11 +155,11 @@ class Extractor():
       if "PRP" in token.morphos:
         element.element = "PR[%s]" % (token.lemma)
     elif token.morphos and token.morphos[0]:
-      if token.morphos[0] == 'N' or token.morphos[0] == 'NUM':
+      if  'N' in token.morphos or  'NUM' in token.morphos:
         element = Element(sintax = 'NP', element = "NP", argument = None, relevance = 3)
-      elif token.morphos[0] == "ADJ":
+      elif "ADJ" in token.morphos:
         element = Element(sintax = 'ADJP', element = "ADJP", argument = None, relevance = 5)
-      elif token.morphos[0] == "V":
+      elif "V" in token.morphos:
         element = Element(sintax = 'SINF', element = "SINF", argument = None, relevance = 5)
 
     if not element:

@@ -110,7 +110,7 @@ class Builder:
   def saveSentence(self, sentence):
     if self.extractArguments:
       #return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed, html = sentence.html)
-      return Sentence.create(id = sentence.id, raw = sentence.raw, parsed = sentence.parsed)
+      return Sentence.create(id = sentence.id, code = sentence.code, raw = sentence.raw, parsed = sentence.parsed)
     else:
       return None
    

@@ -5,11 +5,7 @@ from modules.Configuration import config
 
 from lib.peewee import *
 
-try:
-  dbConfig = config.corpora.database
-except:
-  dbConfig = config.frames.database
-  dbConfig.table = 'sentences'
+dbConfig = config.database
 
 if dbConfig.engine == 'mysql':
   host = dbConfig.host
@@ -30,10 +26,16 @@ class BaseModel(Model):
 # @version 0.1
 class Sentence(BaseModel):
   id = PrimaryKeyField(db_column='id')
-  code = TextField(db_column="sentence_id")
+  sentenceCode = TextField(db_column='sentence_id')
+  code = TextField(db_column='code')
+  age = TextField(db_column='age')
+  role = TextField(db_column='role')
   raw = TextField(db_column='cleared')
   parsed = TextField(db_column='parsed')  
+  morph = TextField(db_column='morph')
+  dep = TextField(db_column='dep')
+  tag = TextField(db_column='tag')
 
   class Meta:
-    db_table = dbConfig.table
+    db_table = 'utterance_pt'
 

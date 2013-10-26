@@ -1,6 +1,6 @@
 corpora: 
   #path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\lexicoNilc.txt
-  path: /home/adriano/src/lexicoNilc_sample.txt
+  path: /home/zanette/vm-share/scf-extractor/tests/corpora/lexicoNilc.txt
 
 frames:
   database:
@@ -8,7 +8,7 @@ frames:
     host: localhost
     user: root
     password: zanette
-    dbName: scftest
+    dbName: scf-test
   createTables: true
   clearTables: false
   referenceTable: nilc_scf

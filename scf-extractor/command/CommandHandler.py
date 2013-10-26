@@ -25,6 +25,11 @@ class CommandHandler:
     elif command == 'statistics':
       from command.RunStatistics import RunStatistics
       operation = RunStatistics()
+    elif command == 'process':
+      from processor import *
+      from modules.Configuration import config
+      module = eval(config.processor+"Processor.Processor()")
+      operation = module
     else:
       raise Exception("unknown command")
 

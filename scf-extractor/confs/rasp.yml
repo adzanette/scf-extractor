@@ -1,5 +1,5 @@
 corpora: 
-  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\rasp.txt
+  path: /home/zanette/vm-share/scf-extractor/tests/corpora/rasp.txt
 
 frames:
   database:
@@ -7,7 +7,7 @@ frames:
     host: localhost
     user: root
     password: zanette
-    dbName: scftest
+    dbName: scf-rasp
   createTables: false
   clearTables: true
   referenceTable: vebnet_scf

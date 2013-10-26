@@ -1,15 +1,15 @@
 corpora: 
-  path: C:\Users\zanette\Desktop\scf-extractor\tests\corpora\framenet\
+  path: /home/zanette/vm-share/scf-extractor/tests/corpora/framenet/
 
 frames:
   database:
     engine: mysql
     host: localhost
-    user: root
+    user: zanette
     password: zanette
-    dbName: scftest
-  createTables: false
-  clearTables: true
+    dbName: scf-test
+  createTables: true
+  clearTables: false
   referenceTable: framenet_scf
 
 reader:

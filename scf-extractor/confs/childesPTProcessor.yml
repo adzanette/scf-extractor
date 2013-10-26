@@ -3,6 +3,6 @@ processor: ChildesPTCorpus
 database:
   engine: mysql
   host: localhost
-  user: root
+  user: zanette
   password: zanette
-  dbName: childes_pt
+  dbName: childes_teste

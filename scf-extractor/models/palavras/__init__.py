@@ -5,6 +5,7 @@ __all__ = [
           ]
 
 import operator
+import re
 
 ## Model for tokens
 # @author Adriano Zanette
@@ -33,7 +34,8 @@ class Token(object):
   # @version 0.1
   # @return None
   def setRelationship(self, relation):
-    relation = relation.translate(None, "#")
+    relation = re.sub('[#]', '', relation)
+    #relation = relation.translate(None, "#")
     values = relation.split("->")
     self.id = int(values[0])
     self.relationship = (int(values[0]), int(values[1]))
@@ -157,14 +159,15 @@ class Sentence(object):
 
     for info in infos:
       if info[0] == "[":
-        token.lemma = info.translate(None, "[]")
+        token.lemma = re.sub('[\[\]]', '', info)
+        #token.lemma = info.translate(None, "[]")
       elif info[0] == "@":
-        token.function = info.translate(None, "@<>")
+        token.function = re.sub('[@<>]', '', info)
       elif info[0] == "#":
         hasRelationship = True
         token.setRelationship(info)
       elif info[0] == "<":
-        token.semantics.append(info.translate(None, "<>"))
+        token.semantics.append(re.sub('[<>]', '', info))
       else:
         token.morphos.append(info)
 
