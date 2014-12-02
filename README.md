@@ -30,15 +30,19 @@ Access the URL http://zanette.extractor
   There are four main commands for scf extraction:
   
   * SCF extraction
+        
         python main.py extract conf/<extract>.yml
 
   * Run Statistics
+        
         python main.py statistics conf/<statistics>.yml
 
   * SCF extraction evaluation
+        
         python main.py evaluate conf/<evaluate>.yml
 
   * Semaintic SCF process
+        
         python main.py process conf/<process>.yml
 
   
