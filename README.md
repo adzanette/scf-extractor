@@ -6,7 +6,7 @@ This module has been tested with Python 2.7.
 
 ### SCFExtractor installation on Ubuntu:
 
-    sudo apt-get install python-mysqldb mysql-server python-matplotlib
+    sudo apt-get install python-mysqldb mysql-server python-matplotlib python-tk
 
 ### SCFViewer installation on Ubuntu:
             
